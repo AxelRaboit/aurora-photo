@@ -1,0 +1,192 @@
+admin:
+  modules:
+    photo: Photo
+  audit:
+    actions:
+      photo:
+        gallery:
+          created: Galerie créée
+          updated: Galerie mise à jour
+          deleted: Galerie supprimée
+          reopened: Sélection rouverte
+          items:
+            added: Photos ajoutées
+            deleted: Photo supprimée
+            bulk_deleted: Photos supprimées
+photo:
+  galleries:
+    add: Nouvelle galerie
+    create: Créer une galerie
+    edit: Modifier la galerie
+    deleteConfirm: 'Supprimer la galerie « {title} » ? Cette action est définitive.'
+    created: Galerie créée.
+    updated: Galerie mise à jour.
+    deleted: Galerie supprimée.
+    empty: Aucune galerie pour le moment.
+    searchPlaceholder: Rechercher par titre ou slug…
+    itemsLabel: photo(s)
+    expiresAt: 'Expire le'
+    passwordSet: Mot de passe défini
+    clearPassword: Retirer le mot de passe
+    openEditor: Gérer les photos
+    openPublic: Voir la galerie
+    backToList: Retour aux galeries
+    addPhotos: Ajouter des photos
+    selectAll: Tout sélectionner
+    toggleSelect: Sélectionner / désélectionner
+    bulkDelete: Supprimer la sélection
+    noPhotos: Aucune photo dans cette galerie. Cliquez sur « Ajouter des photos » pour commencer.
+    captionPlaceholder: Légende (optionnelle)
+    picksTotal: favori(s) au total
+    itemDeleteConfirm: Supprimer cette photo de la galerie ?
+    usage:
+      itemCount: '{count, plural, =1 {1 photo dans la galerie} other {# photos dans la galerie}}'
+    itemsBulkDeleteConfirm: 'Supprimer {count} photo(s) ?'
+    itemsAdded: '{count} photo(s) ajoutée(s).'
+    itemsDeleted: '{count} photo(s) supprimée(s).'
+    fields:
+      coverMedia: Image de couverture
+      coverMediaHint: Affichée sur la liste des galeries et utilisable comme illustration partagée.
+      title: Titre
+      titlePlaceholder: 'Mariage Camille & Julien'
+      slug: Slug
+      slugPlaceholder: mariage-camille-julien
+      slugHint: 'Identifiant URL (ex : mariage-camille-julien)'
+      description: Description
+      descriptionPlaceholder: Quelques mots sur cette galerie (visible par le client)
+      password: Mot de passe
+      passwordChange: 'Nouveau mot de passe (laisser vide pour conserver)'
+      passwordPlaceholder: 'Mot de passe partagé avec le client'
+      passwordHint: 'Si vide, la galerie est accessible sans mot de passe.'
+      expiresAt: Date d'expiration
+      expiresAtPlaceholder: 'Sélectionner une date'
+      expiresAtPastWarning: La date choisie est dans le passé, la galerie sera immédiatement inaccessible aux clients.
+      allowOriginals: Autoriser le téléchargement des originaux
+      allowZipDownload: Autoriser le téléchargement ZIP global
+      picksRequireIdentity: 'Demander nom et email avant de cocher des favoris'
+      maxPicks: Nombre maximum de favoris
+      maxPicksPlaceholder: 'Ex : 30'
+      maxPicksHint: 'Limite par visiteur (vide = illimité). Les autres types de pick (impression / suppression) ne sont pas affectés.'
+      allowVisitorComments: Autoriser les commentaires par photo
+      watermarkEnabled: Appliquer un filigrane sur les téléchargements web
+      watermarkText: Texte du filigrane
+      watermarkTextPlaceholder: '© Studio'
+      watermarkHint: 'Ex : © Studio — affiché en surimpression sur les versions web. Les originaux ne sont jamais marqués.'
+      clientContact: Client (CRM)
+      clientContactPlaceholder: Rechercher par nom ou email…
+    errors:
+      title_required: Le titre est requis.
+      slug_required: Le slug est requis.
+      slug_format: Le slug ne peut contenir que des lettres minuscules, chiffres et tirets.
+      slug_taken: Ce slug est déjà utilisé.
+      items_required: Sélectionnez au moins un élément.
+      invalid_media_id: Identifiant de média invalide.
+      invalid_item_id: Identifiant d'élément invalide.
+      caption_too_long: La légende est trop longue.
+      max_picks_reached: 'Vous avez atteint la limite de {limit} favoris.'
+      comment_required: Le commentaire est vide.
+      comment_too_long: Le commentaire est trop long.
+      name_required: Le nom est requis.
+      email_required: L'email est requis.
+      email_invalid: L'email saisi n'est pas valide.
+      invite_email_taken: Une invitation a déjà été créée pour cet email.
+    admin:
+      reopen: Rouvrir la sélection
+      reopenConfirm: 'Rouvrir cette galerie permettra au client de modifier sa sélection. Continuer ?'
+      reopened: Galerie rouverte.
+      export: Exporter (XLSX)
+      sortByConsensus: Trier par consensus
+      consensusTooltip: 'Pickée par {count}/{total} visiteurs.'
+      comments:
+        title: Commentaires visiteurs
+        empty: Aucun commentaire pour le moment.
+        delete: Supprimer
+        deleteConfirm: Supprimer ce commentaire ?
+        anonymous: Visiteur anonyme
+        deleted: Commentaire supprimé.
+      finalizations:
+        title: Sélections validées
+        reopen: Rouvrir cette validation
+        reopenConfirm: 'Cette personne pourra à nouveau modifier sa sélection. Continuer ?'
+        reopened: Validation rouverte.
+        empty: Aucune photo cochée par cette personne.
+        invitedAs: 'Invité comme : {name} <{email}>'
+      invites:
+        title: Invitations
+        intro: Envoyez un lien magique personnel à chaque invité — pas de mot de passe à partager, et vous voyez qui a consulté la galerie.
+        name: Nom de l'invité
+        email: Email
+        add: Ajouter
+        send: Envoyer le lien
+        resend: Renvoyer
+        notSent: Lien non envoyé
+        sentAt: 'Envoyé le {date}'
+        lastSeen: 'Dernière visite : {date}'
+        notSeen: Pas encore consulté
+        created: Invitation créée.
+        sent: Email envoyé.
+        deleted: Invitation supprimée.
+        deleteConfirmTitle: Supprimer cette invitation ?
+        deleteConfirm: '{name} ne pourra plus accéder à la galerie via son lien magique.'
+  frontend:
+    pick: Ajouter aux favoris
+    unpick: Retirer des favoris
+    picked: favori(s)
+    download: Télécharger
+    downloadAll: Tout télécharger
+    downloadPicks: Télécharger ma sélection
+    finalize: Valider ma sélection
+    finalizedBadge: Sélection validée
+    finalizedToast: Votre sélection a été envoyée au photographe.
+    finalizeIntro: 'Vous avez sélectionné {count} photo(s). Confirmez-vous votre choix ?'
+    alreadyFinalized: La sélection est déjà validée.
+    empty: Aucune photo dans cette galerie pour le moment.
+    unlock:
+      subtitle: Cette galerie est protégée. Saisissez le mot de passe.
+      password: Mot de passe
+      submit: Accéder à la galerie
+      invalid: Mot de passe incorrect.
+      required: Veuillez saisir le mot de passe.
+    identity:
+      title: Vos coordonnées
+      intro: Le photographe demande votre nom et email avant de cocher vos favoris.
+      name: Nom
+      namePlaceholder: 'Camille Dupont'
+      email: Email
+      emailPlaceholder: 'camille@exemple.com'
+      submit: Continuer
+    kinds:
+      favorite: Favoris
+      print: À imprimer
+      discard: À retirer
+      tabFavorite: Mes favoris
+      tabPrint: À imprimer
+      tabDiscard: À retirer
+    maxPicksProgress: '{count}/{limit} favoris'
+    compare:
+      add: Ajouter à la comparaison
+      remove: Retirer de la comparaison
+      selected: '{count}/{max} photos à comparer'
+      open: Comparer
+      title: Comparaison
+      clear: Vider
+      max: 'Vous ne pouvez comparer que {max} photos à la fois.'
+    burst:
+      tooltip: 'Rafale de {size} photos prises à moins de 2 secondes d''écart.'
+    share:
+      button: Partager ma sélection
+      title: Partager ma sélection
+      intro: 'Envoyez ce lien à votre conjoint ou à un proche pour qu''il consulte vos {count} photo(s) sélectionnée(s) (lecture seule).'
+      copy: Copier
+      copied: Copié !
+      readOnlyBadge: Sélection partagée — lecture seule
+    comments:
+      add: Ajouter un commentaire
+      label: Votre commentaire
+      placeholder: Vos remarques sur cette photo…
+      submit: Envoyer
+      sent: Commentaire envoyé.
+      cancel: Annuler
+      nameRequired: Le nom est requis.
+      emailRequired: L'email est requis.
+      contentRequired: Veuillez écrire un commentaire.

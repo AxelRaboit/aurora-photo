@@ -1,0 +1,192 @@
+admin:
+  modules:
+    photo: Photo
+  audit:
+    actions:
+      photo:
+        gallery:
+          created: Gallery created
+          updated: Gallery updated
+          deleted: Gallery deleted
+          reopened: Selection reopened
+          items:
+            added: Photos added
+            deleted: Photo deleted
+            bulk_deleted: Photos deleted
+photo:
+  galleries:
+    add: New gallery
+    create: Create gallery
+    edit: Edit gallery
+    deleteConfirm: 'Delete gallery "{title}"? This cannot be undone.'
+    created: Gallery created.
+    updated: Gallery updated.
+    deleted: Gallery deleted.
+    empty: No galleries yet.
+    searchPlaceholder: Search by title or slug…
+    itemsLabel: photo(s)
+    expiresAt: Expires on
+    passwordSet: Password set
+    clearPassword: Remove password
+    openEditor: Manage photos
+    openPublic: View gallery
+    backToList: Back to galleries
+    addPhotos: Add photos
+    selectAll: Select all
+    toggleSelect: Toggle selection
+    bulkDelete: Delete selection
+    noPhotos: No photos in this gallery yet. Click "Add photos" to get started.
+    captionPlaceholder: Caption (optional)
+    picksTotal: total favorites
+    itemDeleteConfirm: Remove this photo from the gallery?
+    usage:
+      itemCount: '{count, plural, =1 {1 photo in the gallery} other {# photos in the gallery}}'
+    itemsBulkDeleteConfirm: 'Delete {count} photo(s)?'
+    itemsAdded: '{count} photo(s) added.'
+    itemsDeleted: '{count} photo(s) deleted.'
+    fields:
+      coverMedia: Cover image
+      coverMediaHint: Shown on the gallery list and reusable as a shared thumbnail.
+      title: Title
+      titlePlaceholder: 'Wedding Camille & Julien'
+      slug: Slug
+      slugPlaceholder: wedding-camille-julien
+      slugHint: 'URL identifier (e.g. wedding-camille-julien)'
+      description: Description
+      descriptionPlaceholder: A few words about this gallery (visible to the client)
+      password: Password
+      passwordChange: 'New password (leave empty to keep current)'
+      passwordPlaceholder: 'Password shared with the client'
+      passwordHint: If empty, the gallery is publicly accessible.
+      expiresAt: Expiry date
+      expiresAtPlaceholder: 'Select a date'
+      expiresAtPastWarning: The chosen date is in the past, the gallery will be immediately inaccessible to clients.
+      allowOriginals: Allow original file downloads
+      allowZipDownload: Allow bulk ZIP download
+      picksRequireIdentity: Require name and email before picking favorites
+      maxPicks: Maximum number of favorites
+      maxPicksPlaceholder: 'e.g. 30'
+      maxPicksHint: 'Per-visitor limit (empty = unlimited). Other pick types (print / discard) are not affected.'
+      allowVisitorComments: Allow per-photo comments
+      watermarkEnabled: Apply watermark on web downloads
+      watermarkText: Watermark text
+      watermarkTextPlaceholder: '© Studio'
+      watermarkHint: 'E.g. © Studio — overlaid on web variants. Originals are never marked.'
+      clientContact: Client (CRM)
+      clientContactPlaceholder: Search by name or email…
+    errors:
+      title_required: Title is required.
+      slug_required: Slug is required.
+      slug_format: Slug can only contain lowercase letters, numbers and hyphens.
+      slug_taken: This slug is already in use.
+      items_required: Select at least one item.
+      invalid_media_id: Invalid media id.
+      invalid_item_id: Invalid item id.
+      caption_too_long: Caption is too long.
+      max_picks_reached: 'You reached the limit of {limit} favorites.'
+      comment_required: Comment is empty.
+      comment_too_long: Comment is too long.
+      name_required: Name is required.
+      email_required: Email is required.
+      email_invalid: This email address is not valid.
+      invite_email_taken: An invitation has already been created for this email.
+    admin:
+      reopen: Reopen selection
+      reopenConfirm: 'Reopening this gallery lets the client edit their selection again. Continue?'
+      reopened: Gallery reopened.
+      export: Export (XLSX)
+      sortByConsensus: Sort by consensus
+      consensusTooltip: 'Picked by {count}/{total} visitors.'
+      comments:
+        title: Visitor comments
+        empty: No comments yet.
+        delete: Delete
+        deleteConfirm: Delete this comment?
+        anonymous: Anonymous visitor
+        deleted: Comment deleted.
+      finalizations:
+        title: Validated selections
+        reopen: Reopen this validation
+        reopenConfirm: 'This visitor will be able to edit their selection again. Continue?'
+        reopened: Validation reopened.
+        empty: This visitor did not pick any photo.
+        invitedAs: 'Invited as: {name} <{email}>'
+      invites:
+        title: Invitations
+        intro: Send a personal magic link to each guest — no shared password, and you can see who actually viewed the gallery.
+        name: Guest name
+        email: Email
+        add: Add
+        send: Send link
+        resend: Resend
+        notSent: Link not sent
+        sentAt: 'Sent on {date}'
+        lastSeen: 'Last visit: {date}'
+        notSeen: Not viewed yet
+        created: Invitation created.
+        sent: Email sent.
+        deleted: Invitation deleted.
+        deleteConfirmTitle: Delete this invitation?
+        deleteConfirm: '{name} will no longer be able to access the gallery through their magic link.'
+  frontend:
+    pick: Add to favorites
+    unpick: Remove from favorites
+    picked: picked
+    download: Download
+    downloadAll: Download all
+    downloadPicks: Download my selection
+    finalize: Submit my selection
+    finalizedBadge: Selection submitted
+    finalizedToast: Your selection has been sent to the photographer.
+    finalizeIntro: 'You picked {count} photo(s). Confirm your selection?'
+    alreadyFinalized: Selection already submitted.
+    empty: No photos in this gallery yet.
+    unlock:
+      subtitle: This gallery is protected. Please enter the password.
+      password: Password
+      submit: Open gallery
+      invalid: Invalid password.
+      required: Please enter the password.
+    identity:
+      title: Your details
+      intro: The photographer needs your name and email before you can pick favorites.
+      name: Name
+      namePlaceholder: 'Camille Smith'
+      email: Email
+      emailPlaceholder: 'camille@example.com'
+      submit: Continue
+    kinds:
+      favorite: Favorites
+      print: To print
+      discard: To remove
+      tabFavorite: My favorites
+      tabPrint: To print
+      tabDiscard: To remove
+    maxPicksProgress: '{count}/{limit} favorites'
+    compare:
+      add: Add to comparison
+      remove: Remove from comparison
+      selected: '{count}/{max} photos to compare'
+      open: Compare
+      title: Comparison
+      clear: Clear
+      max: 'You can compare at most {max} photos at a time.'
+    burst:
+      tooltip: 'Burst of {size} photos taken within 2 seconds.'
+    share:
+      button: Share my selection
+      title: Share my selection
+      intro: 'Send this link to your spouse or a relative so they can review your {count} picked photo(s) (read-only).'
+      copy: Copy
+      copied: Copied!
+      readOnlyBadge: Shared selection — read only
+    comments:
+      add: Add a comment
+      label: Your comment
+      placeholder: Your notes about this photo…
+      submit: Send
+      sent: Comment sent.
+      cancel: Cancel
+      nameRequired: Name is required.
+      emailRequired: Email is required.
+      contentRequired: Please write a comment.
