@@ -190,3 +190,9 @@ photo:
       nameRequired: Le nom est requis.
       emailRequired: L'email est requis.
       contentRequired: Veuillez écrire un commentaire.
+  mail:
+    gallery:
+      subject_finalized: '{title} — Sélection terminée'
+      subject_visitor: 'Confirmation de votre sélection — {title}'
+      subject_comment: '{title} — Nouveau commentaire'
+      subject_invite: '{title} — Vos photos sont prêtes'

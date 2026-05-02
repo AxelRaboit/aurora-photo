@@ -15,6 +15,7 @@ final readonly class GalleryCommentService
     public function __construct(
         private EntityManagerInterface $entityManager,
         private GalleryItemCommentRepository $commentRepository,
+        private GalleryNotificationService $notificationService,
     ) {}
 
     public function add(GalleryItem $item, string $visitorToken, GalleryItemCommentInput $input): GalleryItemComment
@@ -28,6 +29,8 @@ final readonly class GalleryCommentService
 
         $this->entityManager->persist($comment);
         $this->entityManager->flush();
+
+        $this->notificationService->notifyItemComment($comment);
 
         return $comment;
     }

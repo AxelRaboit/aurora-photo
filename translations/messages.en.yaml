@@ -190,3 +190,9 @@ photo:
       nameRequired: Name is required.
       emailRequired: Email is required.
       contentRequired: Please write a comment.
+  mail:
+    gallery:
+      subject_finalized: '{title} — Selection completed'
+      subject_visitor: 'Confirmation of your selection — {title}'
+      subject_comment: '{title} — New comment'
+      subject_invite: '{title} — Your photos are ready'
