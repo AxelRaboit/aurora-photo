@@ -6,6 +6,7 @@ namespace Aurora\Module\Photo\Gallery\Service;
 
 use DateTimeImmutable;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Filesystem\Path;
 
 /**
  * Lightweight EXIF reader scoped to the photo module. Only reads the one
@@ -25,7 +26,7 @@ final readonly class ExifReader
             return null;
         }
 
-        $absolute = $this->uploadDir.'/'.$relativePath;
+        $absolute = Path::join($this->uploadDir, $relativePath);
         if (!is_file($absolute)) {
             return null;
         }

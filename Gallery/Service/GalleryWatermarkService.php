@@ -7,6 +7,8 @@ namespace Aurora\Module\Photo\Gallery\Service;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use GdImage;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
 /**
  * Applies a text watermark on JPEG/PNG/WebP images and caches the result on
@@ -22,6 +24,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class GalleryWatermarkService
 {
     public function __construct(
+        private readonly Filesystem $filesystem,
         #[Autowire('%kernel.project_dir%/public/uploads')]
         private readonly string $uploadDir,
     ) {}
@@ -50,9 +53,7 @@ class GalleryWatermarkService
             return $cachedPath;
         }
 
-        if (!is_dir(dirname($cachedPath))) {
-            @mkdir(dirname($cachedPath), 0o775, true);
-        }
+        $this->filesystem->mkdir(dirname($cachedPath));
 
         $rendered = $this->renderTo(
             $absoluteSourcePath,
@@ -70,25 +71,8 @@ class GalleryWatermarkService
      */
     public function clearCacheForGallery(Gallery $gallery): void
     {
-        $dir = $this->galleryCacheDir($gallery);
-        if (!is_dir($dir)) {
-            return;
-        }
-
-        $this->rmDirRecursive($dir);
-    }
-
-    private function rmDirRecursive(string $dir): void
-    {
-        foreach (glob($dir.'/*') ?: [] as $entry) {
-            if (is_dir($entry)) {
-                $this->rmDirRecursive($entry);
-            } else {
-                @unlink($entry);
-            }
-        }
-
-        @rmdir($dir);
+        // Filesystem::remove() walks recursively and is a no-op when missing.
+        $this->filesystem->remove($this->galleryCacheDir($gallery));
     }
 
     private function renderTo(string $sourcePath, string $galleryText, string $visitorText, string $destinationPath): bool
@@ -201,9 +185,7 @@ class GalleryWatermarkService
             return $cachedPath;
         }
 
-        if (!is_dir(dirname($cachedPath))) {
-            @mkdir(dirname($cachedPath), 0o775, true);
-        }
+        $this->filesystem->mkdir(dirname($cachedPath));
 
         return $this->renderDegraded($absoluteSourcePath, $cachedPath) ? $cachedPath : $absoluteSourcePath;
     }
@@ -253,20 +235,20 @@ class GalleryWatermarkService
         $shard = mb_substr($hash, 0, 2);
         $ext = pathinfo($sourcePath, PATHINFO_EXTENSION) ?: 'jpg';
 
-        return sprintf('%s/photo-degraded/%s/%s.%s', $this->uploadDir, $shard, $hash, $ext);
+        return Path::join($this->uploadDir, 'photo-degraded', $shard, sprintf('%s.%s', $hash, $ext));
     }
 
     private function cachedPath(Gallery $gallery, string $sourcePath, string $visitorWatermark = ''): string
     {
         $visitorShard = '' === $visitorWatermark ? '_anon' : mb_substr(sha1($visitorWatermark), 0, 8);
 
-        return sprintf('%s/%s/%s', $this->galleryCacheDir($gallery), $visitorShard, basename($sourcePath));
+        return Path::join($this->galleryCacheDir($gallery), $visitorShard, basename($sourcePath));
     }
 
     private function galleryCacheDir(Gallery $gallery): string
     {
         $hash = mb_substr(sha1((string) $gallery->getWatermarkText()), 0, 8);
 
-        return sprintf('%s/photo-watermarks/%d-%s', $this->uploadDir, $gallery->getId(), $hash);
+        return Path::join($this->uploadDir, 'photo-watermarks', sprintf('%d-%s', $gallery->getId(), $hash));
     }
 }

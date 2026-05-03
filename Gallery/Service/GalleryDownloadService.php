@@ -9,6 +9,7 @@ use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use DomainException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -119,7 +120,7 @@ final readonly class GalleryDownloadService
                 throw new DomainException('Original downloads are disabled for this gallery.');
             }
 
-            return $this->uploadDir.'/'.$media->getPath();
+            return Path::join($this->uploadDir, $media->getPath());
         }
 
         // 'web' = the largest cached derivative, falling back to the original
@@ -127,7 +128,7 @@ final readonly class GalleryDownloadService
         $variantPath = $media->getVariants()['large'] ?? $media->getVariants()['medium'] ?? null;
         $relative = $variantPath ?? $media->getPath();
 
-        return $this->uploadDir.'/'.$relative;
+        return Path::join($this->uploadDir, $relative);
     }
 
     private function niceName(Media $media, string $variant, bool $degraded = false): string
