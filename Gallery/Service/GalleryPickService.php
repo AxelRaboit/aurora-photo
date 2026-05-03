@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
+use Aurora\Core\Sequence\SequenceGenerator;
+use Aurora\Core\Sequence\SequencePrefixEnum;
+use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
+use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
@@ -23,6 +27,8 @@ final readonly class GalleryPickService
         private GalleryPickRepository $pickRepository,
         private GalleryFinalizationRepository $finalizationRepository,
         private GalleryInviteRepository $inviteRepository,
+        private SequenceGenerator $sequenceGenerator,
+        private SettingRepository $settingRepository,
     ) {}
 
     /**
@@ -69,6 +75,10 @@ final readonly class GalleryPickService
         $this->entityManager->persist($pick);
         $this->entityManager->flush();
 
+        $pickPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryPickPrefix->value, SequencePrefixEnum::GalleryPick->value) ?? SequencePrefixEnum::GalleryPick->value;
+        $pick->setReference($this->sequenceGenerator->next($pickPrefix));
+        $this->entityManager->flush();
+
         return true;
     }
 
@@ -91,6 +101,10 @@ final readonly class GalleryPickService
         $finalization->setVisitorEmail($visitorEmail);
 
         $this->entityManager->persist($finalization);
+        $this->entityManager->flush();
+
+        $finPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryFinalizationPrefix->value, SequencePrefixEnum::GalleryFinalization->value) ?? SequencePrefixEnum::GalleryFinalization->value;
+        $finalization->setReference($this->sequenceGenerator->next($finPrefix));
         $this->entityManager->flush();
 
         return $finalization;

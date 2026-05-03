@@ -6,6 +6,10 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Repository\MediaRepository;
+use Aurora\Core\Sequence\SequenceGenerator;
+use Aurora\Core\Sequence\SequencePrefixEnum;
+use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
+use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Contract\GalleryItemManagerInterface;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
@@ -23,6 +27,8 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         private MediaRepository $mediaRepository,
         private AuditLogger $auditLogger,
         private ExifReader $exifReader,
+        private SequenceGenerator $sequenceGenerator,
+        private SettingRepository $settingRepository,
     ) {}
 
     public function addItems(Gallery $gallery, array $mediaIds): int
@@ -37,6 +43,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
             $existing[$item->getMedia()->getId()] = true;
         }
 
+        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryItemPrefix->value, SequencePrefixEnum::GalleryItem->value) ?? SequencePrefixEnum::GalleryItem->value;
         $position = $this->itemRepository->nextPositionForGallery((int) $gallery->getId());
         $number = $this->itemRepository->nextNumberForGallery((int) $gallery->getId());
         $added = 0;
@@ -56,6 +63,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
             $item->setPosition($position++);
             $item->setNumber($number++);
             $item->setTakenAt($this->exifReader->readDateTimeOriginal($media->getPath()));
+            $item->setReference($this->sequenceGenerator->next($prefix));
             $this->entityManager->persist($item);
             // Keep the in-memory collection in sync so callers can serialize
             // the gallery without re-fetching after the flush.

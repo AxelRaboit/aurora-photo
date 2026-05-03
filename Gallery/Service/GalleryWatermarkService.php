@@ -79,7 +79,9 @@ class GalleryWatermarkService
 
     private function renderTo(string $sourcePath, string $galleryText, string $visitorText, string $destinationPath): bool
     {
-        $info = @getimagesize($sourcePath);
+        set_error_handler(static fn (): bool => true);
+        $info = getimagesize($sourcePath);
+        restore_error_handler();
         if (false === $info) {
             return false;
         }
@@ -194,7 +196,9 @@ class GalleryWatermarkService
 
     private function renderDegraded(string $sourcePath, string $destinationPath): bool
     {
-        $info = @getimagesize($sourcePath);
+        set_error_handler(static fn (): bool => true);
+        $info = getimagesize($sourcePath);
+        restore_error_handler();
         if (false === $info) {
             return false;
         }

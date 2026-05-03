@@ -6,6 +6,10 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Repository\MediaRepository;
+use Aurora\Core\Sequence\SequenceGenerator;
+use Aurora\Core\Sequence\SequencePrefixEnum;
+use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
+use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Core\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Photo\Gallery\Contract\GalleryManagerInterface;
@@ -24,6 +28,8 @@ final readonly class GalleryManager implements GalleryManagerInterface
         private ContactRepository $contactRepository,
         private AuditLogger $auditLogger,
         private GalleryWatermarkService $watermarkService,
+        private SequenceGenerator $sequenceGenerator,
+        private SettingRepository $settingRepository,
     ) {}
 
     public function create(GalleryInput $input, User $createdBy): Gallery
@@ -31,6 +37,8 @@ final readonly class GalleryManager implements GalleryManagerInterface
         $gallery = new Gallery();
         $gallery->setCreatedBy($createdBy);
         $this->applyInput($gallery, $input, isCreate: true);
+        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryPrefix->value, SequencePrefixEnum::Gallery->value) ?? SequencePrefixEnum::Gallery->value;
+        $gallery->setReference($this->sequenceGenerator->next($prefix));
         $this->entityManager->persist($gallery);
         $this->entityManager->flush();
 

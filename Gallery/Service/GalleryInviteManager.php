@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
+use Aurora\Core\Sequence\SequenceGenerator;
+use Aurora\Core\Sequence\SequencePrefixEnum;
+use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
+use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,11 +20,14 @@ final readonly class GalleryInviteManager
         private GalleryNotificationService $notificationService,
         private UrlGeneratorInterface $urlGenerator,
         private GalleryAccessService $accessService,
+        private SequenceGenerator $sequenceGenerator,
+        private SettingRepository $settingRepository,
     ) {}
 
     public function create(Gallery $gallery, string $name, string $email): GalleryInvite
     {
         $token = bin2hex(random_bytes(24));
+        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryInvitePrefix->value, SequencePrefixEnum::GalleryInvite->value) ?? SequencePrefixEnum::GalleryInvite->value;
 
         $invite = new GalleryInvite();
         $invite->setGallery($gallery);
@@ -28,6 +35,7 @@ final readonly class GalleryInviteManager
         $invite->setEmail(mb_strtolower($email));
         $invite->setToken($token);
         $invite->setVisitorToken($this->accessService->visitorTokenForInviteToken($token));
+        $invite->setReference($this->sequenceGenerator->next($prefix));
 
         $this->entityManager->persist($invite);
         $this->entityManager->flush();

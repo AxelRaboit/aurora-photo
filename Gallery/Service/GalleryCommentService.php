@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
+use Aurora\Core\Sequence\SequenceGenerator;
+use Aurora\Core\Sequence\SequencePrefixEnum;
+use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
+use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\DTO\GalleryItemCommentInput;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
@@ -16,6 +20,8 @@ final readonly class GalleryCommentService
         private EntityManagerInterface $entityManager,
         private GalleryItemCommentRepository $commentRepository,
         private GalleryNotificationService $notificationService,
+        private SequenceGenerator $sequenceGenerator,
+        private SettingRepository $settingRepository,
     ) {}
 
     public function add(GalleryItem $item, string $visitorToken, GalleryItemCommentInput $input): GalleryItemComment
@@ -28,6 +34,10 @@ final readonly class GalleryCommentService
         $comment->setVisitorEmail($input->visitorEmail);
 
         $this->entityManager->persist($comment);
+        $this->entityManager->flush();
+
+        $commentPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryItemCommentPrefix->value, SequencePrefixEnum::GalleryItemComment->value) ?? SequencePrefixEnum::GalleryItemComment->value;
+        $comment->setReference($this->sequenceGenerator->next($commentPrefix));
         $this->entityManager->flush();
 
         $this->notificationService->notifyItemComment($comment);
