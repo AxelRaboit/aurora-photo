@@ -16,7 +16,7 @@ use Symfony\Component\Filesystem\Path;
 final readonly class ExifReader
 {
     public function __construct(
-        #[Autowire('%kernel.project_dir%/public/uploads')]
+        #[Autowire('%app.upload_dir%')]
         private string $uploadDir,
     ) {}
 

@@ -26,7 +26,7 @@ use ZipStream\ZipStream;
 final readonly class GalleryDownloadService
 {
     public function __construct(
-        #[Autowire('%kernel.project_dir%/public/uploads')]
+        #[Autowire('%app.upload_dir%')]
         private string $uploadDir,
         private GalleryWatermarkService $watermarkService,
     ) {}

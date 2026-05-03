@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
+use Aurora\Core\Media\Enum\StorageAreaEnum;
+use Aurora\Module\Photo\Enum\PhotoCacheDirEnum;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use GdImage;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -14,7 +16,7 @@ use Symfony\Component\Filesystem\Path;
  * Applies a text watermark on JPEG/PNG/WebP images and caches the result on
  * disk so subsequent downloads of the same item don't re-render the overlay.
  *
- * Cache layout:  uploads/photo-watermarks/<galleryId>/<basename>.<ext>
+ * Cache layout:  uploads/photo/watermarks/<galleryId>/<basename>.<ext>
  * Cache key includes the gallery's text + a hash so changing the watermark
  * text invalidates entries automatically (the hash is part of the dir name).
  *
@@ -25,7 +27,7 @@ class GalleryWatermarkService
 {
     public function __construct(
         private readonly Filesystem $filesystem,
-        #[Autowire('%kernel.project_dir%/public/uploads')]
+        #[Autowire('%app.upload_dir%')]
         private readonly string $uploadDir,
     ) {}
 
@@ -171,7 +173,7 @@ class GalleryWatermarkService
      * entitled to the real photo (expired gallery, originals disabled,
      * pre-finalize attempt on a quota-gated gallery, etc.).
      *
-     * Cached on disk under uploads/photo-degraded/. Returns the source path
+     * Cached on disk under uploads/photo/degraded/. Returns the source path
      * untouched if rendering fails.
      */
     public function applyDegradation(string $absoluteSourcePath): string
@@ -235,7 +237,7 @@ class GalleryWatermarkService
         $shard = mb_substr($hash, 0, 2);
         $ext = pathinfo($sourcePath, PATHINFO_EXTENSION) ?: 'jpg';
 
-        return Path::join($this->uploadDir, 'photo-degraded', $shard, sprintf('%s.%s', $hash, $ext));
+        return Path::join($this->uploadDir, StorageAreaEnum::Photo->value, PhotoCacheDirEnum::Degraded->value, $shard, sprintf('%s.%s', $hash, $ext));
     }
 
     private function cachedPath(Gallery $gallery, string $sourcePath, string $visitorWatermark = ''): string
@@ -249,6 +251,6 @@ class GalleryWatermarkService
     {
         $hash = mb_substr(sha1((string) $gallery->getWatermarkText()), 0, 8);
 
-        return Path::join($this->uploadDir, 'photo-watermarks', sprintf('%d-%s', $gallery->getId(), $hash));
+        return Path::join($this->uploadDir, StorageAreaEnum::Photo->value, PhotoCacheDirEnum::Watermarks->value, sprintf('%d-%s', $gallery->getId(), $hash));
     }
 }
