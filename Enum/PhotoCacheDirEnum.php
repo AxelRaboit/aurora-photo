@@ -7,5 +7,5 @@ namespace Aurora\Module\Photo\Enum;
 enum PhotoCacheDirEnum: string
 {
     case Watermarks = 'watermarks';
-    case Degraded   = 'degraded';
+    case Degraded = 'degraded';
 }
