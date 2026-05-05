@@ -8,7 +8,6 @@ use Aurora\Core\Module\ModuleInterface;
 use Aurora\Core\Module\NavItem;
 use Aurora\Core\Module\NavPermission;
 use Aurora\Core\Module\NavSection;
-use Aurora\Core\User\Enum\UserRoleEnum;
 use Aurora\Module\Photo\Service\PhotoContext;
 
 final readonly class PhotoModule implements ModuleInterface
@@ -23,10 +22,10 @@ final readonly class PhotoModule implements ModuleInterface
     public function getPermissions(): array
     {
         return [
-            new NavPermission('photo.galleries.view', UserRoleEnum::Editor->value),
-            new NavPermission('photo.galleries.create', UserRoleEnum::Editor->value),
-            new NavPermission('photo.galleries.edit', UserRoleEnum::Editor->value),
-            new NavPermission('photo.galleries.delete', UserRoleEnum::Admin->value),
+            new NavPermission('photo.galleries.view'),
+            new NavPermission('photo.galleries.create'),
+            new NavPermission('photo.galleries.edit'),
+            new NavPermission('photo.galleries.delete'),
         ];
     }
 
@@ -38,7 +37,7 @@ final readonly class PhotoModule implements ModuleInterface
 
         return [
             new NavSection('photo', [
-                new NavItem('admin_galleries', 'admin.nav.galleries', 'images', UserRoleEnum::Editor->value),
+                new NavItem('admin_galleries', 'admin.nav.galleries', 'images'),
             ], priority: 70),
         ];
     }
