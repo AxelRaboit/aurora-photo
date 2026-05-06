@@ -41,7 +41,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/admin/galleries', name: 'admin_galleries')]
+#[Route('/backend/galleries', name: 'admin_galleries')]
 #[IsGranted('photo.galleries.view')]
 final class GalleriesController extends AbstractController
 {
