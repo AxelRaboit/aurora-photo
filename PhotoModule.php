@@ -37,7 +37,7 @@ final readonly class PhotoModule implements ModuleInterface
 
         return [
             new NavSection('photo', [
-                new NavItem('backend_galleries', 'admin.nav.galleries', 'images'),
+                new NavItem('backend_galleries', 'backend.nav.galleries', 'images'),
             ], priority: 70),
         ];
     }
