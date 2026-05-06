@@ -74,7 +74,7 @@ final readonly class GalleryNotificationService
             [
                 'gallery' => $gallery,
                 'visitorName' => $visitorName,
-                'galleryUrl' => $this->urlGenerator->generate('front_gallery', ['slug' => $gallery->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'galleryUrl' => $this->urlGenerator->generate('frontend_gallery', ['slug' => $gallery->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL),
             ],
             subjectParams: ['{title}' => $gallery->getTitle()],
         );

@@ -82,7 +82,7 @@ final readonly class GalleryAdminViewBuilder
             'itemsDeletePath' => $this->urlGenerator->generate('backend_galleries_items_delete', ['id' => $id, 'itemId' => '__id__']),
             'itemsBulkDeletePath' => $this->urlGenerator->generate('backend_galleries_items_bulk_delete', ['id' => $id]),
             'commentDeletePath' => $this->urlGenerator->generate('backend_galleries_comments_delete', ['id' => $id, 'commentId' => '__id__']),
-            'previewPath' => $this->urlGenerator->generate('front_gallery', ['slug' => $gallery->getSlug()]),
+            'previewPath' => $this->urlGenerator->generate('frontend_gallery', ['slug' => $gallery->getSlug()]),
         ];
     }
 }

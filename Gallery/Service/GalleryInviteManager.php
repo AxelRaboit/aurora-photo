@@ -51,7 +51,7 @@ final readonly class GalleryInviteManager
 
     public function send(GalleryInvite $invite): void
     {
-        $magicUrl = $this->urlGenerator->generate('front_gallery_invite_redeem', [
+        $magicUrl = $this->urlGenerator->generate('frontend_gallery_invite_redeem', [
             'slug' => $invite->getGallery()->getSlug(),
             'token' => $invite->getToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);

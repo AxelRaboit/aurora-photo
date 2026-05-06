@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/g/{slug}', name: 'front_gallery', requirements: ['slug' => '[a-z0-9-]+'])]
+#[Route('/g/{slug}', name: 'frontend_gallery', requirements: ['slug' => '[a-z0-9-]+'])]
 final class GalleryController extends AbstractController
 {
     use JsonRequestTrait;
@@ -69,7 +69,7 @@ final class GalleryController extends AbstractController
         $cookie = $this->accessService->unlockForInvite($invite);
         $this->inviteManager->markSeen($invite);
 
-        $response = $this->redirectToRoute('front_gallery', ['slug' => $slug]);
+        $response = $this->redirectToRoute('frontend_gallery', ['slug' => $slug]);
         $response->headers->setCookie($cookie);
 
         return $response;
@@ -117,7 +117,7 @@ final class GalleryController extends AbstractController
             return $this->jsonFailure('photo.frontend.unlock.invalid', Response::HTTP_UNAUTHORIZED);
         }
 
-        $response = $this->jsonSuccess(['redirectUrl' => $this->generateUrl('front_gallery', ['slug' => $slug])]);
+        $response = $this->jsonSuccess(['redirectUrl' => $this->generateUrl('frontend_gallery', ['slug' => $slug])]);
         $response->headers->setCookie($cookie);
 
         return $response;

@@ -20,7 +20,7 @@ final readonly class PhotoRouteGateSubscriber implements EventSubscriberInterfac
 {
     private const string ADMIN_PREFIX = 'backend_galleries';
 
-    private const string FRONT_PREFIX = 'front_gallery';
+    private const string FRONT_PREFIX = 'frontend_gallery';
 
     public function __construct(private PhotoContext $photoContext) {}
 

@@ -31,7 +31,7 @@ final readonly class GalleryFrontViewBuilder
     {
         return [
             'gallery' => $gallery,
-            'unlockPath' => $this->urlGenerator->generate('front_gallery_unlock', ['slug' => $gallery->getSlug()]),
+            'unlockPath' => $this->urlGenerator->generate('frontend_gallery_unlock', ['slug' => $gallery->getSlug()]),
         ];
     }
 
@@ -54,12 +54,12 @@ final readonly class GalleryFrontViewBuilder
             // visitor sees their own finalize state and gets a share URL.
             'finalizedByVisitor' => $readOnly || $this->pickService->isFinalizedBy($gallery, $visitorToken),
             'readOnly' => $readOnly,
-            'pickPath' => $readOnly ? '' : $this->urlGenerator->generate('front_gallery_pick', ['slug' => $slug, 'itemId' => '__id__']),
-            'commentPath' => $readOnly ? '' : $this->urlGenerator->generate('front_gallery_comment', ['slug' => $slug, 'itemId' => '__id__']),
-            'finalizePath' => $readOnly ? '' : $this->urlGenerator->generate('front_gallery_finalize', ['slug' => $slug]),
-            'downloadItemPath' => $readOnly ? '' : $this->urlGenerator->generate('front_gallery_download_item', ['slug' => $slug, 'itemId' => '__id__']),
-            'downloadZipPath' => $readOnly ? '' : $this->urlGenerator->generate('front_gallery_download_zip', ['slug' => $slug]),
-            'sharePath' => $readOnly ? null : $this->urlGenerator->generate('front_gallery_shared', [
+            'pickPath' => $readOnly ? '' : $this->urlGenerator->generate('frontend_gallery_pick', ['slug' => $slug, 'itemId' => '__id__']),
+            'commentPath' => $readOnly ? '' : $this->urlGenerator->generate('frontend_gallery_comment', ['slug' => $slug, 'itemId' => '__id__']),
+            'finalizePath' => $readOnly ? '' : $this->urlGenerator->generate('frontend_gallery_finalize', ['slug' => $slug]),
+            'downloadItemPath' => $readOnly ? '' : $this->urlGenerator->generate('frontend_gallery_download_item', ['slug' => $slug, 'itemId' => '__id__']),
+            'downloadZipPath' => $readOnly ? '' : $this->urlGenerator->generate('frontend_gallery_download_zip', ['slug' => $slug]),
+            'sharePath' => $readOnly ? null : $this->urlGenerator->generate('frontend_gallery_shared', [
                 'slug' => $slug,
                 'visitorToken' => $visitorToken,
                 'signature' => $this->accessService->computeShareSignature($gallery, $visitorToken),
