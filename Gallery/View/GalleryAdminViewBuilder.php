@@ -35,13 +35,13 @@ final readonly class GalleryAdminViewBuilder
         return [
             'galleries' => $this->gallerySerializer->serializeListPayload($this->galleryRepository->findPaginated($pagination->page, search: $pagination->search)),
             'search' => $pagination->search ?? '',
-            'createPath' => $this->urlGenerator->generate('admin_galleries_create'),
-            'updatePath' => $this->urlGenerator->generate('admin_galleries_update', ['id' => '__id__']),
-            'deletePath' => $this->urlGenerator->generate('admin_galleries_delete', ['id' => '__id__']),
-            'listPath' => $this->urlGenerator->generate('admin_galleries_list'),
-            'editPath' => $this->urlGenerator->generate('admin_galleries_edit', ['id' => '__id__']),
+            'createPath' => $this->urlGenerator->generate('backend_galleries_create'),
+            'updatePath' => $this->urlGenerator->generate('backend_galleries_update', ['id' => '__id__']),
+            'deletePath' => $this->urlGenerator->generate('backend_galleries_delete', ['id' => '__id__']),
+            'listPath' => $this->urlGenerator->generate('backend_galleries_list'),
+            'editPath' => $this->urlGenerator->generate('backend_galleries_edit', ['id' => '__id__']),
             'crmEnabled' => $crmEnabled,
-            'contactsSearchPath' => $crmEnabled ? $this->urlGenerator->generate('crm_contacts_list') : '',
+            'contactsSearchPath' => $crmEnabled ? $this->urlGenerator->generate('backend_crm_contacts_list') : '',
         ];
     }
 
@@ -69,19 +69,19 @@ final readonly class GalleryAdminViewBuilder
         $id = $gallery->getId();
 
         return [
-            'updatePath' => $this->urlGenerator->generate('admin_galleries_update', ['id' => $id]),
-            'reopenPath' => $this->urlGenerator->generate('admin_galleries_reopen', ['id' => $id]),
-            'finalizationDeletePath' => $this->urlGenerator->generate('admin_galleries_finalizations_delete', ['id' => $id, 'finalizationId' => '__id__']),
-            'invitesCreatePath' => $this->urlGenerator->generate('admin_galleries_invites_create', ['id' => $id]),
-            'invitesSendPath' => $this->urlGenerator->generate('admin_galleries_invites_send', ['id' => $id, 'inviteId' => '__id__']),
-            'invitesDeletePath' => $this->urlGenerator->generate('admin_galleries_invites_delete', ['id' => $id, 'inviteId' => '__id__']),
-            'exportPath' => $this->urlGenerator->generate('admin_galleries_export', ['id' => $id]),
-            'itemsAddPath' => $this->urlGenerator->generate('admin_galleries_items_add', ['id' => $id]),
-            'itemsReorderPath' => $this->urlGenerator->generate('admin_galleries_items_reorder', ['id' => $id]),
-            'itemsCaptionPath' => $this->urlGenerator->generate('admin_galleries_items_caption', ['id' => $id, 'itemId' => '__id__']),
-            'itemsDeletePath' => $this->urlGenerator->generate('admin_galleries_items_delete', ['id' => $id, 'itemId' => '__id__']),
-            'itemsBulkDeletePath' => $this->urlGenerator->generate('admin_galleries_items_bulk_delete', ['id' => $id]),
-            'commentDeletePath' => $this->urlGenerator->generate('admin_galleries_comments_delete', ['id' => $id, 'commentId' => '__id__']),
+            'updatePath' => $this->urlGenerator->generate('backend_galleries_update', ['id' => $id]),
+            'reopenPath' => $this->urlGenerator->generate('backend_galleries_reopen', ['id' => $id]),
+            'finalizationDeletePath' => $this->urlGenerator->generate('backend_galleries_finalizations_delete', ['id' => $id, 'finalizationId' => '__id__']),
+            'invitesCreatePath' => $this->urlGenerator->generate('backend_galleries_invites_create', ['id' => $id]),
+            'invitesSendPath' => $this->urlGenerator->generate('backend_galleries_invites_send', ['id' => $id, 'inviteId' => '__id__']),
+            'invitesDeletePath' => $this->urlGenerator->generate('backend_galleries_invites_delete', ['id' => $id, 'inviteId' => '__id__']),
+            'exportPath' => $this->urlGenerator->generate('backend_galleries_export', ['id' => $id]),
+            'itemsAddPath' => $this->urlGenerator->generate('backend_galleries_items_add', ['id' => $id]),
+            'itemsReorderPath' => $this->urlGenerator->generate('backend_galleries_items_reorder', ['id' => $id]),
+            'itemsCaptionPath' => $this->urlGenerator->generate('backend_galleries_items_caption', ['id' => $id, 'itemId' => '__id__']),
+            'itemsDeletePath' => $this->urlGenerator->generate('backend_galleries_items_delete', ['id' => $id, 'itemId' => '__id__']),
+            'itemsBulkDeletePath' => $this->urlGenerator->generate('backend_galleries_items_bulk_delete', ['id' => $id]),
+            'commentDeletePath' => $this->urlGenerator->generate('backend_galleries_comments_delete', ['id' => $id, 'commentId' => '__id__']),
             'previewPath' => $this->urlGenerator->generate('front_gallery', ['slug' => $gallery->getSlug()]),
         ];
     }

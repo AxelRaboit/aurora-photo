@@ -48,7 +48,7 @@ final readonly class GalleryNotificationService
                 'gallery' => $gallery,
                 'visitorPicks' => $visitorPicks,
                 'countsByKind' => $countsByKind,
-                'adminUrl' => $this->urlGenerator->generate('admin_galleries', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'adminUrl' => $this->urlGenerator->generate('backend_galleries', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'visitorName' => $visitorName,
                 'visitorEmail' => $visitorEmail,
             ],
@@ -93,7 +93,7 @@ final readonly class GalleryNotificationService
             [
                 'comment' => $comment,
                 'gallery' => $gallery,
-                'adminUrl' => $this->urlGenerator->generate('admin_galleries', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'adminUrl' => $this->urlGenerator->generate('backend_galleries', [], UrlGeneratorInterface::ABSOLUTE_URL),
             ],
             subjectParams: ['{title}' => $gallery->getTitle()],
         );

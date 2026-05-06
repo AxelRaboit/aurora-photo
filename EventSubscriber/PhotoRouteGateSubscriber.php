@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 final readonly class PhotoRouteGateSubscriber implements EventSubscriberInterface
 {
-    private const string ADMIN_PREFIX = 'admin_galleries';
+    private const string ADMIN_PREFIX = 'backend_galleries';
 
     private const string FRONT_PREFIX = 'front_gallery';
 

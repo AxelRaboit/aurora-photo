@@ -32,7 +32,7 @@ final readonly class PhotoMediaUsageProvider implements MediaUsageProviderInterf
                 'type' => 'gallery.cover',
                 'label' => $row['title'],
                 'detail' => $this->translator->trans('photo.galleries.fields.coverMedia'),
-                'href' => $this->safeUrl('admin_galleries_edit', ['id' => (int) $row['id']]),
+                'href' => $this->safeUrl('backend_galleries_edit', ['id' => (int) $row['id']]),
             ];
         }
 
@@ -50,7 +50,7 @@ final readonly class PhotoMediaUsageProvider implements MediaUsageProviderInterf
                 'type' => 'gallery.item',
                 'label' => $row['title'],
                 'detail' => $this->translator->trans('photo.galleries.usage.itemCount', ['count' => (int) $row['cnt']]),
-                'href' => $this->safeUrl('admin_galleries_edit', ['id' => (int) $row['id']]),
+                'href' => $this->safeUrl('backend_galleries_edit', ['id' => (int) $row['id']]),
             ];
         }
 
