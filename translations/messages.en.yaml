@@ -1,4 +1,4 @@
-admin:
+backend:
   modules:
     photo: Photo
   audit:
