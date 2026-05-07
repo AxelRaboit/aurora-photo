@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GalleryItemRepository::class)]
-#[ORM\Table(name: 'photo_gallery_items')]
+#[ORM\Table(name: 'core_photo_gallery_items')]
 #[ORM\UniqueConstraint(name: 'uniq_gallery_media', columns: ['gallery_id', 'media_id'])]
 #[ORM\UniqueConstraint(name: 'uniq_gallery_number', columns: ['gallery_id', 'number'])]
 #[ORM\Index(name: 'idx_gallery_position', columns: ['gallery_id', 'position'])]

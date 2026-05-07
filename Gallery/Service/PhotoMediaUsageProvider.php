@@ -24,7 +24,7 @@ final readonly class PhotoMediaUsageProvider implements MediaUsageProviderInterf
 
         // Cover images.
         $covers = $this->connection->fetchAllAssociative(
-            'SELECT id, title FROM photo_galleries WHERE cover_media_id = :id',
+            'SELECT id, title FROM core_photo_galleries WHERE cover_media_id = :id',
             ['id' => $mediaId],
         );
         foreach ($covers as $row) {
@@ -39,7 +39,7 @@ final readonly class PhotoMediaUsageProvider implements MediaUsageProviderInterf
         // Items inside galleries (one entry per gallery, with the photo count).
         $items = $this->connection->fetchAllAssociative(
             'SELECT g.id, g.title, COUNT(i.id) AS cnt
-             FROM photo_gallery_items i
+             FROM core_photo_gallery_items i
              INNER JOIN photo_galleries g ON g.id = i.gallery_id
              WHERE i.media_id = :id
              GROUP BY g.id, g.title',

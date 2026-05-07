@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * admin gallery editor so the photographer sees per-photo notes alongside picks.
  */
 #[ORM\Entity(repositoryClass: GalleryItemCommentRepository::class)]
-#[ORM\Table(name: 'photo_gallery_item_comments')]
+#[ORM\Table(name: 'core_photo_gallery_item_comments')]
 #[ORM\Index(name: 'idx_comment_item', columns: ['gallery_item_id'])]
 #[ORM\Index(name: 'idx_comment_token', columns: ['visitor_token'])]
 class GalleryItemComment

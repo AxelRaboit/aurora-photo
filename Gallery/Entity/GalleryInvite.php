@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * actually viewed the gallery.
  */
 #[ORM\Entity(repositoryClass: GalleryInviteRepository::class)]
-#[ORM\Table(name: 'photo_gallery_invites')]
+#[ORM\Table(name: 'core_photo_gallery_invites')]
 #[ORM\UniqueConstraint(name: 'uniq_invite_token', columns: ['token'])]
 #[ORM\UniqueConstraint(name: 'uniq_invite_per_email', columns: ['gallery_id', 'email'])]
 #[ORM\Index(name: 'idx_invite_visitor_token', columns: ['visitor_token'])]

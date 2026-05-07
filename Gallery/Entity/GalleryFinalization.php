@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * separate global lock the photographer may set to close the gallery.
  */
 #[ORM\Entity(repositoryClass: GalleryFinalizationRepository::class)]
-#[ORM\Table(name: 'photo_gallery_finalizations')]
+#[ORM\Table(name: 'core_photo_gallery_finalizations')]
 #[ORM\UniqueConstraint(name: 'uniq_finalization_per_visitor', columns: ['gallery_id', 'visitor_token'])]
 #[ORM\Index(name: 'idx_finalization_token', columns: ['visitor_token'])]
 class GalleryFinalization

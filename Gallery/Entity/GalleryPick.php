@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * are populated only when the gallery requires identity for picks.
  */
 #[ORM\Entity(repositoryClass: GalleryPickRepository::class)]
-#[ORM\Table(name: 'photo_gallery_picks')]
+#[ORM\Table(name: 'core_photo_gallery_picks')]
 #[ORM\UniqueConstraint(name: 'uniq_pick_per_visitor', columns: ['gallery_item_id', 'visitor_token', 'kind'])]
 #[ORM\Index(name: 'idx_pick_token', columns: ['visitor_token'])]
 class GalleryPick

@@ -17,7 +17,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GalleryRepository::class)]
-#[ORM\Table(name: 'photo_galleries')]
+#[ORM\Table(name: 'core_photo_galleries')]
 #[ORM\HasLifecycleCallbacks]
 class Gallery
 {
