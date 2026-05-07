@@ -47,12 +47,22 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         $position = $this->itemRepository->nextPositionForGallery((int) $gallery->getId());
         $number = $this->itemRepository->nextNumberForGallery((int) $gallery->getId());
         $added = 0;
+
+        // Batch-fetch only the media we don't already have on the gallery.
+        $newMediaIds = array_values(array_filter($mediaIds, static fn (int $id): bool => !isset($existing[$id])));
+        $mediaById = [];
+        if ([] !== $newMediaIds) {
+            foreach ($this->mediaRepository->findBy(['id' => $newMediaIds]) as $media) {
+                $mediaById[(int) $media->getId()] = $media;
+            }
+        }
+
         foreach ($mediaIds as $mediaId) {
             if (isset($existing[$mediaId])) {
                 continue;
             }
 
-            $media = $this->mediaRepository->find($mediaId);
+            $media = $mediaById[$mediaId] ?? null;
             if (null === $media) {
                 continue;
             }
@@ -86,9 +96,15 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
             return;
         }
 
+        // Single batched query — index by id so the reorder loop is O(n).
+        $itemById = [];
+        foreach ($this->itemRepository->findBy(['id' => $orderedItemIds]) as $item) {
+            $itemById[(int) $item->getId()] = $item;
+        }
+
         $position = 0;
         foreach ($orderedItemIds as $itemId) {
-            $item = $this->itemRepository->find($itemId);
+            $item = $itemById[$itemId] ?? null;
             if ($item instanceof GalleryItem && $item->getGallery()->getId() === $gallery->getId()) {
                 $item->setPosition($position++);
             }
@@ -123,9 +139,8 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         }
 
         $deleted = 0;
-        foreach ($itemIds as $itemId) {
-            $item = $this->itemRepository->find($itemId);
-            if ($item instanceof GalleryItem && $item->getGallery()->getId() === $gallery->getId()) {
+        foreach ($this->itemRepository->findBy(['id' => $itemIds]) as $item) {
+            if ($item->getGallery()->getId() === $gallery->getId()) {
                 $this->entityManager->remove($item);
                 ++$deleted;
             }
