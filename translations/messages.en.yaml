@@ -1,4 +1,6 @@
 backend:
+  nav:
+    galleries_description: Photo galleries for your clients (selection, approval, delivery)
   modules:
     photo: Photo
   audit:
