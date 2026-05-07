@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\Controller\Admin;
+namespace Aurora\Module\Photo\Gallery\Controller\Backend;
 
 use Aurora\Core\Enum\HttpMethodEnum;
 use Aurora\Core\Frontend\Controller\JsonRequestTrait;
@@ -68,7 +68,7 @@ final class GalleriesController extends AbstractController
     #[Route('', name: '', methods: [HttpMethodEnum::Get->value])]
     public function index(PaginationRequest $pagination): Response
     {
-        return $this->render('@Photo/admin/galleries/index.html.twig', $this->viewBuilder->indexView($pagination));
+        return $this->render('@Photo/backend/galleries/index.html.twig', $this->viewBuilder->indexView($pagination));
     }
 
     #[Route('/list', name: '_list', methods: [HttpMethodEnum::Get->value])]
@@ -134,7 +134,7 @@ final class GalleriesController extends AbstractController
     {
         $gallery = $this->galleryRepository->findOneWithItemsAndMedia((int) $gallery->getId()) ?? $gallery;
 
-        return $this->render('@Photo/admin/galleries/edit.html.twig', $this->viewBuilder->editView($gallery));
+        return $this->render('@Photo/backend/galleries/edit.html.twig', $this->viewBuilder->editView($gallery));
     }
 
     #[Route('/{id}/reopen', name: '_reopen', methods: [HttpMethodEnum::Post->value])]
