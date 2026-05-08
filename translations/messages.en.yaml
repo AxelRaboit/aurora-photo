@@ -1,4 +1,12 @@
 backend:
+  permissions:
+    names:
+      photo:
+        galleries:
+          view: View galleries
+          create: Create galleries
+          edit: Edit galleries
+          delete: Delete galleries
   nav:
     galleries_description: Photo galleries for your clients (selection, approval, delivery)
   modules:
