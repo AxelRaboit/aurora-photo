@@ -89,7 +89,7 @@ final class GalleriesController extends AbstractController
         }
 
         if ([] !== $errors) {
-            return $this->jsonInvalidInput($errors, Response::HTTP_OK);
+            return $this->jsonInvalidInput($errors);
         }
 
         /** @var User $user */
@@ -111,7 +111,7 @@ final class GalleriesController extends AbstractController
         }
 
         if ([] !== $errors) {
-            return $this->jsonInvalidInput($errors, Response::HTTP_OK);
+            return $this->jsonInvalidInput($errors);
         }
 
         $this->galleryManager->update($gallery, $input);
