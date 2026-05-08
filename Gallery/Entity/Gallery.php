@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Core\Media\Entity\Media;
+use Aurora\Core\Media\Entity\MediaInterface;
 use Aurora\Core\Trait\TimestampableTrait;
 use Aurora\Core\User\Entity\User;
 use Aurora\Module\Crm\Contact\Entity\Contact;
@@ -47,9 +47,9 @@ class Gallery
     #[ORM\Column(name: 'password_hash', length: 255, nullable: true)]
     private ?string $passwordHash = null;
 
-    #[ORM\ManyToOne(targetEntity: Media::class)]
+    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private ?Media $coverMedia = null;
+    private ?MediaInterface $coverMedia = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $expiresAt = null;
@@ -185,12 +185,12 @@ class Gallery
         return null !== $this->passwordHash && '' !== $this->passwordHash;
     }
 
-    public function getCoverMedia(): ?Media
+    public function getCoverMedia(): ?MediaInterface
     {
         return $this->coverMedia;
     }
 
-    public function setCoverMedia(?Media $coverMedia): static
+    public function setCoverMedia(?MediaInterface $coverMedia): static
     {
         $this->coverMedia = $coverMedia;
 
