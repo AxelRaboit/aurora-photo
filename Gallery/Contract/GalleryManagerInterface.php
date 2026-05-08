@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Contract;
 
 use Aurora\Core\User\Entity\User;
-use Aurora\Module\Photo\Gallery\DTO\GalleryInput;
+use Aurora\Module\Photo\Gallery\Dto\GalleryInput;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 
 interface GalleryManagerInterface

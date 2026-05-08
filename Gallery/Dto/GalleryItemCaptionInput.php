@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\DTO;
+namespace Aurora\Module\Photo\Gallery\Dto;
 
 use Aurora\Core\Support\Str;
 use Symfony\Component\Validator\Constraints as Assert;

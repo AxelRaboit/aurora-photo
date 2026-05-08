@@ -13,7 +13,7 @@ use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Core\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Photo\Gallery\Contract\GalleryManagerInterface;
-use Aurora\Module\Photo\Gallery\DTO\GalleryInput;
+use Aurora\Module\Photo\Gallery\Dto\GalleryInput;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Service\GalleryWatermarkService;
 use Doctrine\ORM\EntityManagerInterface;

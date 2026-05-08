@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\DTO;
+namespace Aurora\Module\Photo\Gallery\Dto;
 
 use Aurora\Core\Support\Str;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final readonly class GalleryInviteInput
+final readonly class GalleryFinalizeInput
 {
     public function __construct(
         #[Assert\NotBlank(message: 'photo.galleries.errors.name_required')]

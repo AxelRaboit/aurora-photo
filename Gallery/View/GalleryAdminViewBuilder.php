@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\View;
 
-use Aurora\Core\Validation\DTO\PaginationRequest;
+use Aurora\Core\Validation\Dto\PaginationRequest;
 use Aurora\Module\Crm\Service\CrmContext;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
