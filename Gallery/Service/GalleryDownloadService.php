@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Core\Media\Entity\Media;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Core\Media\Entity\MediaInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use DomainException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Path;
@@ -32,8 +32,8 @@ final readonly class GalleryDownloadService
     ) {}
 
     public function singleItemResponse(
-        Gallery $gallery,
-        GalleryItem $item,
+        GalleryInterface $gallery,
+        GalleryItemInterface $item,
         string $variant,
         bool $degraded = false,
         ?string $visitorWatermark = null,
@@ -58,10 +58,10 @@ final readonly class GalleryDownloadService
      * in memory or on disk. Items are read sequentially from the upload dir
      * and pushed through the response output stream.
      *
-     * @param iterable<GalleryItem> $items
+     * @param iterable<GalleryItemInterface> $items
      */
     public function bulkZipResponse(
-        Gallery $gallery,
+        GalleryInterface $gallery,
         iterable $items,
         string $variant,
         bool $degraded = false,
@@ -113,7 +113,7 @@ final readonly class GalleryDownloadService
         return $response;
     }
 
-    private function resolvePath(Gallery $gallery, Media $media, string $variant): string
+    private function resolvePath(GalleryInterface $gallery, MediaInterface $media, string $variant): string
     {
         if ('original' === $variant) {
             if (!$gallery->isAllowOriginals()) {
@@ -131,7 +131,7 @@ final readonly class GalleryDownloadService
         return Path::join($this->uploadDir, $relative);
     }
 
-    private function niceName(Media $media, string $variant, bool $degraded = false): string
+    private function niceName(MediaInterface $media, string $variant, bool $degraded = false): string
     {
         $base = pathinfo($media->getOriginalName(), PATHINFO_FILENAME) ?: pathinfo($media->getPath(), PATHINFO_FILENAME);
         $ext = pathinfo($media->getPath(), PATHINFO_EXTENSION) ?: 'jpg';

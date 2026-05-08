@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Repository;
 
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Aurora\Core\Repository\Trait\PaginationTrait;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
-use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,7 +42,7 @@ class GalleryRepository extends ResolveTargetEntityRepository
         return $this->paginate($qb, $countQb, $page, $limit);
     }
 
-    public function findOneBySlug(string $slug): ?Gallery
+    public function findOneBySlug(string $slug): ?GalleryInterface
     {
         return $this->findOneBy(['slug' => $slug]);
     }

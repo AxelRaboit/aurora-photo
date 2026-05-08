@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Repository;
 
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
-use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**

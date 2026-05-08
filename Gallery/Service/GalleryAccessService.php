@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -30,7 +30,7 @@ final readonly class GalleryAccessService
 
     public function __construct(private string $appSecret) {}
 
-    public function cookieName(Gallery $gallery): string
+    public function cookieName(GalleryInterface $gallery): string
     {
         return self::COOKIE_PREFIX.$gallery->getId();
     }
@@ -38,7 +38,7 @@ final readonly class GalleryAccessService
     /**
      * @return string|null the visitor token if the cookie is present and valid, otherwise null
      */
-    public function readVisitorToken(Request $request, Gallery $gallery): ?string
+    public function readVisitorToken(Request $request, GalleryInterface $gallery): ?string
     {
         $raw = $request->cookies->get($this->cookieName($gallery));
         if (!is_string($raw) || '' === $raw) {
@@ -62,7 +62,7 @@ final readonly class GalleryAccessService
      * Verifies the gallery password (if any) and returns a Cookie that grants
      * access. Caller is responsible for adding it to the response.
      */
-    public function unlock(Gallery $gallery, ?string $password): ?Cookie
+    public function unlock(GalleryInterface $gallery, ?string $password): ?Cookie
     {
         if ($gallery->hasPassword()) {
             if (null === $password || '' === $password) {
@@ -92,7 +92,7 @@ final readonly class GalleryAccessService
     /**
      * True when the gallery is open OR the request carries a valid token.
      */
-    public function isUnlocked(Request $request, Gallery $gallery): bool
+    public function isUnlocked(Request $request, GalleryInterface $gallery): bool
     {
         if (!$gallery->hasPassword()) {
             return true;
@@ -109,7 +109,7 @@ final readonly class GalleryAccessService
      *
      * @return array{0: ?string, 1: ?Cookie} [visitorToken, cookieToSet]
      */
-    public function ensureVisitorToken(Request $request, Gallery $gallery): array
+    public function ensureVisitorToken(Request $request, GalleryInterface $gallery): array
     {
         $token = $this->readVisitorToken($request, $gallery);
         if (null !== $token) {
@@ -130,7 +130,7 @@ final readonly class GalleryAccessService
         return [$newToken, $cookie];
     }
 
-    private function computeHmac(Gallery $gallery, string $visitorToken): string
+    private function computeHmac(GalleryInterface $gallery, string $visitorToken): string
     {
         $payload = sprintf('%d:%s:%s', $gallery->getId(), $visitorToken, $gallery->getPasswordHash() ?? '');
 
@@ -171,14 +171,14 @@ final readonly class GalleryAccessService
      * signature ties the share to the gallery + the visitor token; rotating
      * the gallery password also invalidates outstanding share links.
      */
-    public function computeShareSignature(Gallery $gallery, string $visitorToken): string
+    public function computeShareSignature(GalleryInterface $gallery, string $visitorToken): string
     {
         $payload = sprintf('share:%d:%s:%s', $gallery->getId(), $visitorToken, $gallery->getPasswordHash() ?? '');
 
         return mb_substr(hash_hmac('sha256', $payload, $this->appSecret), 0, 32);
     }
 
-    public function verifyShareSignature(Gallery $gallery, string $visitorToken, string $signature): bool
+    public function verifyShareSignature(GalleryInterface $gallery, string $visitorToken, string $signature): bool
     {
         return hash_equals($this->computeShareSignature($gallery, $visitorToken), $signature);
     }

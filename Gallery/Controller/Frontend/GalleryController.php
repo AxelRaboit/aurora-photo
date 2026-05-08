@@ -15,6 +15,7 @@ use Aurora\Module\Photo\Gallery\Dto\GalleryPickInput;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
 use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
@@ -370,7 +371,7 @@ final class GalleryController extends AbstractController
     }
 
     /**
-     * @return list<GalleryItem>
+     * @return list<GalleryItemInterface>
      */
     private function visitorPickedItems(Gallery $gallery, Request $request): array
     {

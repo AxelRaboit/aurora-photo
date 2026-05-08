@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Repository;
 
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryPick;
 use Aurora\Module\Photo\Gallery\Entity\GalleryPickInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
-use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 

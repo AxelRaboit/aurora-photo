@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Repository;
 
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalizationInterface;
-use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,20 +20,20 @@ class GalleryFinalizationRepository extends ResolveTargetEntityRepository
         parent::__construct($registry, GalleryFinalization::class, GalleryFinalizationInterface::class);
     }
 
-    public function findOneByVisitor(int $galleryId, string $visitorToken): ?GalleryFinalization
+    public function findOneByVisitor(int $galleryId, string $visitorToken): ?GalleryFinalizationInterface
     {
         return $this->findOneBy(['gallery' => $galleryId, 'visitorToken' => $visitorToken]);
     }
 
-    public function findInGallery(int $finalizationId, int $galleryId): ?GalleryFinalization
+    public function findInGallery(int $finalizationId, int $galleryId): ?GalleryFinalizationInterface
     {
         $finalization = $this->find($finalizationId);
 
-        return $finalization instanceof GalleryFinalization && $finalization->getGallery()->getId() === $galleryId ? $finalization : null;
+        return $finalization instanceof GalleryFinalizationInterface && $finalization->getGallery()->getId() === $galleryId ? $finalization : null;
     }
 
     /**
-     * @return list<GalleryFinalization>
+     * @return list<GalleryFinalizationInterface>
      */
     public function findAllForGallery(int $galleryId): array
     {

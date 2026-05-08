@@ -12,6 +12,7 @@ use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryPick;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
 use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
@@ -177,7 +178,7 @@ final readonly class GalleryPickService
     }
 
     /**
-     * @return list<GalleryItem>
+     * @return list<GalleryItemInterface>
      */
     public function itemsPickedBy(Gallery $gallery, string $visitorToken, PickKindEnum $kind = PickKindEnum::Favorite): array
     {

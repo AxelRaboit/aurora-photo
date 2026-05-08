@@ -6,7 +6,7 @@ namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Media\Enum\StorageAreaEnum;
 use Aurora\Module\Photo\Enum\PhotoCacheDirEnum;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use GdImage;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
@@ -40,7 +40,7 @@ class GalleryWatermarkService
      * Returns the absolute path to the watermarked cached version, or the
      * source itself if no watermark applies and no visitor watermark is set.
      */
-    public function applyOrPassthrough(Gallery $gallery, string $absoluteSourcePath, ?string $visitorWatermark = null): string
+    public function applyOrPassthrough(GalleryInterface $gallery, string $absoluteSourcePath, ?string $visitorWatermark = null): string
     {
         $visitor = null !== $visitorWatermark ? mb_trim($visitorWatermark) : '';
         $hasGalleryMark = $gallery->hasActiveWatermark();
@@ -71,7 +71,7 @@ class GalleryWatermarkService
      * Wipes the on-disk cache for a gallery. Call after watermark settings
      * change so old renders aren't served.
      */
-    public function clearCacheForGallery(Gallery $gallery): void
+    public function clearCacheForGallery(GalleryInterface $gallery): void
     {
         // Filesystem::remove() walks recursively and is a no-op when missing.
         $this->filesystem->remove($this->galleryCacheDir($gallery));
@@ -244,14 +244,14 @@ class GalleryWatermarkService
         return Path::join($this->uploadDir, StorageAreaEnum::Photo->value, PhotoCacheDirEnum::Degraded->value, $shard, sprintf('%s.%s', $hash, $ext));
     }
 
-    private function cachedPath(Gallery $gallery, string $sourcePath, string $visitorWatermark = ''): string
+    private function cachedPath(GalleryInterface $gallery, string $sourcePath, string $visitorWatermark = ''): string
     {
         $visitorShard = '' === $visitorWatermark ? '_anon' : mb_substr(sha1($visitorWatermark), 0, 8);
 
         return Path::join($this->galleryCacheDir($gallery), $visitorShard, basename($sourcePath));
     }
 
-    private function galleryCacheDir(Gallery $gallery): string
+    private function galleryCacheDir(GalleryInterface $gallery): string
     {
         $hash = mb_substr(sha1((string) $gallery->getWatermarkText()), 0, 8);
 

@@ -12,8 +12,6 @@ use Aurora\Core\User\Entity\User;
 use Aurora\Core\Validation\Dto\PaginationRequest;
 use Aurora\Core\Validation\Service\PayloadValidator;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputFactoryInterface;
-use Aurora\Module\Photo\Gallery\Manager\GalleryItemManagerInterface;
-use Aurora\Module\Photo\Gallery\Manager\GalleryManagerInterface;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInviteInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemAddInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemBulkDeleteInput;
@@ -24,6 +22,8 @@ use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
+use Aurora\Module\Photo\Gallery\Manager\GalleryItemManagerInterface;
+use Aurora\Module\Photo\Gallery\Manager\GalleryManagerInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
@@ -86,7 +86,7 @@ final class GalleriesController extends AbstractController
         $input = $this->galleryInputFactory->fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
 
-        if ([] === $errors && $this->galleryRepository->isSlugTaken($input->slug)) {
+        if ([] === $errors && $this->galleryRepository->isSlugTaken($input->getSlug())) {
             $errors['slug'] = 'photo.galleries.errors.slug_taken';
         }
 
@@ -108,7 +108,7 @@ final class GalleriesController extends AbstractController
         $input = $this->galleryInputFactory->fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
 
-        if ([] === $errors && $this->galleryRepository->isSlugTaken($input->slug, $gallery->getId())) {
+        if ([] === $errors && $this->galleryRepository->isSlugTaken($input->getSlug(), $gallery->getId())) {
             $errors['slug'] = 'photo.galleries.errors.slug_taken';
         }
 
