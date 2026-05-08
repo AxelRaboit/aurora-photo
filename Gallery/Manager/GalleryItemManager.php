@@ -10,28 +10,28 @@ use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Core\Sequence\SequencePrefixEnum;
 use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
-use Aurora\Module\Photo\Gallery\Contract\GalleryItemManagerInterface;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemRepository;
 use Aurora\Module\Photo\Gallery\Service\ExifReader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(GalleryItemManagerInterface::class)]
-final readonly class GalleryItemManager implements GalleryItemManagerInterface
+class GalleryItemManager implements GalleryItemManagerInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private GalleryItemRepository $itemRepository,
-        private MediaRepository $mediaRepository,
-        private AuditLogger $auditLogger,
-        private ExifReader $exifReader,
-        private SequenceGenerator $sequenceGenerator,
-        private SettingRepository $settingRepository,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly GalleryItemRepository $itemRepository,
+        protected readonly MediaRepository $mediaRepository,
+        protected readonly AuditLogger $auditLogger,
+        protected readonly ExifReader $exifReader,
+        protected readonly SequenceGenerator $sequenceGenerator,
+        protected readonly SettingRepository $settingRepository,
     ) {}
 
-    public function addItems(Gallery $gallery, array $mediaIds): int
+    public function addItems(GalleryInterface $gallery, array $mediaIds): int
     {
         $mediaIds = array_values(array_filter($mediaIds, static fn (int $id): bool => $id > 0));
         if ([] === $mediaIds) {
@@ -67,7 +67,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
                 continue;
             }
 
-            $item = new GalleryItem();
+            $item = $this->createGalleryItem();
             $item->setGallery($gallery);
             $item->setMedia($media);
             $item->setPosition($position++);
@@ -89,7 +89,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         return $added;
     }
 
-    public function reorder(Gallery $gallery, array $orderedItemIds): void
+    public function reorder(GalleryInterface $gallery, array $orderedItemIds): void
     {
         $orderedItemIds = array_values(array_filter($orderedItemIds, static fn (int $id): bool => $id > 0));
         if ([] === $orderedItemIds) {
@@ -105,7 +105,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         $position = 0;
         foreach ($orderedItemIds as $itemId) {
             $item = $itemById[$itemId] ?? null;
-            if ($item instanceof GalleryItem && $item->getGallery()->getId() === $gallery->getId()) {
+            if ($item instanceof GalleryItemInterface && $item->getGallery()->getId() === $gallery->getId()) {
                 $item->setPosition($position++);
             }
         }
@@ -113,14 +113,14 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         $this->entityManager->flush();
     }
 
-    public function updateCaption(GalleryItem $item, ?string $caption): void
+    public function updateCaption(GalleryItemInterface $item, ?string $caption): void
     {
         $caption = null !== $caption ? mb_trim($caption) : null;
         $item->setCaption('' !== $caption ? $caption : null);
         $this->entityManager->flush();
     }
 
-    public function delete(GalleryItem $item): void
+    public function delete(GalleryItemInterface $item): void
     {
         $galleryId = $item->getGallery()->getId();
         $itemId = $item->getId();
@@ -131,7 +131,7 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         $this->auditLogger->log('photo', 'gallery.items.deleted', 'GalleryItem', $itemId, ['galleryId' => $galleryId]);
     }
 
-    public function bulkDelete(Gallery $gallery, array $itemIds): int
+    public function bulkDelete(GalleryInterface $gallery, array $itemIds): int
     {
         $itemIds = array_values(array_filter($itemIds, static fn (int $id): bool => $id > 0));
         if ([] === $itemIds) {
@@ -152,5 +152,10 @@ final readonly class GalleryItemManager implements GalleryItemManagerInterface
         }
 
         return $deleted;
+    }
+
+    protected function createGalleryItem(): GalleryItemInterface
+    {
+        return new GalleryItem();
     }
 }

@@ -20,7 +20,7 @@ use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
-use Aurora\Module\Photo\Gallery\Serializer\GallerySerializer;
+use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryDownloadService;
@@ -54,7 +54,7 @@ final class GalleryController extends AbstractController
         private readonly PayloadValidator $payloadValidator,
         private readonly GalleryInviteRepository $inviteRepository,
         private readonly GalleryInviteManager $inviteManager,
-        private readonly GallerySerializer $gallerySerializer,
+        private readonly GallerySerializerInterface $gallerySerializer,
         private readonly GalleryFrontViewBuilder $viewBuilder,
     ) {}
 

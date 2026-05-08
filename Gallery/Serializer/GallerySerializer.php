@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Serializer;
 
-use Aurora\Module\Crm\Contact\Entity\Contact;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
+use Aurora\Module\Crm\Contact\Entity\ContactInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
 use DateTimeInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
-final readonly class GallerySerializer
+#[AsAlias(GallerySerializerInterface::class)]
+class GallerySerializer implements GallerySerializerInterface
 {
     public function __construct(
-        private GalleryPickRepository $pickRepository,
-        private GalleryItemCommentRepository $commentRepository,
-        private GalleryFinalizationRepository $finalizationRepository,
-        private GalleryInviteRepository $inviteRepository,
+        protected readonly GalleryPickRepository $pickRepository,
+        protected readonly GalleryItemCommentRepository $commentRepository,
+        protected readonly GalleryFinalizationRepository $finalizationRepository,
+        protected readonly GalleryInviteRepository $inviteRepository,
     ) {}
 
     /**
      * @return list<array<string, mixed>>
      */
-    public function serializeInvites(Gallery $gallery): array
+    public function serializeInvites(GalleryInterface $gallery): array
     {
         $invites = $this->inviteRepository->findAllForGallery((int) $gallery->getId());
         if ([] === $invites) {
@@ -51,7 +53,7 @@ final readonly class GallerySerializer
     }
 
     /** @return array<string, mixed> */
-    public function serialize(Gallery $gallery): array
+    public function serialize(GalleryInterface $gallery): array
     {
         return [
             'id' => $gallery->getId(),
@@ -69,7 +71,7 @@ final readonly class GallerySerializer
             'allowVisitorComments' => $gallery->isAllowVisitorComments(),
             'watermarkEnabled' => $gallery->isWatermarkEnabled(),
             'watermarkText' => $gallery->getWatermarkText(),
-            'client' => $gallery->getClientContact() instanceof Contact ? [
+            'client' => $gallery->getClientContact() instanceof ContactInterface ? [
                 'id' => $gallery->getClientContact()->getId(),
                 'name' => $gallery->getClientContact()->getFullName(),
                 'email' => $gallery->getClientContact()->getEmail(),
@@ -85,7 +87,7 @@ final readonly class GallerySerializer
     }
 
     /** @return list<array<string, mixed>> */
-    public function serializeItems(Gallery $gallery): array
+    public function serializeItems(GalleryInterface $gallery): array
     {
         $items = [];
         foreach ($gallery->getItems() as $item) {
@@ -116,7 +118,7 @@ final readonly class GallerySerializer
      *   consensusByItemId: array<int, array<string, int>>
      * }
      */
-    public function serializePickStats(Gallery $gallery): array
+    public function serializePickStats(GalleryInterface $gallery): array
     {
         $picks = $this->pickRepository->findAllForGallery((int) $gallery->getId());
 
@@ -156,7 +158,7 @@ final readonly class GallerySerializer
     /**
      * @return list<array<string, mixed>>
      */
-    public function serializeComments(Gallery $gallery): array
+    public function serializeComments(GalleryInterface $gallery): array
     {
         $comments = $this->commentRepository->findAllForGallery((int) $gallery->getId());
 
@@ -166,7 +168,7 @@ final readonly class GallerySerializer
     /**
      * @return array<string, mixed>
      */
-    public function serializeComment(GalleryItemComment $comment): array
+    public function serializeComment(GalleryItemCommentInterface $comment): array
     {
         return [
             'id' => $comment->getId(),
@@ -181,7 +183,7 @@ final readonly class GallerySerializer
     /**
      * @return list<array<string, mixed>>
      */
-    public function serializeFinalizations(Gallery $gallery): array
+    public function serializeFinalizations(GalleryInterface $gallery): array
     {
         $finalizations = $this->finalizationRepository->findAllForGallery((int) $gallery->getId());
         if ([] === $finalizations) {
@@ -230,7 +232,7 @@ final readonly class GallerySerializer
     }
 
     /**
-     * @param array{items: list<Gallery>, total: int, page: int, totalPages: int} $paginated
+     * @param array{items: list<GalleryInterface>, total: int, page: int, totalPages: int} $paginated
      *
      * @return array<string, mixed>
      */

@@ -8,7 +8,7 @@ use Aurora\Core\Validation\Dto\PaginationRequest;
 use Aurora\Module\Crm\Service\CrmContext;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
-use Aurora\Module\Photo\Gallery\Serializer\GallerySerializer;
+use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 final readonly class GalleryAdminViewBuilder
 {
     public function __construct(
-        private GallerySerializer $gallerySerializer,
+        private GallerySerializerInterface $gallerySerializer,
         private GalleryRepository $galleryRepository,
         private CrmContext $crmContext,
         private UrlGeneratorInterface $urlGenerator,

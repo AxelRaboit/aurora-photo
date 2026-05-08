@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\View;
 
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Serializer\GallerySerializer;
+use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 final readonly class GalleryFrontViewBuilder
 {
     public function __construct(
-        private GallerySerializer $gallerySerializer,
+        private GallerySerializerInterface $gallerySerializer,
         private GalleryPickService $pickService,
         private GalleryAccessService $accessService,
         private UrlGeneratorInterface $urlGenerator,

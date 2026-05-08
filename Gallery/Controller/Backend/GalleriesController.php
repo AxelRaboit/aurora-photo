@@ -11,9 +11,9 @@ use Aurora\Core\Frontend\Controller\JsonResponseTrait;
 use Aurora\Core\User\Entity\User;
 use Aurora\Core\Validation\Dto\PaginationRequest;
 use Aurora\Core\Validation\Service\PayloadValidator;
-use Aurora\Module\Photo\Gallery\Contract\GalleryItemManagerInterface;
-use Aurora\Module\Photo\Gallery\Contract\GalleryManagerInterface;
-use Aurora\Module\Photo\Gallery\Dto\GalleryInput;
+use Aurora\Module\Photo\Gallery\Dto\GalleryInputFactoryInterface;
+use Aurora\Module\Photo\Gallery\Manager\GalleryItemManagerInterface;
+use Aurora\Module\Photo\Gallery\Manager\GalleryManagerInterface;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInviteInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemAddInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemBulkDeleteInput;
@@ -29,7 +29,7 @@ use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
-use Aurora\Module\Photo\Gallery\Serializer\GallerySerializer;
+use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryExportService;
 use Aurora\Module\Photo\Gallery\Service\GalleryInviteManager;
@@ -52,7 +52,7 @@ final class GalleriesController extends AbstractController
     public function __construct(
         private readonly GalleryRepository $galleryRepository,
         private readonly GalleryItemRepository $itemRepository,
-        private readonly GallerySerializer $gallerySerializer,
+        private readonly GallerySerializerInterface $gallerySerializer,
         private readonly GalleryManagerInterface $galleryManager,
         private readonly GalleryItemManagerInterface $itemManager,
         private readonly PayloadValidator $payloadValidator,
@@ -64,6 +64,7 @@ final class GalleriesController extends AbstractController
         private readonly GalleryInviteRepository $inviteRepository,
         private readonly GalleryInviteManager $inviteManager,
         private readonly GalleryAdminViewBuilder $viewBuilder,
+        private readonly GalleryInputFactoryInterface $galleryInputFactory,
     ) {}
 
     #[Route('', name: '', methods: [HttpMethodEnum::Get->value])]
@@ -82,7 +83,7 @@ final class GalleriesController extends AbstractController
     #[IsGranted('photo.galleries.create')]
     public function create(Request $request): JsonResponse
     {
-        $input = GalleryInput::fromArray($this->decodeJson($request));
+        $input = $this->galleryInputFactory->fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
 
         if ([] === $errors && $this->galleryRepository->isSlugTaken($input->slug)) {
@@ -104,7 +105,7 @@ final class GalleriesController extends AbstractController
     #[IsGranted('photo.galleries.edit')]
     public function update(Gallery $gallery, Request $request): JsonResponse
     {
-        $input = GalleryInput::fromArray($this->decodeJson($request));
+        $input = $this->galleryInputFactory->fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
 
         if ([] === $errors && $this->galleryRepository->isSlugTaken($input->slug, $gallery->getId())) {

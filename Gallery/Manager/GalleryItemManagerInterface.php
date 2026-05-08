@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\Contract;
+namespace Aurora\Module\Photo\Gallery\Manager;
 
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 
 interface GalleryItemManagerInterface
 {
@@ -16,7 +16,7 @@ interface GalleryItemManagerInterface
      *
      * @return int number of items effectively added
      */
-    public function addItems(Gallery $gallery, array $mediaIds): int;
+    public function addItems(GalleryInterface $gallery, array $mediaIds): int;
 
     /**
      * Reorders the gallery's items in the order of the provided ids.
@@ -24,16 +24,16 @@ interface GalleryItemManagerInterface
      *
      * @param list<int> $orderedItemIds
      */
-    public function reorder(Gallery $gallery, array $orderedItemIds): void;
+    public function reorder(GalleryInterface $gallery, array $orderedItemIds): void;
 
-    public function updateCaption(GalleryItem $item, ?string $caption): void;
+    public function updateCaption(GalleryItemInterface $item, ?string $caption): void;
 
-    public function delete(GalleryItem $item): void;
+    public function delete(GalleryItemInterface $item): void;
 
     /**
      * @param list<int> $itemIds
      *
      * @return int number of items effectively deleted
      */
-    public function bulkDelete(Gallery $gallery, array $itemIds): int;
+    public function bulkDelete(GalleryInterface $gallery, array $itemIds): int;
 }
