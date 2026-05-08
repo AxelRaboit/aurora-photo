@@ -7,7 +7,7 @@ namespace Aurora\Module\Photo\Gallery\Entity;
 use Aurora\Core\Media\Entity\MediaInterface;
 use Aurora\Core\Trait\TimestampableTrait;
 use Aurora\Core\User\Entity\User;
-use Aurora\Module\Crm\Contact\Entity\Contact;
+use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -113,9 +113,9 @@ class Gallery
      * survives if the contact is deleted (FK nullable + ON DELETE SET NULL),
      * and works fine even when the CRM module is disabled.
      */
-    #[ORM\ManyToOne(targetEntity: Contact::class)]
+    #[ORM\ManyToOne(targetEntity: ContactInterface::class)]
     #[ORM\JoinColumn(name: 'client_contact_id', nullable: true, onDelete: 'SET NULL')]
-    private ?Contact $clientContact = null;
+    private ?ContactInterface $clientContact = null;
 
     /** @var Collection<int, GalleryItem> */
     #[ORM\OneToMany(targetEntity: GalleryItem::class, mappedBy: 'gallery', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -360,12 +360,12 @@ class Gallery
         return $this;
     }
 
-    public function getClientContact(): ?Contact
+    public function getClientContact(): ?ContactInterface
     {
         return $this->clientContact;
     }
 
-    public function setClientContact(?Contact $clientContact): static
+    public function setClientContact(?ContactInterface $clientContact): static
     {
         $this->clientContact = $clientContact;
 
