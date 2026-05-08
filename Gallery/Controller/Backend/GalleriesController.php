@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Controller\Backend;
 
 use Aurora\Core\Enum\HttpMethodEnum;
+use Aurora\Core\Enum\HttpStatusEnum;
 use Aurora\Core\Frontend\Controller\JsonRequestTrait;
 use Aurora\Core\Frontend\Controller\JsonResponseTrait;
 use Aurora\Core\User\Entity\User;
@@ -158,7 +159,7 @@ final class GalleriesController extends AbstractController
 
         $existing = $this->inviteRepository->findOneByGalleryAndEmail((int) $gallery->getId(), $input->email);
         if ($existing instanceof GalleryInvite) {
-            return $this->jsonInvalidInput(['email' => 'photo.galleries.errors.invite_email_taken'], Response::HTTP_CONFLICT);
+            return $this->jsonInvalidInput(['email' => 'photo.galleries.errors.invite_email_taken'], HttpStatusEnum::Conflict->value);
         }
 
         $this->inviteManager->create($gallery, $input->name, $input->email);
@@ -172,7 +173,7 @@ final class GalleriesController extends AbstractController
     {
         $invite = $this->inviteRepository->findInGallery($inviteId, (int) $gallery->getId());
         if (!$invite instanceof GalleryInvite) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $this->inviteManager->send($invite);
@@ -186,7 +187,7 @@ final class GalleriesController extends AbstractController
     {
         $invite = $this->inviteRepository->findInGallery($inviteId, (int) $gallery->getId());
         if (!$invite instanceof GalleryInvite) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $this->inviteManager->delete($invite);
@@ -200,7 +201,7 @@ final class GalleriesController extends AbstractController
     {
         $finalization = $this->finalizationRepository->findInGallery($finalizationId, (int) $gallery->getId());
         if (!$finalization instanceof GalleryFinalization) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $this->pickService->reopenFor($gallery, $finalization->getVisitorToken());
@@ -260,7 +261,7 @@ final class GalleriesController extends AbstractController
     {
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
         if (!$item instanceof GalleryItem) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $input = GalleryItemCaptionInput::fromArray($this->decodeJson($request));
@@ -280,7 +281,7 @@ final class GalleriesController extends AbstractController
     {
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
         if (!$item instanceof GalleryItem) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $this->itemManager->delete($item);
@@ -309,7 +310,7 @@ final class GalleriesController extends AbstractController
     {
         $comment = $this->commentRepository->findInGallery($commentId, (int) $gallery->getId());
         if (!$comment instanceof GalleryItemComment) {
-            return $this->jsonFailure('not_found', Response::HTTP_NOT_FOUND);
+            return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
         $this->commentService->delete($comment);

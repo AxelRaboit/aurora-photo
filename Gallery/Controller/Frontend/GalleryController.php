@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Controller\Frontend;
 
 use Aurora\Core\Enum\HttpMethodEnum;
+use Aurora\Core\Enum\HttpStatusEnum;
 use Aurora\Core\Frontend\Controller\JsonRequestTrait;
 use Aurora\Core\Frontend\Controller\JsonResponseTrait;
 use Aurora\Core\Validation\Service\PayloadValidator;
@@ -114,7 +115,7 @@ final class GalleryController extends AbstractController
 
         $cookie = $this->accessService->unlock($gallery, $password);
         if (!$cookie instanceof Cookie) {
-            return $this->jsonFailure('photo.frontend.unlock.invalid', Response::HTTP_UNAUTHORIZED);
+            return $this->jsonFailure('photo.frontend.unlock.invalid', HttpStatusEnum::Unauthorized->value);
         }
 
         $response = $this->jsonSuccess(['redirectUrl' => $this->generateUrl('frontend_gallery', ['slug' => $slug])]);
@@ -138,7 +139,7 @@ final class GalleryController extends AbstractController
         }
 
         if ($gallery->isFinalized() || $this->pickService->isFinalizedBy($gallery, $token)) {
-            return $this->jsonFailure('finalized', Response::HTTP_CONFLICT);
+            return $this->jsonFailure('finalized', HttpStatusEnum::Conflict->value);
         }
 
         $input = GalleryPickInput::fromArray($this->decodeJson($request));
@@ -148,13 +149,13 @@ final class GalleryController extends AbstractController
         }
 
         if ($gallery->isPicksRequireIdentity() && !$this->pickService->visitorHasIdentity($token, $input->visitorName, $input->visitorEmail)) {
-            return $this->jsonFailure('identity_required', Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->jsonFailure('identity_required', HttpStatusEnum::UnprocessableEntity->value);
         }
 
         try {
             $picked = $this->pickService->toggle($item, $token, $input->visitorName, $input->visitorEmail, $input->kind);
         } catch (MaxPicksReachedException $maxPicksReachedException) {
-            return $this->jsonFailure('max_picks_reached', Response::HTTP_CONFLICT, ['limit' => $maxPicksReachedException->limit]);
+            return $this->jsonFailure('max_picks_reached', HttpStatusEnum::Conflict->value, ['limit' => $maxPicksReachedException->limit]);
         }
 
         return $this->jsonSuccess([
@@ -178,7 +179,7 @@ final class GalleryController extends AbstractController
         }
 
         if ($gallery->isFinalized() || $this->pickService->isFinalizedBy($gallery, $token)) {
-            return $this->jsonFailure('finalized', Response::HTTP_CONFLICT);
+            return $this->jsonFailure('finalized', HttpStatusEnum::Conflict->value);
         }
 
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
@@ -193,7 +194,7 @@ final class GalleryController extends AbstractController
         }
 
         if ($gallery->isPicksRequireIdentity() && !$this->pickService->visitorHasIdentity($token, $input->visitorName, $input->visitorEmail)) {
-            return $this->jsonFailure('identity_required', Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->jsonFailure('identity_required', HttpStatusEnum::UnprocessableEntity->value);
         }
 
         // Auto-fill the comment author from prior picks when the visitor
@@ -220,7 +221,7 @@ final class GalleryController extends AbstractController
         }
 
         if ($gallery->isFinalized()) {
-            return $this->jsonFailure('finalized', Response::HTTP_CONFLICT);
+            return $this->jsonFailure('finalized', HttpStatusEnum::Conflict->value);
         }
 
         if ($this->pickService->isFinalizedBy($gallery, $token)) {
