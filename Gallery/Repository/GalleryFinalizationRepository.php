@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Module\Photo\Gallery\Entity\GalleryFinalizationInterface;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<GalleryFinalization>
+ * @extends ResolveTargetEntityRepository<GalleryFinalizationInterface>
  */
-class GalleryFinalizationRepository extends ServiceEntityRepository
+class GalleryFinalizationRepository extends ResolveTargetEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GalleryFinalization::class);
+        parent::__construct($registry, GalleryFinalization::class, GalleryFinalizationInterface::class);
     }
 
     public function findOneByVisitor(int $galleryId, string $visitorToken): ?GalleryFinalization

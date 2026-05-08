@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<GalleryInvite>
+ * @extends ResolveTargetEntityRepository<GalleryInviteInterface>
  */
-class GalleryInviteRepository extends ServiceEntityRepository
+class GalleryInviteRepository extends ResolveTargetEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GalleryInvite::class);
+        parent::__construct($registry, GalleryInvite::class, GalleryInviteInterface::class);
     }
 
     public function findOneByToken(string $token): ?GalleryInvite

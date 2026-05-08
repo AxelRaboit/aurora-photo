@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryPick;
+use Aurora\Module\Photo\Gallery\Entity\GalleryPickInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<GalleryPick>
+ * @extends ResolveTargetEntityRepository<GalleryPickInterface>
  */
-class GalleryPickRepository extends ServiceEntityRepository
+class GalleryPickRepository extends ResolveTargetEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GalleryPick::class);
+        parent::__construct($registry, GalleryPick::class, GalleryPickInterface::class);
     }
 
     /**

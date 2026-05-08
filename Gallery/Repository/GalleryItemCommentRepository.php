@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<GalleryItemComment>
+ * @extends ResolveTargetEntityRepository<GalleryItemCommentInterface>
  */
-class GalleryItemCommentRepository extends ServiceEntityRepository
+class GalleryItemCommentRepository extends ResolveTargetEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GalleryItemComment::class);
+        parent::__construct($registry, GalleryItemComment::class, GalleryItemCommentInterface::class);
     }
 
     public function findInGallery(int $commentId, int $galleryId): ?GalleryItemComment

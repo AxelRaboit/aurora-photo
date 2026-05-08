@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<GalleryItem>
+ * @extends ResolveTargetEntityRepository<GalleryItemInterface>
  */
-class GalleryItemRepository extends ServiceEntityRepository
+class GalleryItemRepository extends ResolveTargetEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GalleryItem::class);
+        parent::__construct($registry, GalleryItem::class, GalleryItemInterface::class);
     }
 
     public function findInGallery(int $itemId, int $galleryId): ?GalleryItem

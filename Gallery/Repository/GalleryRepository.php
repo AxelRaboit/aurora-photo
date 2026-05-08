@@ -6,20 +6,21 @@ namespace Aurora\Module\Photo\Gallery\Repository;
 
 use Aurora\Core\Repository\Trait\PaginationTrait;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Gallery>
+ * @extends ResolveTargetEntityRepository<GalleryInterface>
  */
-class GalleryRepository extends ServiceEntityRepository
+class GalleryRepository extends ResolveTargetEntityRepository
 {
     use PaginationTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Gallery::class);
+        parent::__construct($registry, Gallery::class, GalleryInterface::class);
     }
 
     /**
