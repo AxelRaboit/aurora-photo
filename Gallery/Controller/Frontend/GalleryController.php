@@ -28,7 +28,7 @@ use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryDownloadService;
 use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
-use Aurora\Module\Photo\Gallery\View\GalleryViewBuilder;
+use Aurora\Module\Photo\Gallery\View\Frontend\GalleryViewBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Cookie;
