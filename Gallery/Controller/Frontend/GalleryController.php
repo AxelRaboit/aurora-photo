@@ -96,7 +96,7 @@ final class GalleryController extends AbstractController
         [$token, $cookie] = $this->accessService->ensureVisitorToken($request, $gallery);
 
         if (null === $token) {
-            return $this->render('@Photo/front/gallery/unlock.html.twig', $this->viewBuilder->unlockView($gallery));
+            return $this->render('@Photo/frontend/gallery/unlock.html.twig', $this->viewBuilder->unlockView($gallery));
         }
 
         $response = $this->renderGalleryView($gallery, $token, readOnly: false);
@@ -367,7 +367,7 @@ final class GalleryController extends AbstractController
 
     private function renderGalleryView(Gallery $gallery, string $visitorToken, bool $readOnly): Response
     {
-        return $this->render('@Photo/front/gallery/index.html.twig', $this->viewBuilder->galleryView($gallery, $visitorToken, $readOnly));
+        return $this->render('@Photo/frontend/gallery/index.html.twig', $this->viewBuilder->galleryView($gallery, $visitorToken, $readOnly));
     }
 
     /**
