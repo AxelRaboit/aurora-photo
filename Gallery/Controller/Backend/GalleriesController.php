@@ -34,7 +34,7 @@ use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryExportService;
 use Aurora\Module\Photo\Gallery\Service\GalleryInviteManager;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
-use Aurora\Module\Photo\Gallery\View\GalleryAdminViewBuilder;
+use Aurora\Module\Photo\Gallery\View\GalleryViewBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +63,7 @@ final class GalleriesController extends AbstractController
         private readonly GalleryPickService $pickService,
         private readonly GalleryInviteRepository $inviteRepository,
         private readonly GalleryInviteManager $inviteManager,
-        private readonly GalleryAdminViewBuilder $viewBuilder,
+        private readonly GalleryViewBuilder $viewBuilder,
         private readonly GalleryInputFactoryInterface $galleryInputFactory,
     ) {}
 

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * and serialisation in one place so the controller stays focused on the HTTP
  * lifecycle (auth, validation, error responses).
  */
-final readonly class GalleryAdminViewBuilder
+final readonly class GalleryViewBuilder
 {
     public function __construct(
         private GallerySerializerInterface $gallerySerializer,
