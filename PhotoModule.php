@@ -35,6 +35,11 @@ final readonly class PhotoModule implements ModuleInterface
             return [];
         }
 
+        return $this->getCatalogNavSections();
+    }
+
+    public function getCatalogNavSections(): array
+    {
         return [
             new NavSection('photo', [
                 new NavItem('backend_galleries', 'backend.nav.galleries', 'images', descriptionKey: 'backend.nav.galleries_description'),
