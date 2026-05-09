@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\Service;
+namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Core\Sequence\SequencePrefixEnum;
@@ -10,6 +10,8 @@ use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
+use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
+use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

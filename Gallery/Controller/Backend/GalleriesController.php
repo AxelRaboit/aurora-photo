@@ -32,7 +32,7 @@ use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryExportService;
-use Aurora\Module\Photo\Gallery\Service\GalleryInviteManager;
+use Aurora\Module\Photo\Gallery\Manager\GalleryInviteManager;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
 use Aurora\Module\Photo\Gallery\View\GalleryViewBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
