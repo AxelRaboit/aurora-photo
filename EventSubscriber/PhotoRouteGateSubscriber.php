@@ -13,8 +13,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * Gates Photo routes against the admin/front toggles.
  *
- *  - Admin (`admin_galleries*`)   → 404 when PhotoAdminEnabled is off
- *  - Front (`frontend_gallery*`)     → 404 when PhotoFrontEnabled is off
+ *  - Admin (`admin_galleries*`)   → 404 when PhotoEnabled is off
+ *  - Front (`frontend_gallery*`)     → 404 when PhotoPublicEnabled is off
  */
 final readonly class PhotoRouteGateSubscriber implements EventSubscriberInterface
 {

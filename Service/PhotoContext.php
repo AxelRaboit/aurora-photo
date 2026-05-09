@@ -21,11 +21,11 @@ final readonly class PhotoContext
 
     public function isAdminEnabled(): bool
     {
-        return $this->settingRepository->getBoolean(ApplicationParameterEnum::PhotoAdminEnabled->value, true);
+        return $this->settingRepository->getBoolean(ApplicationParameterEnum::PhotoEnabled->value, true);
     }
 
     public function isFrontEnabled(): bool
     {
-        return $this->settingRepository->getBoolean(ApplicationParameterEnum::PhotoFrontEnabled->value, true);
+        return $this->settingRepository->getBoolean(ApplicationParameterEnum::PhotoPublicEnabled->value, true);
     }
 }
