@@ -7,6 +7,7 @@ namespace Aurora\Module\Photo\Gallery\Service;
 use Aurora\Core\Mail\Service\MailService;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -103,7 +104,7 @@ final readonly class GalleryNotificationService
      * Sends the magic-link invitation email. The unique URL is built by the
      * caller (it depends on the Symfony router) and passed in.
      */
-    public function notifyInvite(GalleryInvite $invite, string $magicUrl): void
+    public function notifyInvite(GalleryInviteInterface $invite, string $magicUrl): void
     {
         $gallery = $invite->getGallery();
 
