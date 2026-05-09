@@ -25,7 +25,7 @@ use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryCommentService;
 use Aurora\Module\Photo\Gallery\Service\GalleryDownloadService;
-use Aurora\Module\Photo\Gallery\Manager\GalleryInviteManager;
+use Aurora\Module\Photo\Gallery\Manager\GalleryInviteManagerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
 use Aurora\Module\Photo\Gallery\View\GalleryViewBuilder;
@@ -54,7 +54,7 @@ final class GalleryController extends AbstractController
         private readonly GalleryNotificationService $notificationService,
         private readonly PayloadValidator $payloadValidator,
         private readonly GalleryInviteRepository $inviteRepository,
-        private readonly GalleryInviteManager $inviteManager,
+        private readonly GalleryInviteManagerInterface $inviteManager,
         private readonly GallerySerializerInterface $gallerySerializer,
         private readonly GalleryViewBuilder $viewBuilder,
     ) {}

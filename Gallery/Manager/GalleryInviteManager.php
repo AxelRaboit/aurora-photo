@@ -10,28 +10,31 @@ use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final readonly class GalleryInviteManager
+#[AsAlias(GalleryInviteManagerInterface::class)]
+class GalleryInviteManager implements GalleryInviteManagerInterface
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private GalleryNotificationService $notificationService,
-        private UrlGeneratorInterface $urlGenerator,
-        private GalleryAccessService $accessService,
-        private SequenceGenerator $sequenceGenerator,
-        private SettingRepository $settingRepository,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly GalleryNotificationService $notificationService,
+        protected readonly UrlGeneratorInterface $urlGenerator,
+        protected readonly GalleryAccessService $accessService,
+        protected readonly SequenceGenerator $sequenceGenerator,
+        protected readonly SettingRepository $settingRepository,
     ) {}
 
-    public function create(Gallery $gallery, string $name, string $email): GalleryInvite
+    public function create(Gallery $gallery, string $name, string $email): GalleryInviteInterface
     {
         $token = bin2hex(random_bytes(24));
         $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryInvitePrefix->value, SequencePrefixEnum::GalleryInvite->value) ?? SequencePrefixEnum::GalleryInvite->value;
 
-        $invite = new GalleryInvite();
+        $invite = $this->createGalleryInvite();
         $invite->setGallery($gallery);
         $invite->setName($name);
         $invite->setEmail(mb_strtolower($email));
@@ -45,13 +48,13 @@ final readonly class GalleryInviteManager
         return $invite;
     }
 
-    public function delete(GalleryInvite $invite): void
+    public function delete(GalleryInviteInterface $invite): void
     {
         $this->entityManager->remove($invite);
         $this->entityManager->flush();
     }
 
-    public function send(GalleryInvite $invite): void
+    public function send(GalleryInviteInterface $invite): void
     {
         $magicUrl = $this->urlGenerator->generate('frontend_gallery_invite_redeem', [
             'slug' => $invite->getGallery()->getSlug(),
@@ -64,9 +67,14 @@ final readonly class GalleryInviteManager
         $this->entityManager->flush();
     }
 
-    public function markSeen(GalleryInvite $invite): void
+    public function markSeen(GalleryInviteInterface $invite): void
     {
         $invite->markSeen();
         $this->entityManager->flush();
+    }
+
+    protected function createGalleryInvite(): GalleryInviteInterface
+    {
+        return new GalleryInvite();
     }
 }
