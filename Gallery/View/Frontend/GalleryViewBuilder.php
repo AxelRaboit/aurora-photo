@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Gallery\View;
+namespace Aurora\Module\Photo\Gallery\View\Frontend;
 
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * URL generation + serialisation so controller actions stay focused on flow
  * (auth, redirects, error responses) instead of view-shape concerns.
  */
-final readonly class GalleryFrontViewBuilder
+final readonly class GalleryViewBuilder
 {
     public function __construct(
         private GallerySerializerInterface $gallerySerializer,

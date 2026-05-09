@@ -28,7 +28,7 @@ use Aurora\Module\Photo\Gallery\Service\GalleryDownloadService;
 use Aurora\Module\Photo\Gallery\Service\GalleryInviteManager;
 use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
-use Aurora\Module\Photo\Gallery\View\GalleryFrontViewBuilder;
+use Aurora\Module\Photo\Gallery\View\GalleryViewBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -56,7 +56,7 @@ final class GalleryController extends AbstractController
         private readonly GalleryInviteRepository $inviteRepository,
         private readonly GalleryInviteManager $inviteManager,
         private readonly GallerySerializerInterface $gallerySerializer,
-        private readonly GalleryFrontViewBuilder $viewBuilder,
+        private readonly GalleryViewBuilder $viewBuilder,
     ) {}
 
     #[Route('/i/{token}', name: '_invite_redeem', requirements: ['token' => '[a-f0-9]{48}'], methods: [HttpMethodEnum::Get->value])]
