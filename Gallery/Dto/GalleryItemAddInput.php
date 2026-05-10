@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Dto;
 
+use Aurora\Core\Support\Arr;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final readonly class GalleryItemAddInput
@@ -19,9 +20,6 @@ final readonly class GalleryItemAddInput
 
     public static function fromArray(array $data): self
     {
-        $raw = (array) ($data['mediaIds'] ?? []);
-        $ids = array_values(array_filter(array_map(intval(...), $raw), static fn (int $id): bool => $id > 0));
-
-        return new self(mediaIds: $ids);
+        return new self(mediaIds: Arr::positiveInts($data['mediaIds'] ?? null));
     }
 }
