@@ -10,9 +10,13 @@ backend:
   nav:
     sections:
       photo: Photo
+    galleries: Galleries
     galleries_description: Photo galleries for your clients (selection, approval, delivery)
   modules:
     photo: Photo
+    photo_description: 'Enables the Photography section in the admin (client delivery galleries).'
+    photo_public: Public galleries
+    photo_public_description: 'Enables public galleries on the front end. Requires the Photo module.'
   audit:
     actions:
       photo:

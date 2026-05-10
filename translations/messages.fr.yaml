@@ -7,12 +7,16 @@ backend:
           create: Créer des galeries
           edit: Modifier les galeries
           delete: Supprimer les galeries
+  modules:
+    photo: Photo
+    photo_description: "Active la section Photographie dans l'administration (galeries de livraison client)."
+    photo_public: Galeries publiques
+    photo_public_description: 'Active les galeries publiques côté front. Nécessite le module Photo.'
   nav:
     sections:
       photo: Photo
+    galleries: Galeries
     galleries_description: Galeries photos pour vos clients (sélection, validation, livraison)
-  modules:
-    photo: Photo
   audit:
     actions:
       photo:
