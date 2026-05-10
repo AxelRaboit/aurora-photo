@@ -6,7 +6,6 @@ namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Mail\Service\MailService;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
