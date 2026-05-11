@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Service;
 
+use Aurora\Core\Module\ModuleAccessChecker;
 use Aurora\Core\Setting\Enum\ModuleParameterEnum;
-use Aurora\Core\Setting\Repository\SettingRepository;
 
 final readonly class PhotoContext
 {
-    public function __construct(private SettingRepository $settingRepository) {}
+    public function __construct(private ModuleAccessChecker $moduleAccessChecker) {}
 
     public function isAdminEnabled(): bool
     {
-        return $this->settingRepository->getBoolean(ModuleParameterEnum::PhotoEnabled->value, true);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoEnabled);
     }
 
     public function isFrontEnabled(): bool
     {
-        return $this->settingRepository->getBoolean(ModuleParameterEnum::PhotoPublicEnabled->value, true);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoPublicEnabled);
     }
 
     public function isGalleriesEnabled(): bool
     {
-        return $this->isAdminEnabled() && $this->settingRepository->getBoolean(ModuleParameterEnum::PhotoGalleriesEnabled->value, true);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoGalleriesEnabled);
     }
 }
