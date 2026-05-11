@@ -30,7 +30,7 @@ final readonly class GalleryViewBuilder
      */
     public function indexView(PaginationRequest $pagination): array
     {
-        $crmEnabled = $this->crmContext->isAdminEnabled();
+        $crmEnabled = $this->crmContext->isBackendEnabled();
 
         return [
             'galleries' => $this->gallerySerializer->serializeListPayload($this->galleryRepository->findPaginated($pagination->page, search: $pagination->search)),

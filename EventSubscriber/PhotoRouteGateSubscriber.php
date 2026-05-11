@@ -40,7 +40,7 @@ final readonly class PhotoRouteGateSubscriber implements EventSubscriberInterfac
             return;
         }
 
-        if (str_starts_with($route, self::ADMIN_PREFIX) && !$this->photoContext->isAdminEnabled()) {
+        if (str_starts_with($route, self::ADMIN_PREFIX) && !$this->photoContext->isBackendEnabled()) {
             throw new NotFoundHttpException();
         }
 

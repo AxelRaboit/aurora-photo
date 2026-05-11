@@ -33,7 +33,7 @@ final readonly class PhotoModule implements ModuleInterface, ModuleToggleProvide
 
     public function getNavSections(): array
     {
-        if (!$this->photoContext->isAdminEnabled()) {
+        if (!$this->photoContext->isBackendEnabled()) {
             return [];
         }
 
