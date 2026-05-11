@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Service;
 
-use Aurora\Core\Module\ModuleAccessChecker;
+use Aurora\Core\Module\Service\ModuleAccessChecker;
 use Aurora\Core\Setting\Enum\ModuleParameterEnum;
 
 final readonly class PhotoContext

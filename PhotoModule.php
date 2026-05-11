@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo;
 
-use Aurora\Core\Module\ModuleInterface;
-use Aurora\Core\Module\ModuleToggleProviderInterface;
-use Aurora\Core\Module\NavItem;
-use Aurora\Core\Module\NavPermission;
-use Aurora\Core\Module\NavSection;
+use Aurora\Core\Module\Contract\ModuleInterface;
+use Aurora\Core\Module\Contract\ModuleToggleProviderInterface;
+use Aurora\Core\Module\Nav\NavItem;
+use Aurora\Core\Module\Nav\NavPermission;
+use Aurora\Core\Module\Nav\NavSection;
 use Aurora\Core\Setting\Enum\ModuleParameterEnum;
 use Aurora\Module\Photo\Service\PhotoContext;
 
