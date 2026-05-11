@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo;
 
 use Aurora\Core\Module\ModuleInterface;
+use Aurora\Core\Module\ModuleToggleProviderInterface;
 use Aurora\Core\Module\NavItem;
 use Aurora\Core\Module\NavPermission;
 use Aurora\Core\Module\NavSection;
+use Aurora\Core\Setting\Enum\ModuleParameterEnum;
 use Aurora\Module\Photo\Service\PhotoContext;
 
-final readonly class PhotoModule implements ModuleInterface
+final readonly class PhotoModule implements ModuleInterface, ModuleToggleProviderInterface
 {
     public function __construct(private PhotoContext $photoContext) {}
 
@@ -54,6 +56,15 @@ final readonly class PhotoModule implements ModuleInterface
             new NavSection('photo', [
                 new NavItem('backend_galleries', 'backend.nav.galleries', 'images', descriptionKey: 'backend.nav.galleries_description'),
             ], priority: 70),
+        ];
+    }
+
+    public function getToggles(): array
+    {
+        return [
+            ModuleParameterEnum::PhotoEnabled->toToggle(),
+            ModuleParameterEnum::PhotoPublicEnabled->toToggle(),
+            ModuleParameterEnum::PhotoGalleriesEnabled->toToggle(),
         ];
     }
 }
