@@ -40,7 +40,7 @@ final readonly class PhotoModule implements ModuleInterface, ModuleToggleProvide
         $items = [];
 
         if ($this->photoContext->isGalleriesEnabled()) {
-            $items[] = new NavItem('backend_galleries', 'backend.nav.galleries', 'images', descriptionKey: 'backend.nav.galleries_description');
+            $items[] = new NavItem('backend_galleries', 'backend.nav.galleries', 'images', requiredPrivilege: 'photo.galleries.view', descriptionKey: 'backend.nav.galleries_description');
         }
 
         if ([] === $items) {
@@ -54,7 +54,7 @@ final readonly class PhotoModule implements ModuleInterface, ModuleToggleProvide
     {
         return [
             new NavSection('photo', [
-                new NavItem('backend_galleries', 'backend.nav.galleries', 'images', descriptionKey: 'backend.nav.galleries_description'),
+                new NavItem('backend_galleries', 'backend.nav.galleries', 'images', requiredPrivilege: 'photo.galleries.view', descriptionKey: 'backend.nav.galleries_description'),
             ], priority: 70),
         ];
     }
