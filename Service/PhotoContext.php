@@ -13,16 +13,16 @@ final readonly class PhotoContext
 
     public function isAdminEnabled(): bool
     {
-        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoEnabled);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoBackend);
     }
 
     public function isFrontEnabled(): bool
     {
-        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoPublicEnabled);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoFrontend);
     }
 
     public function isGalleriesEnabled(): bool
     {
-        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoGalleriesEnabled);
+        return $this->moduleAccessChecker->isEnabled(ModuleParameterEnum::PhotoGalleries);
     }
 }

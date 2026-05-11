@@ -9,9 +9,10 @@ backend:
           delete: Supprimer les galeries
   modules:
     photo: Photo
-    photo_description: "Active la section Photographie dans l'administration (galeries de livraison client)."
-    photo_public: Galeries publiques
-    photo_public_description: 'Active les galeries publiques côté front. Nécessite le module Photo.'
+    photo_backend: Photo
+    photo_backend_description: "Active la section Photographie dans l'administration (galeries de livraison client)."
+    photo_frontend: Galeries publiques
+    photo_frontend_description: 'Active les galeries publiques côté front. Nécessite le module Photo.'
   nav:
     sections:
       photo: Photo

@@ -62,9 +62,9 @@ final readonly class PhotoModule implements ModuleInterface, ModuleToggleProvide
     public function getToggles(): array
     {
         return [
-            ModuleParameterEnum::PhotoEnabled->toToggle(),
-            ModuleParameterEnum::PhotoPublicEnabled->toToggle(),
-            ModuleParameterEnum::PhotoGalleriesEnabled->toToggle(),
+            ModuleParameterEnum::PhotoBackend->toToggle(),
+            ModuleParameterEnum::PhotoFrontend->toToggle(),
+            ModuleParameterEnum::PhotoGalleries->toToggle(),
         ];
     }
 }
