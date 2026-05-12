@@ -52,4 +52,29 @@ class GalleryFinalizationRepository extends ResolveTargetEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Returns a map of galleryId → finalization count for the given gallery IDs.
+     * Fires a single GROUP BY query instead of one COUNT per gallery.
+     *
+     * @param list<int> $galleryIds
+     *
+     * @return array<int, int>
+     */
+    public function countByGalleries(array $galleryIds): array
+    {
+        if ([] === $galleryIds) {
+            return [];
+        }
+
+        $rows = $this->createQueryBuilder('f')
+            ->select('IDENTITY(f.gallery) AS gid, COUNT(f.id) AS cnt')
+            ->where('f.gallery IN (:ids)')
+            ->setParameter('ids', $galleryIds)
+            ->groupBy('f.gallery')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($rows, 'cnt', 'gid');
+    }
 }

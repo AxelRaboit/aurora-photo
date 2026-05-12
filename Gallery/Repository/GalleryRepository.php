@@ -29,6 +29,8 @@ class GalleryRepository extends ResolveTargetEntityRepository
     public function findPaginated(int $page, int $limit = 20, ?string $search = null): array
     {
         $qb = $this->createQueryBuilder('g')
+            ->leftJoin('g.coverMedia', 'cm')->addSelect('cm')
+            ->leftJoin('g.clientContact', 'cc')->addSelect('cc')
             ->orderBy('g.createdAt', Order::Descending->value);
 
         $countQb = $this->createQueryBuilder('g')->select('COUNT(g.id)');
@@ -45,6 +47,32 @@ class GalleryRepository extends ResolveTargetEntityRepository
     public function findOneBySlug(string $slug): ?GalleryInterface
     {
         return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
+     * Returns a map of galleryId → item count for the given gallery IDs.
+     * Fires a single GROUP BY query instead of lazy-loading items per gallery.
+     *
+     * @param list<int> $galleryIds
+     *
+     * @return array<int, int>
+     */
+    public function countItemsByGalleries(array $galleryIds): array
+    {
+        if ([] === $galleryIds) {
+            return [];
+        }
+
+        $rows = $this->createQueryBuilder('g')
+            ->select('g.id AS gid, COUNT(i.id) AS cnt')
+            ->leftJoin('g.items', 'i')
+            ->where('g.id IN (:ids)')
+            ->setParameter('ids', $galleryIds)
+            ->groupBy('g.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($rows, 'cnt', 'gid');
     }
 
     /**

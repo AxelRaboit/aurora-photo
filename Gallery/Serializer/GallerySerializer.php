@@ -11,17 +11,25 @@ use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
+use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use DateTimeInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(GallerySerializerInterface::class)]
 class GallerySerializer implements GallerySerializerInterface
 {
+    /** @var array<int, int> Pre-batched item counts keyed by gallery ID (populated by serializeListPayload). */
+    private array $batchedItemCounts = [];
+
+    /** @var array<int, int> Pre-batched finalization counts keyed by gallery ID (populated by serializeListPayload). */
+    private array $batchedFinalizationCounts = [];
+
     public function __construct(
         protected readonly GalleryPickRepository $pickRepository,
         protected readonly GalleryItemCommentRepository $commentRepository,
         protected readonly GalleryFinalizationRepository $finalizationRepository,
         protected readonly GalleryInviteRepository $inviteRepository,
+        protected readonly GalleryRepository $galleryRepository,
     ) {}
 
     /**
@@ -79,8 +87,8 @@ class GallerySerializer implements GallerySerializerInterface
             'finalizedAt' => $gallery->getFinalizedAt()?->format(DateTimeInterface::ATOM),
             'finalizedByName' => $gallery->getFinalizedByName(),
             'finalizedByEmail' => $gallery->getFinalizedByEmail(),
-            'finalizationCount' => $this->finalizationRepository->countForGallery((int) $gallery->getId()),
-            'itemCount' => $gallery->getItems()->count(),
+            'finalizationCount' => $this->batchedFinalizationCounts[(int) $gallery->getId()] ?? $this->finalizationRepository->countForGallery((int) $gallery->getId()),
+            'itemCount' => $this->batchedItemCounts[(int) $gallery->getId()] ?? $gallery->getItems()->count(),
             'createdAt' => $gallery->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $gallery->getUpdatedAt()->format(DateTimeInterface::ATOM),
         ];
@@ -238,12 +246,21 @@ class GallerySerializer implements GallerySerializerInterface
      */
     public function serializeListPayload(array $paginated): array
     {
-        return [
+        $ids = array_map(static fn (GalleryInterface $g): int => (int) $g->getId(), $paginated['items']);
+        $this->batchedItemCounts = $this->galleryRepository->countItemsByGalleries($ids);
+        $this->batchedFinalizationCounts = $this->finalizationRepository->countByGalleries($ids);
+
+        $result = [
             'success' => true,
             'items' => array_map($this->serialize(...), $paginated['items']),
             'total' => $paginated['total'],
             'page' => $paginated['page'],
             'totalPages' => $paginated['totalPages'],
         ];
+
+        $this->batchedItemCounts = [];
+        $this->batchedFinalizationCounts = [];
+
+        return $result;
     }
 }
