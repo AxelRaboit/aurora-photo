@@ -8,6 +8,7 @@ use Aurora\Core\Repository\ResolveTargetEntityRepository;
 use Aurora\Core\Repository\Trait\PaginationTrait;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -99,5 +100,24 @@ class GalleryRepository extends ResolveTargetEntityRepository
         }
 
         return (int) $qb->getQuery()->getSingleScalarResult() > 0;
+    }
+
+    public function countActive(): int
+    {
+        return (int) $this->createQueryBuilder('g')
+            ->select('COUNT(g.id)')
+            ->andWhere('g.expiresAt IS NULL OR g.expiresAt > :now')
+            ->setParameter('now', new DateTimeImmutable())
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countFinalized(): int
+    {
+        return (int) $this->createQueryBuilder('g')
+            ->select('COUNT(g.id)')
+            ->andWhere('g.finalizedAt IS NOT NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
