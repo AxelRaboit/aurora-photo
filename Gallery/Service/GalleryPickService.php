@@ -8,12 +8,13 @@ use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Core\Sequence\SequencePrefixEnum;
 use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
-use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryFinalizationInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryPick;
+use Aurora\Module\Photo\Gallery\Entity\GalleryPickInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
 use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
@@ -40,7 +41,7 @@ final readonly class GalleryPickService
      * @throws MaxPicksReachedException when adding a Favorite pick would exceed Gallery::maxPicks
      */
     public function toggle(
-        GalleryItem $item,
+        GalleryItemInterface $item,
         string $visitorToken,
         ?string $visitorName = null,
         ?string $visitorEmail = null,
@@ -51,7 +52,7 @@ final readonly class GalleryPickService
             'visitorToken' => $visitorToken,
             'kind' => $kind,
         ]);
-        if ($existing instanceof GalleryPick) {
+        if ($existing instanceof GalleryPickInterface) {
             $this->entityManager->remove($existing);
             $this->entityManager->flush();
 
@@ -88,10 +89,10 @@ final readonly class GalleryPickService
      * Idempotent — returns the existing finalization unchanged when the visitor already
      * validated this gallery. Other visitors' selections are unaffected.
      */
-    public function finalize(Gallery $gallery, string $visitorToken, ?string $visitorName, ?string $visitorEmail): GalleryFinalization
+    public function finalize(GalleryInterface $gallery, string $visitorToken, ?string $visitorName, ?string $visitorEmail): GalleryFinalizationInterface
     {
         $existing = $this->finalizationRepository->findOneByVisitor((int) $gallery->getId(), $visitorToken);
-        if ($existing instanceof GalleryFinalization) {
+        if ($existing instanceof GalleryFinalizationInterface) {
             return $existing;
         }
 
@@ -111,18 +112,18 @@ final readonly class GalleryPickService
         return $finalization;
     }
 
-    public function isFinalizedBy(Gallery $gallery, string $visitorToken): bool
+    public function isFinalizedBy(GalleryInterface $gallery, string $visitorToken): bool
     {
-        return $this->finalizationRepository->findOneByVisitor((int) $gallery->getId(), $visitorToken) instanceof GalleryFinalization;
+        return $this->finalizationRepository->findOneByVisitor((int) $gallery->getId(), $visitorToken) instanceof GalleryFinalizationInterface;
     }
 
     /**
      * Removes a visitor's validation so they can edit their picks again.
      */
-    public function reopenFor(Gallery $gallery, string $visitorToken): void
+    public function reopenFor(GalleryInterface $gallery, string $visitorToken): void
     {
         $existing = $this->finalizationRepository->findOneByVisitor((int) $gallery->getId(), $visitorToken);
-        if (!$existing instanceof GalleryFinalization) {
+        if (!$existing instanceof GalleryFinalizationInterface) {
             return;
         }
 
@@ -140,7 +141,7 @@ final readonly class GalleryPickService
         }
 
         $previous = $this->pickRepository->findOneBy(['visitorToken' => $visitorToken]);
-        if ($previous instanceof GalleryPick && null !== $previous->getVisitorName() && null !== $previous->getVisitorEmail()) {
+        if ($previous instanceof GalleryPickInterface && null !== $previous->getVisitorName() && null !== $previous->getVisitorEmail()) {
             return true;
         }
 
@@ -158,7 +159,7 @@ final readonly class GalleryPickService
         }
 
         $previous = $this->pickRepository->findOneBy(['visitorToken' => $visitorToken]);
-        if ($previous instanceof GalleryPick) {
+        if ($previous instanceof GalleryPickInterface) {
             $name ??= $previous->getVisitorName();
             $email ??= $previous->getVisitorEmail();
         }
@@ -168,7 +169,7 @@ final readonly class GalleryPickService
         // pick to the named invitee.
         if (null === $name || null === $email) {
             $invite = $this->inviteRepository->findOneBy(['visitorToken' => $visitorToken]);
-            if ($invite instanceof GalleryInvite) {
+            if ($invite instanceof GalleryInviteInterface) {
                 $name ??= $invite->getName();
                 $email ??= $invite->getEmail();
             }
@@ -180,7 +181,7 @@ final readonly class GalleryPickService
     /**
      * @return list<GalleryItemInterface>
      */
-    public function itemsPickedBy(Gallery $gallery, string $visitorToken, PickKindEnum $kind = PickKindEnum::Favorite): array
+    public function itemsPickedBy(GalleryInterface $gallery, string $visitorToken, PickKindEnum $kind = PickKindEnum::Favorite): array
     {
         $picks = $this->pickRepository->findByVisitorForGallery($visitorToken, (int) $gallery->getId());
         $items = [];
@@ -200,7 +201,7 @@ final readonly class GalleryPickService
      *
      * @return array<int, list<string>>
      */
-    public function picksByVisitor(Gallery $gallery, string $visitorToken): array
+    public function picksByVisitor(GalleryInterface $gallery, string $visitorToken): array
     {
         $picks = $this->pickRepository->findByVisitorForGallery($visitorToken, (int) $gallery->getId());
         $byItem = [];
@@ -213,7 +214,7 @@ final readonly class GalleryPickService
         return $byItem;
     }
 
-    public function favoriteCount(Gallery $gallery, string $visitorToken): int
+    public function favoriteCount(GalleryInterface $gallery, string $visitorToken): int
     {
         return $this->pickRepository->countForVisitor($visitorToken, (int) $gallery->getId(), PickKindEnum::Favorite);
     }

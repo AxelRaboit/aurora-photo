@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
-use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,7 +148,7 @@ final readonly class GalleryAccessService
         return mb_substr(hash_hmac('sha256', 'invite:'.$inviteToken, $this->appSecret), 0, 32);
     }
 
-    public function unlockForInvite(GalleryInvite $invite): Cookie
+    public function unlockForInvite(GalleryInviteInterface $invite): Cookie
     {
         $visitorToken = $invite->getVisitorToken();
         $value = $visitorToken.'|'.$this->computeHmac($invite->getGallery(), $visitorToken);

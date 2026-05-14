@@ -17,11 +17,11 @@ use Aurora\Module\Photo\Gallery\Dto\GalleryItemAddInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemBulkDeleteInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCaptionInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemReorderInput;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
-use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
+use Aurora\Module\Photo\Gallery\Entity\GalleryFinalizationInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Manager\GalleryInviteManagerInterface;
 use Aurora\Module\Photo\Gallery\Manager\GalleryItemManagerInterface;
 use Aurora\Module\Photo\Gallery\Manager\GalleryManagerInterface;
@@ -103,7 +103,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/update', name: '_update', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function update(Gallery $gallery, Request $request): JsonResponse
+    public function update(GalleryInterface $gallery, Request $request): JsonResponse
     {
         $input = $this->galleryInputFactory->fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
@@ -123,7 +123,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/delete', name: '_delete', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.delete')]
-    public function delete(Gallery $gallery): JsonResponse
+    public function delete(GalleryInterface $gallery): JsonResponse
     {
         $this->galleryManager->delete($gallery);
 
@@ -132,7 +132,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/edit', name: '_edit', methods: [HttpMethodEnum::Get->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function edit(Gallery $gallery): Response
+    public function edit(GalleryInterface $gallery): Response
     {
         $gallery = $this->galleryRepository->findOneWithItemsAndMedia((int) $gallery->getId()) ?? $gallery;
 
@@ -141,7 +141,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/reopen', name: '_reopen', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function reopen(Gallery $gallery): JsonResponse
+    public function reopen(GalleryInterface $gallery): JsonResponse
     {
         $this->galleryManager->reopen($gallery);
 
@@ -150,7 +150,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/invites/create', name: '_invites_create', requirements: ['id' => '\d+'], methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function createInvite(Gallery $gallery, Request $request): JsonResponse
+    public function createInvite(GalleryInterface $gallery, Request $request): JsonResponse
     {
         $input = GalleryInviteInput::fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
@@ -159,7 +159,7 @@ final class GalleriesController extends AbstractController
         }
 
         $existing = $this->inviteRepository->findOneByGalleryAndEmail((int) $gallery->getId(), $input->email);
-        if ($existing instanceof GalleryInvite) {
+        if ($existing instanceof GalleryInviteInterface) {
             return $this->jsonInvalidInput(['email' => 'photo.galleries.errors.invite_email_taken'], HttpStatusEnum::Conflict->value);
         }
 
@@ -170,10 +170,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/invites/{inviteId}/send', name: '_invites_send', requirements: ['id' => '\d+', 'inviteId' => '\d+|__id__'], methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function sendInvite(Gallery $gallery, int $inviteId): JsonResponse
+    public function sendInvite(GalleryInterface $gallery, int $inviteId): JsonResponse
     {
         $invite = $this->inviteRepository->findInGallery($inviteId, (int) $gallery->getId());
-        if (!$invite instanceof GalleryInvite) {
+        if (!$invite instanceof GalleryInviteInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
@@ -184,10 +184,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/invites/{inviteId}', name: '_invites_delete', requirements: ['id' => '\d+', 'inviteId' => '\d+|__id__'], methods: [HttpMethodEnum::Delete->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function deleteInvite(Gallery $gallery, int $inviteId): JsonResponse
+    public function deleteInvite(GalleryInterface $gallery, int $inviteId): JsonResponse
     {
         $invite = $this->inviteRepository->findInGallery($inviteId, (int) $gallery->getId());
-        if (!$invite instanceof GalleryInvite) {
+        if (!$invite instanceof GalleryInviteInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
@@ -198,10 +198,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/finalizations/{finalizationId}', name: '_finalizations_delete', requirements: ['id' => '\d+', 'finalizationId' => '\d+|__id__'], methods: [HttpMethodEnum::Delete->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function deleteFinalization(Gallery $gallery, int $finalizationId): JsonResponse
+    public function deleteFinalization(GalleryInterface $gallery, int $finalizationId): JsonResponse
     {
         $finalization = $this->finalizationRepository->findInGallery($finalizationId, (int) $gallery->getId());
-        if (!$finalization instanceof GalleryFinalization) {
+        if (!$finalization instanceof GalleryFinalizationInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
@@ -216,7 +216,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/export.xlsx', name: '_export', methods: [HttpMethodEnum::Get->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function export(Gallery $gallery): Response
+    public function export(GalleryInterface $gallery): Response
     {
         $gallery = $this->galleryRepository->findOneWithItemsAndMedia((int) $gallery->getId()) ?? $gallery;
 
@@ -225,7 +225,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/items/add', name: '_items_add', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function addItems(Gallery $gallery, Request $request): JsonResponse
+    public function addItems(GalleryInterface $gallery, Request $request): JsonResponse
     {
         $input = GalleryItemAddInput::fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
@@ -243,7 +243,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/items/reorder', name: '_items_reorder', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function reorderItems(Gallery $gallery, Request $request): JsonResponse
+    public function reorderItems(GalleryInterface $gallery, Request $request): JsonResponse
     {
         $input = GalleryItemReorderInput::fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
@@ -258,10 +258,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/items/{itemId}/caption', name: '_items_caption', requirements: ['itemId' => '\d+|__id__'], methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function updateItemCaption(Gallery $gallery, int $itemId, Request $request): JsonResponse
+    public function updateItemCaption(GalleryInterface $gallery, int $itemId, Request $request): JsonResponse
     {
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
-        if (!$item instanceof GalleryItem) {
+        if (!$item instanceof GalleryItemInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
@@ -278,10 +278,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/items/{itemId}/delete', name: '_items_delete', requirements: ['itemId' => '\d+|__id__'], methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function deleteItem(Gallery $gallery, int $itemId): JsonResponse
+    public function deleteItem(GalleryInterface $gallery, int $itemId): JsonResponse
     {
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
-        if (!$item instanceof GalleryItem) {
+        if (!$item instanceof GalleryItemInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 
@@ -292,7 +292,7 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/items/bulk-delete', name: '_items_bulk_delete', methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function bulkDeleteItems(Gallery $gallery, Request $request): JsonResponse
+    public function bulkDeleteItems(GalleryInterface $gallery, Request $request): JsonResponse
     {
         $input = GalleryItemBulkDeleteInput::fromArray($this->decodeJson($request));
         $errors = $this->payloadValidator->errors($input);
@@ -307,10 +307,10 @@ final class GalleriesController extends AbstractController
 
     #[Route('/{id}/comments/{commentId}/delete', name: '_comments_delete', requirements: ['commentId' => '\d+|__id__'], methods: [HttpMethodEnum::Post->value])]
     #[IsGranted('photo.galleries.edit')]
-    public function deleteComment(Gallery $gallery, int $commentId): JsonResponse
+    public function deleteComment(GalleryInterface $gallery, int $commentId): JsonResponse
     {
         $comment = $this->commentRepository->findInGallery($commentId, (int) $gallery->getId());
-        if (!$comment instanceof GalleryItemComment) {
+        if (!$comment instanceof GalleryItemCommentInterface) {
             return $this->jsonFailure('not_found', HttpStatusEnum::NotFound->value);
         }
 

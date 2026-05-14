@@ -9,8 +9,9 @@ use Aurora\Core\Sequence\SequencePrefixEnum;
 use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCommentInput;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -24,7 +25,7 @@ final readonly class GalleryCommentService
         private SettingRepository $settingRepository,
     ) {}
 
-    public function add(GalleryItem $item, string $visitorToken, GalleryItemCommentInput $input): GalleryItemComment
+    public function add(GalleryItemInterface $item, string $visitorToken, GalleryItemCommentInput $input): GalleryItemCommentInterface
     {
         $comment = new GalleryItemComment();
         $comment->setGalleryItem($item);
@@ -45,14 +46,14 @@ final readonly class GalleryCommentService
         return $comment;
     }
 
-    public function delete(GalleryItemComment $comment): void
+    public function delete(GalleryItemCommentInterface $comment): void
     {
         $this->entityManager->remove($comment);
         $this->entityManager->flush();
     }
 
     /**
-     * @return list<GalleryItemComment>
+     * @return list<GalleryItemCommentInterface>
      */
     public function listForGallery(int $galleryId): array
     {

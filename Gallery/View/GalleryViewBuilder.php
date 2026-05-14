@@ -6,7 +6,7 @@ namespace Aurora\Module\Photo\Gallery\View;
 
 use Aurora\Core\Validation\Dto\PaginationRequest;
 use Aurora\Module\Crm\Service\CrmContext;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -48,7 +48,7 @@ final readonly class GalleryViewBuilder
     /**
      * @return array<string, mixed>
      */
-    public function editView(Gallery $gallery): array
+    public function editView(GalleryInterface $gallery): array
     {
         return [
             'gallery' => $this->gallerySerializer->serialize($gallery),
@@ -64,7 +64,7 @@ final readonly class GalleryViewBuilder
     /**
      * @return array<string, string>
      */
-    private function editPaths(Gallery $gallery): array
+    private function editPaths(GalleryInterface $gallery): array
     {
         $id = $gallery->getId();
 

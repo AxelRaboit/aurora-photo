@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
-use Aurora\Module\Photo\Gallery\Entity\GalleryPick;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryPickInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
@@ -40,7 +40,7 @@ final readonly class GalleryExportService
         private GalleryFinalizationRepository $finalizationRepository,
     ) {}
 
-    public function buildXlsxResponse(Gallery $gallery): Response
+    public function buildXlsxResponse(GalleryInterface $gallery): Response
     {
         $spreadsheet = $this->build($gallery);
         $writer = new Xlsx($spreadsheet);
@@ -57,7 +57,7 @@ final readonly class GalleryExportService
         return $response;
     }
 
-    private function build(Gallery $gallery): Spreadsheet
+    private function build(GalleryInterface $gallery): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getProperties()
@@ -100,8 +100,8 @@ final readonly class GalleryExportService
         return $spreadsheet;
     }
 
-    /** @param array<string, list<GalleryPick>> $byKind */
-    private function buildSummarySheet(Worksheet $sheet, Gallery $gallery, array $byKind): void
+    /** @param array<string, list<GalleryPickInterface>> $byKind */
+    private function buildSummarySheet(Worksheet $sheet, GalleryInterface $gallery, array $byKind): void
     {
         $sheet->setTitle('Résumé');
 
@@ -145,7 +145,7 @@ final readonly class GalleryExportService
         $sheet->getColumnDimension('B')->setWidth(60);
     }
 
-    /** @param list<GalleryPick> $picks */
+    /** @param list<GalleryPickInterface> $picks */
     private function buildPicksSheet(Worksheet $sheet, array $picks): void
     {
         $headers = ['Photo #', 'Fichier', 'Position', 'Légende', 'Visiteur', 'Email', 'Date du pick'];
@@ -178,7 +178,7 @@ final readonly class GalleryExportService
         $this->bandRows($sheet, 2, $row - 1, count($headers));
     }
 
-    /** @param list<GalleryItemComment> $comments */
+    /** @param list<GalleryItemCommentInterface> $comments */
     private function buildCommentsSheet(Worksheet $sheet, array $comments): void
     {
         $headers = ['Photo #', 'Fichier', 'Visiteur', 'Email', 'Commentaire', 'Date'];

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Mail\Service\MailService;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
+use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -19,7 +19,7 @@ final readonly class GalleryNotificationService
         private UrlGeneratorInterface $urlGenerator,
     ) {}
 
-    public function notifyFinalized(Gallery $gallery, string $visitorToken, ?string $visitorName = null, ?string $visitorEmail = null): void
+    public function notifyFinalized(GalleryInterface $gallery, string $visitorToken, ?string $visitorName = null, ?string $visitorEmail = null): void
     {
         $adminEmail = $this->mail->adminEmail();
         if (null === $adminEmail) {
@@ -61,7 +61,7 @@ final readonly class GalleryNotificationService
      * Confirmation email sent to the visitor right after they finalize their
      * selection. Silently no-ops when the visitor didn't supply an email.
      */
-    public function notifyVisitor(Gallery $gallery, ?string $visitorName, ?string $visitorEmail): void
+    public function notifyVisitor(GalleryInterface $gallery, ?string $visitorName, ?string $visitorEmail): void
     {
         if (null === $visitorEmail || '' === $visitorEmail) {
             return;
@@ -83,7 +83,7 @@ final readonly class GalleryNotificationService
     /**
      * Notifies the admin when a visitor leaves a comment on a gallery item.
      */
-    public function notifyItemComment(GalleryItemComment $comment): void
+    public function notifyItemComment(GalleryItemCommentInterface $comment): void
     {
         $gallery = $comment->getGalleryItem()->getGallery();
 

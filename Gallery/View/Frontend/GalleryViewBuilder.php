@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\View\Frontend;
 
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryPickService;
@@ -27,7 +27,7 @@ final readonly class GalleryViewBuilder
     /**
      * @return array<string, mixed>
      */
-    public function unlockView(Gallery $gallery): array
+    public function unlockView(GalleryInterface $gallery): array
     {
         return [
             'gallery' => $gallery,
@@ -38,7 +38,7 @@ final readonly class GalleryViewBuilder
     /**
      * @return array<string, mixed>
      */
-    public function galleryView(Gallery $gallery, string $visitorToken, bool $readOnly): array
+    public function galleryView(GalleryInterface $gallery, string $visitorToken, bool $readOnly): array
     {
         [$name, $email] = $this->pickService->recoverIdentity($visitorToken, null, null);
         $slug = $gallery->getSlug();

@@ -13,9 +13,8 @@ use Aurora\Core\Validation\Service\PayloadValidator;
 use Aurora\Module\Photo\Gallery\Dto\GalleryFinalizeInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCommentInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryPickInput;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
-use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
-use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Enum\PickKindEnum;
 use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
@@ -66,7 +65,7 @@ final class GalleryController extends AbstractController
     {
         $gallery = $this->loadGallery($slug);
         $invite = $this->inviteRepository->findOneByToken($token);
-        if (!$invite instanceof GalleryInvite || $invite->getGallery()->getId() !== $gallery->getId()) {
+        if (!$invite instanceof GalleryInviteInterface || $invite->getGallery()->getId() !== $gallery->getId()) {
             throw $this->createNotFoundException();
         }
 
@@ -137,7 +136,7 @@ final class GalleryController extends AbstractController
         }
 
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
-        if (!$item instanceof GalleryItem) {
+        if (!$item instanceof GalleryItemInterface) {
             return $this->jsonNotFound();
         }
 
@@ -186,7 +185,7 @@ final class GalleryController extends AbstractController
         }
 
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
-        if (!$item instanceof GalleryItem) {
+        if (!$item instanceof GalleryItemInterface) {
             return $this->jsonNotFound();
         }
 
@@ -257,7 +256,7 @@ final class GalleryController extends AbstractController
         }
 
         $item = $this->itemRepository->findInGallery($itemId, (int) $gallery->getId());
-        if (!$item instanceof GalleryItem) {
+        if (!$item instanceof GalleryItemInterface) {
             throw $this->createNotFoundException();
         }
 
@@ -317,10 +316,10 @@ final class GalleryController extends AbstractController
         );
     }
 
-    private function loadGallery(string $slugOrThrow, bool $allowExpired = false): Gallery
+    private function loadGallery(string $slugOrThrow, bool $allowExpired = false): GalleryInterface
     {
         $gallery = $this->galleryRepository->findOneBySlug($slugOrThrow);
-        if (!$gallery instanceof Gallery) {
+        if (!$gallery instanceof GalleryInterface) {
             throw $this->createNotFoundException();
         }
 
@@ -337,7 +336,7 @@ final class GalleryController extends AbstractController
      * (always available once unlocked) so anonymous visitors still get a
      * unique stamp tied to their cookie — useful if a screenshot leaks.
      */
-    private function resolveVisitorWatermark(Request $request, Gallery $gallery): ?string
+    private function resolveVisitorWatermark(Request $request, GalleryInterface $gallery): ?string
     {
         $token = $this->accessService->readVisitorToken($request, $gallery);
         if (null === $token) {
@@ -355,7 +354,7 @@ final class GalleryController extends AbstractController
         return 'ID '.mb_substr($token, 0, 8);
     }
 
-    private function visitorHasPicked(Request $request, Gallery $gallery, GalleryItem $item): bool
+    private function visitorHasPicked(Request $request, GalleryInterface $gallery, GalleryItemInterface $item): bool
     {
         $token = $this->accessService->readVisitorToken($request, $gallery);
         if (null === $token) {
@@ -367,7 +366,7 @@ final class GalleryController extends AbstractController
         return array_any($picked, fn ($pickedItem): bool => $pickedItem->getId() === $item->getId());
     }
 
-    private function renderGalleryView(Gallery $gallery, string $visitorToken, bool $readOnly): Response
+    private function renderGalleryView(GalleryInterface $gallery, string $visitorToken, bool $readOnly): Response
     {
         return $this->render($this->themeResolver->resolve('photo/gallery/index'), $this->viewBuilder->galleryView($gallery, $visitorToken, $readOnly));
     }
@@ -375,7 +374,7 @@ final class GalleryController extends AbstractController
     /**
      * @return list<GalleryItemInterface>
      */
-    private function visitorPickedItems(Gallery $gallery, Request $request): array
+    private function visitorPickedItems(GalleryInterface $gallery, Request $request): array
     {
         $token = $this->accessService->readVisitorToken($request, $gallery);
         if (null === $token) {

@@ -8,7 +8,7 @@ use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Core\Sequence\SequencePrefixEnum;
 use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
-use Aurora\Module\Photo\Gallery\Entity\Gallery;
+use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
@@ -29,7 +29,7 @@ class GalleryInviteManager implements GalleryInviteManagerInterface
         protected readonly SettingRepository $settingRepository,
     ) {}
 
-    public function create(Gallery $gallery, string $name, string $email): GalleryInviteInterface
+    public function create(GalleryInterface $gallery, string $name, string $email): GalleryInviteInterface
     {
         $token = bin2hex(random_bytes(24));
         $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryInvitePrefix->value, SequencePrefixEnum::GalleryInvite->value) ?? SequencePrefixEnum::GalleryInvite->value;
