@@ -32,8 +32,8 @@ backend:
             bulk_deleted: Photos supprimées
 photo:
   galleries:
-    add: Nouvelle galerie
-    create: Créer une galerie
+    add: Ajouter une galerie
+    create: Nouvelle galerie
     edit: Modifier la galerie
     deleteConfirm: 'Supprimer la galerie « {title} » ? Cette action est définitive.'
     created: Galerie créée.

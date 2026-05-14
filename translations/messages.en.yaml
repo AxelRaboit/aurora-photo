@@ -32,8 +32,8 @@ backend:
             bulk_deleted: Photos deleted
 photo:
   galleries:
-    add: New gallery
-    create: Create gallery
+    add: Add gallery
+    create: New gallery
     edit: Edit gallery
     deleteConfirm: 'Delete gallery "{title}"? This cannot be undone.'
     created: Gallery created.
