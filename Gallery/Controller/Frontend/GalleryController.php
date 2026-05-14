@@ -8,6 +8,7 @@ use Aurora\Core\Enum\HttpMethodEnum;
 use Aurora\Core\Enum\HttpStatusEnum;
 use Aurora\Core\Frontend\Controller\JsonRequestTrait;
 use Aurora\Core\Frontend\Controller\JsonResponseTrait;
+use Aurora\Core\Theme\Service\ThemeResolver;
 use Aurora\Core\Validation\Service\PayloadValidator;
 use Aurora\Module\Photo\Gallery\Dto\GalleryFinalizeInput;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCommentInput;
@@ -57,6 +58,7 @@ final class GalleryController extends AbstractController
         private readonly GalleryInviteManagerInterface $inviteManager,
         private readonly GallerySerializerInterface $gallerySerializer,
         private readonly GalleryViewBuilder $viewBuilder,
+        private readonly ThemeResolver $themeResolver,
     ) {}
 
     #[Route('/i/{token}', name: '_invite_redeem', requirements: ['token' => '[a-f0-9]{48}'], methods: [HttpMethodEnum::Get->value])]
@@ -96,7 +98,7 @@ final class GalleryController extends AbstractController
         [$token, $cookie] = $this->accessService->ensureVisitorToken($request, $gallery);
 
         if (null === $token) {
-            return $this->render('@Photo/frontend/gallery/unlock.html.twig', $this->viewBuilder->unlockView($gallery));
+            return $this->render($this->themeResolver->resolve('photo/gallery/unlock'), $this->viewBuilder->unlockView($gallery));
         }
 
         $response = $this->renderGalleryView($gallery, $token, readOnly: false);
@@ -367,7 +369,7 @@ final class GalleryController extends AbstractController
 
     private function renderGalleryView(Gallery $gallery, string $visitorToken, bool $readOnly): Response
     {
-        return $this->render('@Photo/frontend/gallery/index.html.twig', $this->viewBuilder->galleryView($gallery, $visitorToken, $readOnly));
+        return $this->render($this->themeResolver->resolve('photo/gallery/index'), $this->viewBuilder->galleryView($gallery, $visitorToken, $readOnly));
     }
 
     /**
