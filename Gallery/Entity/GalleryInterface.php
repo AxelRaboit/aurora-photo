@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Core\Timestampable\TimestampableInterface;
 use Aurora\Core\Media\Entity\MediaInterface;
+use Aurora\Core\Timestampable\TimestampableInterface;
 use Aurora\Core\User\Entity\User;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use DateTimeImmutable;
