@@ -7,7 +7,7 @@ namespace Aurora\Module\Photo;
 use Aurora\Core\Frontend\Contract\FrontendInterface;
 use Aurora\Core\Setting\Enum\ModuleParameterEnum;
 
-final class PhotoFrontDescriptor implements FrontendInterface
+final class PhotoFrontendDescriptor implements FrontendInterface
 {
     public function getSlug(): string
     {
