@@ -133,7 +133,6 @@ photo:
         intro: Send a personal magic link to each guest — no shared password, and you can see who actually viewed the gallery.
         name: Guest name
         email: Email
-        add: Add
         send: Send link
         resend: Resend
         notSent: Link not sent

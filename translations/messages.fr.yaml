@@ -133,7 +133,6 @@ photo:
         intro: Envoyez un lien magique personnel à chaque invité — pas de mot de passe à partager, et vous voyez qui a consulté la galerie.
         name: Nom de l'invité
         email: Email
-        add: Ajouter
         send: Envoyer le lien
         resend: Renvoyer
         notSent: Lien non envoyé
