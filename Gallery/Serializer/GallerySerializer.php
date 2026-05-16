@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Serializer;
 
+use Aurora\Core\Media\Service\MediaUrlGenerator;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
@@ -14,7 +15,6 @@ use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use DateTimeInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
-use Aurora\Core\Media\Service\MediaUrlGenerator;
 
 #[AsAlias(GallerySerializerInterface::class)]
 class GallerySerializer implements GallerySerializerInterface
