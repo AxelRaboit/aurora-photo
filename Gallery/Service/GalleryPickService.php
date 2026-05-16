@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Sequence\SequencePrefixEnum;
-use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalization;
 use Aurora\Module\Photo\Gallery\Entity\GalleryFinalizationInterface;
@@ -20,6 +18,7 @@ use Aurora\Module\Photo\Gallery\Exception\MaxPicksReachedException;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryInviteRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
+use Aurora\Module\Photo\Setting\PhotoSettingEnum;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class GalleryPickService
@@ -77,7 +76,7 @@ final readonly class GalleryPickService
         $this->entityManager->persist($pick);
         $this->entityManager->flush();
 
-        $pickPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryPickPrefix->value, SequencePrefixEnum::GalleryPick->value) ?? SequencePrefixEnum::GalleryPick->value;
+        $pickPrefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryPickPrefix);
         $pick->setReference($this->sequenceGenerator->next($pickPrefix));
         $this->entityManager->flush();
 
@@ -105,7 +104,7 @@ final readonly class GalleryPickService
         $this->entityManager->persist($finalization);
         $this->entityManager->flush();
 
-        $finPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryFinalizationPrefix->value, SequencePrefixEnum::GalleryFinalization->value) ?? SequencePrefixEnum::GalleryFinalization->value;
+        $finPrefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryFinalizationPrefix);
         $finalization->setReference($this->sequenceGenerator->next($finPrefix));
         $this->entityManager->flush();
 

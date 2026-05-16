@@ -7,14 +7,13 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 use Aurora\Core\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Sequence\SequencePrefixEnum;
-use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemRepository;
 use Aurora\Module\Photo\Gallery\Service\ExifReader;
+use Aurora\Module\Photo\Setting\PhotoSettingEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
@@ -43,7 +42,7 @@ class GalleryItemManager implements GalleryItemManagerInterface
             $existing[$item->getMedia()->getId()] = true;
         }
 
-        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryItemPrefix->value, SequencePrefixEnum::GalleryItem->value) ?? SequencePrefixEnum::GalleryItem->value;
+        $prefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryItemPrefix);
         $position = $this->itemRepository->nextPositionForGallery((int) $gallery->getId());
         $number = $this->itemRepository->nextNumberForGallery((int) $gallery->getId());
         $added = 0;

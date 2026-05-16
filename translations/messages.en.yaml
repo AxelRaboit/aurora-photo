@@ -1,4 +1,23 @@
 backend:
+  parameters:
+    photo_gallery_prefix:
+      label: Gallery reference prefix
+      description: Auto-generated photo gallery reference prefix (e.g. GAL).
+    photo_gallery_item_prefix:
+      label: Photo reference prefix
+      description: Auto-generated reference prefix (e.g. XXX). Leave empty to disable.
+    photo_gallery_invite_prefix:
+      label: Gallery invite reference prefix
+      description: Auto-generated reference prefix (e.g. XXX). Leave empty to disable.
+    photo_gallery_finalization_prefix:
+      label: Gallery finalization reference prefix
+      description: Auto-generated reference prefix (e.g. XXX). Leave empty to disable.
+    photo_gallery_item_comment_prefix:
+      label: Photo comment reference prefix
+      description: Auto-generated reference prefix (e.g. XXX). Leave empty to disable.
+    photo_gallery_pick_prefix:
+      label: Photo pick reference prefix
+      description: Auto-generated reference prefix (e.g. XXX). Leave empty to disable.
   permissions:
     names:
       photo:

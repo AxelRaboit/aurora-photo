@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Sequence\SequencePrefixEnum;
-use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryAccessService;
 use Aurora\Module\Photo\Gallery\Service\GalleryNotificationService;
+use Aurora\Module\Photo\Setting\PhotoSettingEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,7 +31,7 @@ class GalleryInviteManager implements GalleryInviteManagerInterface
     public function create(GalleryInterface $gallery, string $name, string $email): GalleryInviteInterface
     {
         $token = bin2hex(random_bytes(24));
-        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryInvitePrefix->value, SequencePrefixEnum::GalleryInvite->value) ?? SequencePrefixEnum::GalleryInvite->value;
+        $prefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryInvitePrefix);
 
         $invite = $this->createGalleryInvite();
         $invite->setGallery($gallery);

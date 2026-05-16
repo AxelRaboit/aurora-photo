@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Sequence\SequencePrefixEnum;
-use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCommentInput;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryItemCommentRepository;
+use Aurora\Module\Photo\Setting\PhotoSettingEnum;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class GalleryCommentService
@@ -37,7 +36,7 @@ final readonly class GalleryCommentService
         $this->entityManager->persist($comment);
         $this->entityManager->flush();
 
-        $commentPrefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryItemCommentPrefix->value, SequencePrefixEnum::GalleryItemComment->value) ?? SequencePrefixEnum::GalleryItemComment->value;
+        $commentPrefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryItemCommentPrefix);
         $comment->setReference($this->sequenceGenerator->next($commentPrefix));
         $this->entityManager->flush();
 

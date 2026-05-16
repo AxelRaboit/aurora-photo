@@ -7,8 +7,6 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 use Aurora\Core\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Sequence\SequencePrefixEnum;
-use Aurora\Core\Setting\Enum\ApplicationParameterEnum;
 use Aurora\Core\Setting\Repository\SettingRepository;
 use Aurora\Core\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
@@ -16,6 +14,7 @@ use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryWatermarkService;
+use Aurora\Module\Photo\Setting\PhotoSettingEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
@@ -37,7 +36,7 @@ class GalleryManager implements GalleryManagerInterface
         $gallery = $this->createGallery();
         $gallery->setCreatedBy($createdBy);
         $this->applyInput($gallery, $input);
-        $prefix = $this->settingRepository->get(ApplicationParameterEnum::PhotoGalleryPrefix->value, SequencePrefixEnum::Gallery->value) ?? SequencePrefixEnum::Gallery->value;
+        $prefix = $this->settingRepository->getOrDefault(PhotoSettingEnum::GalleryPrefix);
         $gallery->setReference($this->sequenceGenerator->next($prefix));
         $this->entityManager->persist($gallery);
         $this->entityManager->flush();

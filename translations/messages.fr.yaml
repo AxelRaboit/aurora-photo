@@ -1,4 +1,23 @@
 backend:
+  parameters:
+    photo_gallery_prefix:
+      label: Préfixe des numéros de galeries
+      description: 'Préfixe de la référence galerie photo auto-générée (ex: GAL).'
+    photo_gallery_item_prefix:
+      label: Préfixe des références photos
+      description: 'Préfixe de la référence auto-générée (ex: XXX). Laissez vide pour désactiver.'
+    photo_gallery_invite_prefix:
+      label: Préfixe des références invitations galerie
+      description: 'Préfixe de la référence auto-générée (ex: XXX). Laissez vide pour désactiver.'
+    photo_gallery_finalization_prefix:
+      label: Préfixe des références finalisations de galerie
+      description: 'Préfixe de la référence auto-générée (ex: XXX). Laissez vide pour désactiver.'
+    photo_gallery_item_comment_prefix:
+      label: Préfixe des références commentaires de photo
+      description: 'Préfixe de la référence auto-générée (ex: XXX). Laissez vide pour désactiver.'
+    photo_gallery_pick_prefix:
+      label: Préfixe des références sélections de photo
+      description: 'Préfixe de la référence auto-générée (ex: XXX). Laissez vide pour désactiver.'
   permissions:
     names:
       photo:
