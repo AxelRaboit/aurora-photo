@@ -14,6 +14,7 @@ use Aurora\Module\Photo\Gallery\Repository\GalleryPickRepository;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use DateTimeInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+use Aurora\Core\Media\Service\MediaUrlGenerator;
 
 #[AsAlias(GallerySerializerInterface::class)]
 class GallerySerializer implements GallerySerializerInterface
@@ -30,6 +31,7 @@ class GallerySerializer implements GallerySerializerInterface
         protected readonly GalleryFinalizationRepository $finalizationRepository,
         protected readonly GalleryInviteRepository $inviteRepository,
         protected readonly GalleryRepository $galleryRepository,
+        protected readonly MediaUrlGenerator $mediaUrlGenerator,
     ) {}
 
     /**
@@ -70,7 +72,7 @@ class GallerySerializer implements GallerySerializerInterface
             'description' => $gallery->getDescription(),
             'hasPassword' => $gallery->hasPassword(),
             'coverMediaId' => $gallery->getCoverMedia()?->getId(),
-            'coverMediaUrl' => $gallery->getCoverMedia()?->getVariantUrl('medium') ?? $gallery->getCoverMedia()?->getPublicUrl(),
+            'coverMediaUrl' => $this->mediaUrlGenerator->variantUrl($gallery->getCoverMedia(), 'medium') ?? $this->mediaUrlGenerator->publicUrl($gallery->getCoverMedia()),
             'expiresAt' => $gallery->getExpiresAt()?->format(DateTimeInterface::ATOM),
             'allowOriginals' => $gallery->isAllowOriginals(),
             'allowZipDownload' => $gallery->isAllowZipDownload(),
@@ -103,9 +105,9 @@ class GallerySerializer implements GallerySerializerInterface
             $items[] = [
                 'id' => $item->getId(),
                 'mediaId' => $media->getId(),
-                'thumb' => $media->getVariantUrl('medium') ?? $media->getVariantUrl('large') ?? $media->getPublicUrl(),
-                'medium' => $media->getVariantUrl('medium') ?? $media->getVariantUrl('large') ?? $media->getPublicUrl(),
-                'full' => $media->getVariantUrl('large') ?? $media->getPublicUrl(),
+                'thumb' => $this->mediaUrlGenerator->variantUrl($media, 'medium') ?? $this->mediaUrlGenerator->variantUrl($media, 'large') ?? $this->mediaUrlGenerator->publicUrl($media),
+                'medium' => $this->mediaUrlGenerator->variantUrl($media, 'medium') ?? $this->mediaUrlGenerator->variantUrl($media, 'large') ?? $this->mediaUrlGenerator->publicUrl($media),
+                'full' => $this->mediaUrlGenerator->variantUrl($media, 'large') ?? $this->mediaUrlGenerator->publicUrl($media),
                 'caption' => $item->getCaption(),
                 'alt' => $media->getAlt(),
                 'position' => $item->getPosition(),
