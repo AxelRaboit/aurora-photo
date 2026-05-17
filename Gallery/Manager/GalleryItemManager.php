@@ -7,7 +7,7 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 use Aurora\Core\Dev\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Setting\Repository\SettingRepository;
+use Aurora\Core\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;

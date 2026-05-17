@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Setting\Repository\SettingRepository;
+use Aurora\Core\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInvite;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;

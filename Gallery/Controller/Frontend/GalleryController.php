@@ -8,7 +8,7 @@ use Aurora\Core\Enum\HttpMethodEnum;
 use Aurora\Core\Enum\HttpStatusEnum;
 use Aurora\Core\Frontend\Controller\JsonRequestTrait;
 use Aurora\Core\Frontend\Controller\JsonResponseTrait;
-use Aurora\Core\Theme\Service\ThemeResolver;
+use Aurora\Core\Configuration\Theme\Service\ThemeResolver;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Manager\GalleryInviteManagerInterface;

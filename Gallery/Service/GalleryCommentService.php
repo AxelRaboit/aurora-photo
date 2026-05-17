@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Setting\Repository\SettingRepository;
+use Aurora\Core\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryItemCommentInput;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemComment;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
