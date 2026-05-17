@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Core\Media\Contract\MediaUsageProviderInterface;
+use Aurora\Core\Media\Library\Contract\MediaUsageProviderInterface;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
