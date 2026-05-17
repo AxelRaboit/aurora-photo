@@ -10,7 +10,7 @@ use Aurora\Core\Module\Nav\NavItem;
 use Aurora\Core\Module\Nav\NavPermission;
 use Aurora\Core\Module\Nav\NavSection;
 use Aurora\Core\Configuration\Setting\Enum\ModuleParameterEnum;
-use Aurora\Module\Photo\Service\PhotoContext;
+use Aurora\Module\Photo\PhotoContext;
 
 final readonly class PhotoModule implements ModuleInterface, ModuleToggleProviderInterface
 {

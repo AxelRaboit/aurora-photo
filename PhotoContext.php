@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aurora\Module\Photo\Service;
+namespace Aurora\Module\Photo;
 
 use Aurora\Core\Module\Service\ModuleAccessChecker;
 use Aurora\Core\Configuration\Setting\Enum\ModuleParameterEnum;
