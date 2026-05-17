@@ -6,7 +6,7 @@ namespace Aurora\Module\Photo\Gallery\Entity;
 
 use Aurora\Core\Media\Library\Entity\MediaInterface;
 use Aurora\Core\Timestampable\TimestampableTrait;
-use Aurora\Core\User\Entity\User;
+use Aurora\Core\Platform\User\Entity\User;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;

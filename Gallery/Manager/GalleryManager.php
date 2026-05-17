@@ -8,7 +8,7 @@ use Aurora\Core\Dev\Audit\Service\AuditLogger;
 use Aurora\Core\Media\Library\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Core\Configuration\Setting\Repository\SettingRepository;
-use Aurora\Core\User\Entity\User;
+use Aurora\Core\Platform\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
