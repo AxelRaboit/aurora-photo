@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Setting;
 
-use Aurora\Core\Configuration\Setting\Configuration\ConfigurationTab;
-use Aurora\Core\Configuration\Setting\Configuration\ConfigurationTabProviderInterface;
-use Aurora\Core\Configuration\Setting\Configuration\SettingFieldDescriptor;
+use Aurora\Module\Configuration\Setting\Configuration\ConfigurationTab;
+use Aurora\Module\Configuration\Setting\Configuration\ConfigurationTabProviderInterface;
+use Aurora\Module\Configuration\Setting\Configuration\SettingFieldDescriptor;
 
 final readonly class PhotoConfigurationTabProvider implements ConfigurationTabProviderInterface
 {

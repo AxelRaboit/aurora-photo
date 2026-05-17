@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Core\Media\Library\Enum\StorageAreaEnum;
+use Aurora\Module\Media\Library\Enum\StorageAreaEnum;
 use Aurora\Module\Photo\Enum\PhotoCacheDirEnum;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use GdImage;

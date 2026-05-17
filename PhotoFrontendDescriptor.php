@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo;
 
 use Aurora\Core\Frontend\Contract\FrontendInterface;
-use Aurora\Core\Configuration\Setting\Enum\ModuleParameterEnum;
+use Aurora\Module\Configuration\Setting\Enum\ModuleParameterEnum;
 
 final class PhotoFrontendDescriptor implements FrontendInterface
 {

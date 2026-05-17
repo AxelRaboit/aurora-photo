@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Module\Dev\Audit\Service\AuditLogger;
-use Aurora\Core\Media\Library\Repository\MediaRepository;
+use Aurora\Module\Media\Library\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
-use Aurora\Core\Configuration\Setting\Repository\SettingRepository;
+use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Core\Platform\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
