@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Manager;
 
-use Aurora\Module\Dev\Audit\Service\AuditLogger;
-use Aurora\Module\Media\Library\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
+use Aurora\Module\Dev\Audit\Service\AuditLogger;
+use Aurora\Module\Media\Library\Repository\MediaRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;

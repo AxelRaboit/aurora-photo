@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Serializer;
 
-use Aurora\Module\Media\Library\Service\MediaUrlGenerator;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
+use Aurora\Module\Media\Library\Service\MediaUrlGenerator;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryFinalizationRepository;

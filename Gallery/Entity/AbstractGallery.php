@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Module\Media\Library\Entity\MediaInterface;
 use Aurora\Core\Timestampable\TimestampableTrait;
-use Aurora\Module\Platform\User\Entity\User;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
+use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Platform\User\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

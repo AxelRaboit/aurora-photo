@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Manager;
 
-use Aurora\Module\Dev\Audit\Service\AuditLogger;
-use Aurora\Module\Media\Library\Repository\MediaRepository;
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
-use Aurora\Module\Platform\User\Entity\User;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
+use Aurora\Module\Dev\Audit\Service\AuditLogger;
+use Aurora\Module\Media\Library\Repository\MediaRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Service\GalleryWatermarkService;
 use Aurora\Module\Photo\Setting\PhotoSettingEnum;
+use Aurora\Module\Platform\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
