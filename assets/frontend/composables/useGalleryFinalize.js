@@ -47,7 +47,7 @@ export function useGalleryFinalize({
         }
         finalized.value = true;
         showFinalizeModal.value = false;
-        toast.success(t("photo.frontend.finalizedToast"));
+        toast.success(t("photo.frontend.finalized_toast"));
     }
 
     return {

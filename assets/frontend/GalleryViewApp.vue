@@ -120,7 +120,7 @@ function downloadOne(itemId) {
             </div>
             <div class="flex items-center gap-3 flex-wrap">
                 <span v-if="maxPicks" class="text-sm" :class="favoriteCountReached ? 'text-rose-500' : 'text-muted'">
-                    {{ t("photo.frontend.maxPicksProgress", { count: favoriteTotal, limit: maxPicks }) }}
+                    {{ t("photo.frontend.max_picks_progress", { count: favoriteTotal, limit: maxPicks }) }}
                 </span>
                 <span v-else class="text-sm text-muted flex items-center gap-1.5">
                     <Heart class="w-4 h-4 text-accent-500" :stroke-width="2" fill="currentColor" />
@@ -134,7 +134,7 @@ function downloadOne(itemId) {
                     v-on:click="downloadAll(false)"
                 >
                     <Archive class="w-4 h-4" :stroke-width="2" />
-                    {{ t("photo.frontend.downloadAll") }}
+                    {{ t("photo.frontend.download_all") }}
                 </AppButton>
                 <AppButton
                     v-if="gallery.allowZipDownload && favoriteTotal > 0 && !readOnly"
@@ -144,7 +144,7 @@ function downloadOne(itemId) {
                     v-on:click="downloadAll(true)"
                 >
                     <Download class="w-4 h-4" :stroke-width="2" />
-                    {{ t("photo.frontend.downloadPicks") }}
+                    {{ t("photo.frontend.download_picks") }}
                 </AppButton>
                 <AppButton
                     v-if="!finalized && favoriteTotal > 0 && !readOnly"
@@ -168,11 +168,11 @@ function downloadOne(itemId) {
                 </AppButton>
                 <span v-if="finalized && !readOnly" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-500 text-xs font-medium">
                     <Check class="w-3.5 h-3.5" :stroke-width="2.5" />
-                    {{ t("photo.frontend.finalizedBadge") }}
+                    {{ t("photo.frontend.finalized_badge") }}
                 </span>
                 <span v-if="readOnly" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/15 text-blue-500 text-xs font-medium">
                     <Share2 class="w-3.5 h-3.5" :stroke-width="2.5" />
-                    {{ t("photo.frontend.share.readOnlyBadge") }}
+                    {{ t("photo.frontend.share.read_only_badge") }}
                 </span>
             </div>
         </header>
@@ -484,7 +484,7 @@ function downloadOne(itemId) {
                     <AppInput
                         v-model="visitorName"
                         :label="t('photo.frontend.identity.name')"
-                        :placeholder="t('photo.frontend.identity.namePlaceholder')"
+                        :placeholder="t('photo.frontend.identity.name_placeholder')"
                         :error="commentNameError"
                         required
                     />
@@ -492,7 +492,7 @@ function downloadOne(itemId) {
                         v-model="visitorEmail"
                         type="email"
                         :label="t('photo.frontend.identity.email')"
-                        :placeholder="t('photo.frontend.identity.emailPlaceholder')"
+                        :placeholder="t('photo.frontend.identity.email_placeholder')"
                         :error="commentEmailError"
                         required
                     />
@@ -544,11 +544,11 @@ function downloadOne(itemId) {
         <!-- Finalize modal -->
         <AppModal :show="showFinalizeModal" :title="t('photo.frontend.finalize')" :closeable="false" v-on:close="showFinalizeModal = false">
             <form class="space-y-4" v-on:submit.prevent="submitFinalize">
-                <p class="text-sm text-muted">{{ t("photo.frontend.finalizeIntro", { count: favoriteTotal }) }}</p>
+                <p class="text-sm text-muted">{{ t("photo.frontend.finalize_intro", { count: favoriteTotal }) }}</p>
                 <AppInput
                     v-model="finalizeName"
                     :label="t('photo.frontend.identity.name')"
-                    :placeholder="t('photo.frontend.identity.namePlaceholder')"
+                    :placeholder="t('photo.frontend.identity.name_placeholder')"
                     :error="finalizeNameError"
                     required
                 />
@@ -556,7 +556,7 @@ function downloadOne(itemId) {
                     v-model="finalizeEmail"
                     type="email"
                     :label="t('photo.frontend.identity.email')"
-                    :placeholder="t('photo.frontend.identity.emailPlaceholder')"
+                    :placeholder="t('photo.frontend.identity.email_placeholder')"
                     :error="finalizeEmailError"
                     required
                 />

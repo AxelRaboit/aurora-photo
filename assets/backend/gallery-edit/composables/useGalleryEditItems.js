@@ -53,7 +53,7 @@ export function useGalleryEditItems(props, initialItems) {
             return;
         }
         items.value = data.items ?? items.value;
-        toast.success(t("photo.galleries.itemsAdded", { count: data.added }));
+        toast.success(t("photo.galleries.items_added", { count: data.added }));
     }
 
     // ── Single delete ─────────────────────────────────────────────────────────
@@ -78,7 +78,7 @@ export function useGalleryEditItems(props, initialItems) {
             selected.value.delete(item.id);
             selected.value = new Set(selected.value);
             pendingDeleteItem.value = null;
-            toast.success(t("photo.galleries.itemsDeleted", { count: 1 }));
+            toast.success(t("photo.galleries.items_deleted", { count: 1 }));
         } else {
             toast.error(t("shared.common.error"));
         }
@@ -109,7 +109,7 @@ export function useGalleryEditItems(props, initialItems) {
             selected.value = new Set();
             pendingBulkDelete.value = false;
             toast.success(
-                t("photo.galleries.itemsDeleted", { count: data.deleted }),
+                t("photo.galleries.items_deleted", { count: data.deleted }),
             );
         } else {
             toast.error(t("shared.common.error"));

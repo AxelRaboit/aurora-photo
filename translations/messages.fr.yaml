@@ -54,62 +54,62 @@ photo:
     add: Ajouter une galerie
     create: Nouvelle galerie
     edit: Modifier la galerie
-    deleteConfirm: 'Supprimer la galerie « {title} » ? Cette action est définitive.'
+    delete_confirm: 'Supprimer la galerie « {title} » ? Cette action est définitive.'
     created: Galerie créée.
     updated: Galerie mise à jour.
     deleted: Galerie supprimée.
     empty: Aucune galerie pour le moment.
-    searchPlaceholder: Rechercher par titre ou slug…
-    itemsLabel: photo(s)
-    expiresAt: 'Expire le'
-    passwordSet: Mot de passe défini
-    clearPassword: Retirer le mot de passe
-    openEditor: Gérer les photos
-    openPublic: Voir la galerie
-    backToList: Retour aux galeries
-    addPhotos: Ajouter des photos
-    selectAll: Tout sélectionner
-    toggleSelect: Sélectionner / désélectionner
-    bulkDelete: Supprimer la sélection
-    noPhotos: Aucune photo dans cette galerie. Cliquez sur « Ajouter des photos » pour commencer.
-    captionPlaceholder: Légende (optionnelle)
-    picksTotal: favori(s) au total
-    itemDeleteConfirm: Supprimer cette photo de la galerie ?
+    search_placeholder: Rechercher par titre ou slug…
+    items_label: photo(s)
+    expires_at: 'Expire le'
+    password_set: Mot de passe défini
+    clear_password: Retirer le mot de passe
+    open_editor: Gérer les photos
+    open_public: Voir la galerie
+    back_to_list: Retour aux galeries
+    add_photos: Ajouter des photos
+    select_all: Tout sélectionner
+    toggle_select: Sélectionner / désélectionner
+    bulk_delete: Supprimer la sélection
+    no_photos: Aucune photo dans cette galerie. Cliquez sur « Ajouter des photos » pour commencer.
+    caption_placeholder: Légende (optionnelle)
+    picks_total: favori(s) au total
+    item_delete_confirm: Supprimer cette photo de la galerie ?
     usage:
-      itemCount: '{count, plural, =1 {1 photo dans la galerie} other {# photos dans la galerie}}'
-    itemsBulkDeleteConfirm: 'Supprimer {count} photo(s) ?'
-    itemsAdded: '{count} photo(s) ajoutée(s).'
-    itemsDeleted: '{count} photo(s) supprimée(s).'
+      item_count: '{count, plural, =1 {1 photo dans la galerie} other {# photos dans la galerie}}'
+    items_bulk_delete_confirm: 'Supprimer {count} photo(s) ?'
+    items_added: '{count} photo(s) ajoutée(s).'
+    items_deleted: '{count} photo(s) supprimée(s).'
     fields:
-      coverMedia: Image de couverture
-      coverMediaHint: Affichée sur la liste des galeries et utilisable comme illustration partagée.
+      cover_media: Image de couverture
+      cover_media_hint: Affichée sur la liste des galeries et utilisable comme illustration partagée.
       title: Titre
-      titlePlaceholder: 'Mariage Camille & Julien'
+      title_placeholder: 'Mariage Camille & Julien'
       slug: Slug
-      slugPlaceholder: mariage-camille-julien
-      slugHint: 'Identifiant URL (ex : mariage-camille-julien)'
+      slug_placeholder: mariage-camille-julien
+      slug_hint: 'Identifiant URL (ex : mariage-camille-julien)'
       description: Description
-      descriptionPlaceholder: Quelques mots sur cette galerie (visible par le client)
+      description_placeholder: Quelques mots sur cette galerie (visible par le client)
       password: Mot de passe
-      passwordChange: 'Nouveau mot de passe (laisser vide pour conserver)'
-      passwordPlaceholder: 'Mot de passe partagé avec le client'
-      passwordHint: 'Si vide, la galerie est accessible sans mot de passe.'
-      expiresAt: Date d'expiration
-      expiresAtPlaceholder: 'Sélectionner une date'
-      expiresAtPastWarning: La date choisie est dans le passé, la galerie sera immédiatement inaccessible aux clients.
-      allowOriginals: Autoriser le téléchargement des originaux
-      allowZipDownload: Autoriser le téléchargement ZIP global
-      picksRequireIdentity: 'Demander nom et email avant de cocher des favoris'
-      maxPicks: Nombre maximum de favoris
-      maxPicksPlaceholder: 'Ex : 30'
-      maxPicksHint: 'Limite par visiteur (vide = illimité). Les autres types de pick (impression / suppression) ne sont pas affectés.'
-      allowVisitorComments: Autoriser les commentaires par photo
-      watermarkEnabled: Appliquer un filigrane sur les téléchargements web
-      watermarkText: Texte du filigrane
-      watermarkTextPlaceholder: '© Studio'
-      watermarkHint: 'Ex : © Studio — affiché en surimpression sur les versions web. Les originaux ne sont jamais marqués.'
-      clientContact: Client (CRM)
-      clientContactPlaceholder: Rechercher par nom ou email…
+      password_change: 'Nouveau mot de passe (laisser vide pour conserver)'
+      password_placeholder: 'Mot de passe partagé avec le client'
+      password_hint: 'Si vide, la galerie est accessible sans mot de passe.'
+      expires_at: Date d'expiration
+      expires_at_placeholder: 'Sélectionner une date'
+      expires_at_past_warning: La date choisie est dans le passé, la galerie sera immédiatement inaccessible aux clients.
+      allow_originals: Autoriser le téléchargement des originaux
+      allow_zip_download: Autoriser le téléchargement ZIP global
+      picks_require_identity: 'Demander nom et email avant de cocher des favoris'
+      max_picks: Nombre maximum de favoris
+      max_picks_placeholder: 'Ex : 30'
+      max_picks_hint: 'Limite par visiteur (vide = illimité). Les autres types de pick (impression / suppression) ne sont pas affectés.'
+      allow_visitor_comments: Autoriser les commentaires par photo
+      watermark_enabled: Appliquer un filigrane sur les téléchargements web
+      watermark_text: Texte du filigrane
+      watermark_text_placeholder: '© Studio'
+      watermark_hint: 'Ex : © Studio — affiché en surimpression sur les versions web. Les originaux ne sont jamais marqués.'
+      client_contact: Client (CRM)
+      client_contact_placeholder: Rechercher par nom ou email…
     errors:
       title_required: Le titre est requis.
       slug_required: Le slug est requis.
@@ -128,25 +128,25 @@ photo:
       invite_email_taken: Une invitation a déjà été créée pour cet email.
     admin:
       reopen: Rouvrir la sélection
-      reopenConfirm: 'Rouvrir cette galerie permettra au client de modifier sa sélection. Continuer ?'
+      reopen_confirm: 'Rouvrir cette galerie permettra au client de modifier sa sélection. Continuer ?'
       reopened: Galerie rouverte.
       export: Exporter (XLSX)
-      sortByConsensus: Trier par consensus
-      consensusTooltip: 'Pickée par {count}/{total} visiteurs.'
+      sort_by_consensus: Trier par consensus
+      consensus_tooltip: 'Pickée par {count}/{total} visiteurs.'
       comments:
         title: Commentaires visiteurs
         empty: Aucun commentaire pour le moment.
         delete: Supprimer
-        deleteConfirm: Supprimer ce commentaire ?
+        delete_confirm: Supprimer ce commentaire ?
         anonymous: Visiteur anonyme
         deleted: Commentaire supprimé.
       finalizations:
         title: Sélections validées
         reopen: Rouvrir cette validation
-        reopenConfirm: 'Cette personne pourra à nouveau modifier sa sélection. Continuer ?'
+        reopen_confirm: 'Cette personne pourra à nouveau modifier sa sélection. Continuer ?'
         reopened: Validation rouverte.
         empty: Aucune photo cochée par cette personne.
-        invitedAs: 'Invité comme : {name} <{email}>'
+        invited_as: 'Invité comme : {name} <{email}>'
       invites:
         title: Invitations
         intro: Envoyez un lien magique personnel à chaque invité — pas de mot de passe à partager, et vous voyez qui a consulté la galerie.
@@ -154,27 +154,27 @@ photo:
         email: Email
         send: Envoyer le lien
         resend: Renvoyer
-        notSent: Lien non envoyé
-        sentAt: 'Envoyé le {date}'
-        lastSeen: 'Dernière visite : {date}'
-        notSeen: Pas encore consulté
+        not_sent: Lien non envoyé
+        sent_at: 'Envoyé le {date}'
+        last_seen: 'Dernière visite : {date}'
+        not_seen: Pas encore consulté
         created: Invitation créée.
         sent: Email envoyé.
         deleted: Invitation supprimée.
-        deleteConfirmTitle: Supprimer cette invitation ?
-        deleteConfirm: '{name} ne pourra plus accéder à la galerie via son lien magique.'
+        delete_confirm_title: Supprimer cette invitation ?
+        delete_confirm: '{name} ne pourra plus accéder à la galerie via son lien magique.'
   frontend:
     pick: Ajouter aux favoris
     unpick: Retirer des favoris
     picked: favori(s)
     download: Télécharger
-    downloadAll: Tout télécharger
-    downloadPicks: Télécharger ma sélection
+    download_all: Tout télécharger
+    download_picks: Télécharger ma sélection
     finalize: Valider ma sélection
-    finalizedBadge: Sélection validée
-    finalizedToast: Votre sélection a été envoyée au photographe.
-    finalizeIntro: 'Vous avez sélectionné {count} photo(s). Confirmez-vous votre choix ?'
-    alreadyFinalized: La sélection est déjà validée.
+    finalized_badge: Sélection validée
+    finalized_toast: Votre sélection a été envoyée au photographe.
+    finalize_intro: 'Vous avez sélectionné {count} photo(s). Confirmez-vous votre choix ?'
+    already_finalized: La sélection est déjà validée.
     empty: Aucune photo dans cette galerie pour le moment.
     unlock:
       subtitle: Cette galerie est protégée. Saisissez le mot de passe.
@@ -186,18 +186,18 @@ photo:
       title: Vos coordonnées
       intro: Le photographe demande votre nom et email avant de cocher vos favoris.
       name: Nom
-      namePlaceholder: 'Camille Dupont'
+      name_placeholder: 'Camille Dupont'
       email: Email
-      emailPlaceholder: 'camille@exemple.com'
+      email_placeholder: 'camille@exemple.com'
       submit: Continuer
     kinds:
       favorite: Favoris
       print: À imprimer
       discard: À retirer
-      tabFavorite: Mes favoris
-      tabPrint: À imprimer
-      tabDiscard: À retirer
-    maxPicksProgress: '{count}/{limit} favoris'
+      tab_favorite: Mes favoris
+      tab_print: À imprimer
+      tab_discard: À retirer
+    max_picks_progress: '{count}/{limit} favoris'
     compare:
       add: Ajouter à la comparaison
       remove: Retirer de la comparaison
@@ -214,7 +214,7 @@ photo:
       intro: 'Envoyez ce lien à votre conjoint ou à un proche pour qu''il consulte vos {count} photo(s) sélectionnée(s) (lecture seule).'
       copy: Copier
       copied: Copié !
-      readOnlyBadge: Sélection partagée — lecture seule
+      read_only_badge: Sélection partagée — lecture seule
     comments:
       add: Ajouter un commentaire
       label: Votre commentaire
@@ -222,9 +222,9 @@ photo:
       submit: Envoyer
       sent: Commentaire envoyé.
       cancel: Annuler
-      nameRequired: Le nom est requis.
-      emailRequired: L'email est requis.
-      contentRequired: Veuillez écrire un commentaire.
+      name_required: Le nom est requis.
+      email_required: L'email est requis.
+      content_required: Veuillez écrire un commentaire.
   mail:
     gallery:
       subject_finalized: '{title} — Sélection terminée'

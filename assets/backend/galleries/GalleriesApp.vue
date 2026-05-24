@@ -69,7 +69,7 @@ const onCoverChange = onGalleryCoverChange;
         <div class="flex items-center justify-between gap-4 flex-wrap">
             <AppSearchInput
                 :model-value="searchInput"
-                :placeholder="t('photo.galleries.searchPlaceholder')"
+                :placeholder="t('photo.galleries.search_placeholder')"
                 class="flex-1"
                 v-on:update:model-value="onSearch"
             />
@@ -114,7 +114,7 @@ const onCoverChange = onGalleryCoverChange;
                             <span class="truncate">{{ g.client.name }}</span>
                         </p>
                         <div class="flex items-center gap-0.5 pt-1" v-on:click.stop>
-                            <AppIconButton v-if="editPath" color="sky" :title="t('photo.galleries.openEditor')" :href="buildPath(editPath, { id: g.id })">
+                            <AppIconButton v-if="editPath" color="sky" :title="t('photo.galleries.open_editor')" :href="buildPath(editPath, { id: g.id })">
                                 <ImageIcon class="w-3.5 h-3.5" :stroke-width="2" />
                             </AppIconButton>
                             <AppIconButton v-if="can('photo.galleries.edit')" :title="t('shared.common.edit')" v-on:click="openEdit(g)">
@@ -141,15 +141,15 @@ const onCoverChange = onGalleryCoverChange;
         >
             <form class="space-y-4" v-on:submit.prevent="submitCreate">
                 <AppImagePickerField
-                    :label="t('photo.galleries.fields.coverMedia')"
-                    :hint="t('photo.galleries.fields.coverMediaHint')"
+                    :label="t('photo.galleries.fields.cover_media')"
+                    :hint="t('photo.galleries.fields.cover_media_hint')"
                     :model-value="coverState(newForm)"
                     :size="120"
                     v-on:update:model-value="onCoverChange(newForm, $event)"
                 />
                 <AppInput
                     :label="t('photo.galleries.fields.title')"
-                    :placeholder="t('photo.galleries.fields.titlePlaceholder')"
+                    :placeholder="t('photo.galleries.fields.title_placeholder')"
                     :model-value="newForm.title"
                     :error="createErrors.title"
                     required
@@ -157,17 +157,17 @@ const onCoverChange = onGalleryCoverChange;
                 />
                 <AppInput
                     :label="t('photo.galleries.fields.slug')"
-                    :placeholder="t('photo.galleries.fields.slugPlaceholder')"
+                    :placeholder="t('photo.galleries.fields.slug_placeholder')"
                     :model-value="newForm.slug"
                     :error="createErrors.slug"
-                    :hint="t('photo.galleries.fields.slugHint')"
+                    :hint="t('photo.galleries.fields.slug_hint')"
                     required
                     v-on:update:model-value="onCreateSlugInput"
                 />
                 <AppTextarea
                     v-model="newForm.description"
                     :label="t('photo.galleries.fields.description')"
-                    :placeholder="t('photo.galleries.fields.descriptionPlaceholder')"
+                    :placeholder="t('photo.galleries.fields.description_placeholder')"
                     :rows="3"
                 />
                 <AppInput
@@ -175,58 +175,58 @@ const onCoverChange = onGalleryCoverChange;
                     type="password"
                     :toggleable="true"
                     :label="t('photo.galleries.fields.password')"
-                    :placeholder="t('photo.galleries.fields.passwordPlaceholder')"
-                    :hint="t('photo.galleries.fields.passwordHint')"
+                    :placeholder="t('photo.galleries.fields.password_placeholder')"
+                    :hint="t('photo.galleries.fields.password_hint')"
                     autocomplete="new-password"
                 />
                 <div>
                     <AppDatePicker
                         v-model="newForm.expiresAt"
-                        :label="t('photo.galleries.fields.expiresAt')"
-                        :placeholder="t('photo.galleries.fields.expiresAtPlaceholder')"
+                        :label="t('photo.galleries.fields.expires_at')"
+                        :placeholder="t('photo.galleries.fields.expires_at_placeholder')"
                     />
                     <p v-if="isExpiryInPast(newForm.expiresAt)" class="mt-1 text-xs text-amber-500">
-                        ⚠ {{ t("photo.galleries.fields.expiresAtPastWarning") }}
+                        ⚠ {{ t("photo.galleries.fields.expires_at_past_warning") }}
                     </p>
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowOriginals") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_originals") }}</span>
                     <AppToggle v-model="newForm.allowOriginals" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowZipDownload") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_zip_download") }}</span>
                     <AppToggle v-model="newForm.allowZipDownload" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.picksRequireIdentity") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.picks_require_identity") }}</span>
                     <AppToggle v-model="newForm.picksRequireIdentity" />
                 </div>
                 <AppInput
                     v-model="newForm.maxPicks"
                     type="number"
                     min="1"
-                    :label="t('photo.galleries.fields.maxPicks')"
-                    :placeholder="t('photo.galleries.fields.maxPicksPlaceholder')"
-                    :hint="t('photo.galleries.fields.maxPicksHint')"
+                    :label="t('photo.galleries.fields.max_picks')"
+                    :placeholder="t('photo.galleries.fields.max_picks_placeholder')"
+                    :hint="t('photo.galleries.fields.max_picks_hint')"
                 />
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowVisitorComments") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_visitor_comments") }}</span>
                     <AppToggle v-model="newForm.allowVisitorComments" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.watermarkEnabled") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.watermark_enabled") }}</span>
                     <AppToggle v-model="newForm.watermarkEnabled" />
                 </div>
                 <AppInput
                     v-if="newForm.watermarkEnabled"
                     v-model="newForm.watermarkText"
-                    :label="t('photo.galleries.fields.watermarkText')"
-                    :placeholder="t('photo.galleries.fields.watermarkTextPlaceholder')"
-                    :hint="t('photo.galleries.fields.watermarkHint')"
+                    :label="t('photo.galleries.fields.watermark_text')"
+                    :placeholder="t('photo.galleries.fields.watermark_text_placeholder')"
+                    :hint="t('photo.galleries.fields.watermark_hint')"
                     maxlength="100"
                 />
                 <div v-if="crmEnabled">
-                    <p class="text-xs font-medium text-secondary uppercase tracking-wide mb-1.5">{{ t("photo.galleries.fields.clientContact") }}</p>
+                    <p class="text-xs font-medium text-secondary uppercase tracking-wide mb-1.5">{{ t("photo.galleries.fields.client_contact") }}</p>
                     <div v-if="newForm.clientLabel" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-2 border border-line">
                         <User class="w-4 h-4 text-accent-500 shrink-0" :stroke-width="2" />
                         <span class="flex-1 text-sm text-primary truncate">{{ newForm.clientLabel }}</span>
@@ -235,7 +235,7 @@ const onCoverChange = onGalleryCoverChange;
                     <div v-else class="relative">
                         <AppInput
                             type="text"
-                            :placeholder="t('photo.galleries.fields.clientContactPlaceholder')"
+                            :placeholder="t('photo.galleries.fields.client_contact_placeholder')"
                             :model-value="contactSearchQuery"
                             v-on:update:model-value="onContactQueryInput(newForm, $event)"
                         />
@@ -271,8 +271,8 @@ const onCoverChange = onGalleryCoverChange;
         >
             <form class="space-y-4" v-on:submit.prevent="submitEdit">
                 <AppImagePickerField
-                    :label="t('photo.galleries.fields.coverMedia')"
-                    :hint="t('photo.galleries.fields.coverMediaHint')"
+                    :label="t('photo.galleries.fields.cover_media')"
+                    :hint="t('photo.galleries.fields.cover_media_hint')"
                     :model-value="coverState(editForm)"
                     :size="120"
                     v-on:update:model-value="onCoverChange(editForm, $event)"
@@ -280,84 +280,84 @@ const onCoverChange = onGalleryCoverChange;
                 <AppInput
                     v-model="editForm.title"
                     :label="t('photo.galleries.fields.title')"
-                    :placeholder="t('photo.galleries.fields.titlePlaceholder')"
+                    :placeholder="t('photo.galleries.fields.title_placeholder')"
                     :error="editErrors.title"
                     required
                 />
                 <AppInput
                     v-model="editForm.slug"
                     :label="t('photo.galleries.fields.slug')"
-                    :placeholder="t('photo.galleries.fields.slugPlaceholder')"
+                    :placeholder="t('photo.galleries.fields.slug_placeholder')"
                     :error="editErrors.slug"
                     required
                 />
                 <AppTextarea
                     v-model="editForm.description"
                     :label="t('photo.galleries.fields.description')"
-                    :placeholder="t('photo.galleries.fields.descriptionPlaceholder')"
+                    :placeholder="t('photo.galleries.fields.description_placeholder')"
                     :rows="3"
                 />
                 <div v-if="editingHasPassword && !editForm.clearPassword" class="flex items-center justify-between text-sm">
-                    <span class="flex items-center gap-2 text-primary"><Lock class="w-4 h-4" :stroke-width="2" />{{ t("photo.galleries.passwordSet") }}</span>
-                    <AppTextLinkButton color="danger" size="xs" v-on:click="editForm.clearPassword = true">{{ t("photo.galleries.clearPassword") }}</AppTextLinkButton>
+                    <span class="flex items-center gap-2 text-primary"><Lock class="w-4 h-4" :stroke-width="2" />{{ t("photo.galleries.password_set") }}</span>
+                    <AppTextLinkButton color="danger" size="xs" v-on:click="editForm.clearPassword = true">{{ t("photo.galleries.clear_password") }}</AppTextLinkButton>
                 </div>
                 <AppInput
                     v-model="editForm.password"
                     type="password"
                     :toggleable="true"
-                    :label="editingHasPassword ? t('photo.galleries.fields.passwordChange') : t('photo.galleries.fields.password')"
-                    :placeholder="t('photo.galleries.fields.passwordPlaceholder')"
-                    :hint="t('photo.galleries.fields.passwordHint')"
+                    :label="editingHasPassword ? t('photo.galleries.fields.password_change') : t('photo.galleries.fields.password')"
+                    :placeholder="t('photo.galleries.fields.password_placeholder')"
+                    :hint="t('photo.galleries.fields.password_hint')"
                     autocomplete="new-password"
                 />
                 <div>
                     <AppDatePicker
                         v-model="editForm.expiresAt"
-                        :label="t('photo.galleries.fields.expiresAt')"
-                        :placeholder="t('photo.galleries.fields.expiresAtPlaceholder')"
+                        :label="t('photo.galleries.fields.expires_at')"
+                        :placeholder="t('photo.galleries.fields.expires_at_placeholder')"
                     />
                     <p v-if="isExpiryInPast(editForm.expiresAt)" class="mt-1 text-xs text-amber-500">
-                        ⚠ {{ t("photo.galleries.fields.expiresAtPastWarning") }}
+                        ⚠ {{ t("photo.galleries.fields.expires_at_past_warning") }}
                     </p>
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowOriginals") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_originals") }}</span>
                     <AppToggle v-model="editForm.allowOriginals" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowZipDownload") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_zip_download") }}</span>
                     <AppToggle v-model="editForm.allowZipDownload" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.picksRequireIdentity") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.picks_require_identity") }}</span>
                     <AppToggle v-model="editForm.picksRequireIdentity" />
                 </div>
                 <AppInput
                     v-model="editForm.maxPicks"
                     type="number"
                     min="1"
-                    :label="t('photo.galleries.fields.maxPicks')"
-                    :placeholder="t('photo.galleries.fields.maxPicksPlaceholder')"
-                    :hint="t('photo.galleries.fields.maxPicksHint')"
+                    :label="t('photo.galleries.fields.max_picks')"
+                    :placeholder="t('photo.galleries.fields.max_picks_placeholder')"
+                    :hint="t('photo.galleries.fields.max_picks_hint')"
                 />
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allowVisitorComments") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.allow_visitor_comments") }}</span>
                     <AppToggle v-model="editForm.allowVisitorComments" />
                 </div>
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.watermarkEnabled") }}</span>
+                    <span class="text-sm text-primary">{{ t("photo.galleries.fields.watermark_enabled") }}</span>
                     <AppToggle v-model="editForm.watermarkEnabled" />
                 </div>
                 <AppInput
                     v-if="editForm.watermarkEnabled"
                     v-model="editForm.watermarkText"
-                    :label="t('photo.galleries.fields.watermarkText')"
-                    :placeholder="t('photo.galleries.fields.watermarkTextPlaceholder')"
-                    :hint="t('photo.galleries.fields.watermarkHint')"
+                    :label="t('photo.galleries.fields.watermark_text')"
+                    :placeholder="t('photo.galleries.fields.watermark_text_placeholder')"
+                    :hint="t('photo.galleries.fields.watermark_hint')"
                     maxlength="100"
                 />
                 <div v-if="crmEnabled">
-                    <p class="text-xs font-medium text-secondary uppercase tracking-wide mb-1.5">{{ t("photo.galleries.fields.clientContact") }}</p>
+                    <p class="text-xs font-medium text-secondary uppercase tracking-wide mb-1.5">{{ t("photo.galleries.fields.client_contact") }}</p>
                     <div v-if="editForm.clientLabel" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-2 border border-line">
                         <User class="w-4 h-4 text-accent-500 shrink-0" :stroke-width="2" />
                         <span class="flex-1 text-sm text-primary truncate">{{ editForm.clientLabel }}</span>
@@ -366,7 +366,7 @@ const onCoverChange = onGalleryCoverChange;
                     <div v-else class="relative">
                         <AppInput
                             type="text"
-                            :placeholder="t('photo.galleries.fields.clientContactPlaceholder')"
+                            :placeholder="t('photo.galleries.fields.client_contact_placeholder')"
                             :model-value="contactSearchQuery"
                             v-on:update:model-value="onContactQueryInput(editForm, $event)"
                         />
@@ -400,7 +400,7 @@ const onCoverChange = onGalleryCoverChange;
             :icon="Trash2"
             v-on:close="pendingDelete = null"
         >
-            <p class="text-sm text-primary">{{ t("photo.galleries.deleteConfirm", { title: pendingDelete?.title ?? '' }) }}</p>
+            <p class="text-sm text-primary">{{ t("photo.galleries.delete_confirm", { title: pendingDelete?.title ?? '' }) }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingDelete = null"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>

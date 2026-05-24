@@ -78,10 +78,10 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
         <!-- Toolbar -->
         <div class="flex items-center justify-between gap-3 flex-wrap">
             <div class="flex items-center gap-3">
-                <span class="text-sm text-muted">{{ items.length }} {{ t("photo.galleries.itemsLabel") }}</span>
+                <span class="text-sm text-muted">{{ items.length }} {{ t("photo.galleries.items_label") }}</span>
                 <span v-if="picks.total > 0" class="inline-flex items-center gap-1 text-sm text-accent-500">
                     <Heart class="w-3.5 h-3.5" :stroke-width="2" fill="currentColor" />
-                    {{ picks.total }} {{ t("photo.galleries.picksTotal") }}
+                    {{ picks.total }} {{ t("photo.galleries.picks_total") }}
                 </span>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
@@ -93,7 +93,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                     rel="noopener"
                 >
                     <ExternalLink class="w-4 h-4" :stroke-width="2" />
-                    {{ t("photo.galleries.openPublic") }}
+                    {{ t("photo.galleries.open_public") }}
                 </AppButton>
                 <AppButton v-if="exportPath" variant="secondary" size="md" :href="exportPath">
                     <Download class="w-4 h-4" :stroke-width="2" />
@@ -105,7 +105,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                 </AppButton>
                 <AppButton variant="primary" size="md" v-on:click="addPhotos">
                     <Plus class="w-3.5 h-3.5" :stroke-width="2" />
-                    {{ t("photo.galleries.addPhotos") }}
+                    {{ t("photo.galleries.add_photos") }}
                 </AppButton>
             </div>
         </div>
@@ -129,11 +129,11 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
         <!-- Bulk actions bar -->
         <div v-if="items.length > 0" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg bg-surface border border-line">
             <AppCheckbox :model-value="allSelected" v-on:update:model-value="toggleSelectAll">
-                {{ t("photo.galleries.selectAll") }}
+                {{ t("photo.galleries.select_all") }}
                 <span v-if="selected.size > 0" class="text-muted">({{ selected.size }})</span>
             </AppCheckbox>
             <div class="flex items-center gap-2">
-                <AppCheckbox v-if="visitorCount > 0" v-model="sortByConsensus" :label="t('photo.galleries.admin.sortByConsensus')" />
+                <AppCheckbox v-if="visitorCount > 0" v-model="sortByConsensus" :label="t('photo.galleries.admin.sort_by_consensus')" />
                 <AppButton
                     v-if="selected.size > 0"
                     variant="danger"
@@ -142,13 +142,13 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                     v-on:click="askBulkDelete"
                 >
                     <Trash2 class="w-4 h-4" :stroke-width="2" />
-                    {{ t("photo.galleries.bulkDelete") }}
+                    {{ t("photo.galleries.bulk_delete") }}
                 </AppButton>
             </div>
         </div>
 
         <AppNoData v-if="items.length === 0">
-            {{ t("photo.galleries.noPhotos") }}
+            {{ t("photo.galleries.no_photos") }}
         </AppNoData>
 
         <!-- Photo grid -->
@@ -179,7 +179,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                             v-if="visitorCount > 1 && consensusFavorite(item.id) > 0"
                             class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-white text-[10px] font-bold"
                             :class="consensusFavorite(item.id) === visitorCount ? 'bg-emerald-500' : 'bg-accent-500'"
-                            :title="t('photo.galleries.admin.consensusTooltip', { count: consensusFavorite(item.id), total: visitorCount })"
+                            :title="t('photo.galleries.admin.consensus_tooltip', { count: consensusFavorite(item.id), total: visitorCount })"
                         >
                             <Heart class="w-2.5 h-2.5" :stroke-width="3" fill="currentColor" />
                             {{ consensusFavorite(item.id) }}/{{ visitorCount }}
@@ -203,7 +203,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                     <template v-if="editingCaptionId === item.id">
                         <AppInput
                             v-model="editingCaptionDraft"
-                            :placeholder="t('photo.galleries.captionPlaceholder')"
+                            :placeholder="t('photo.galleries.caption_placeholder')"
                             v-on:keyup.enter="saveCaption(item)"
                             v-on:keyup.escape="cancelCaption"
                         />
@@ -224,7 +224,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                         v-on:click="startCaption(item)"
                     >
                         <Pencil class="w-3 h-3 shrink-0 opacity-50" :stroke-width="2" />
-                        <span class="truncate">{{ item.caption || t("photo.galleries.captionPlaceholder") }}</span>
+                        <span class="truncate">{{ item.caption || t("photo.galleries.caption_placeholder") }}</span>
                     </AppButton>
                 </div>
             </div>
@@ -243,7 +243,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                     <AppInput
                         v-model="inviteForm.name"
                         :label="t('photo.galleries.admin.invites.name')"
-                        :placeholder="t('photo.frontend.identity.namePlaceholder')"
+                        :placeholder="t('photo.frontend.identity.name_placeholder')"
                         :error="inviteErrors.name"
                         required
                     />
@@ -253,7 +253,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                         v-model="inviteForm.email"
                         type="email"
                         :label="t('photo.galleries.admin.invites.email')"
-                        :placeholder="t('photo.frontend.identity.emailPlaceholder')"
+                        :placeholder="t('photo.frontend.identity.email_placeholder')"
                         :error="inviteErrors.email"
                         required
                     />
@@ -271,10 +271,10 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                             <span class="text-muted ml-1">&lt;{{ invite.email }}&gt;</span>
                         </p>
                         <p class="text-xs text-muted mt-0.5 flex items-center gap-3 flex-wrap">
-                            <span v-if="!invite.sentAt" class="text-amber-500">{{ t("photo.galleries.admin.invites.notSent") }}</span>
-                            <span v-else>{{ t("photo.galleries.admin.invites.sentAt", { date: new Date(invite.sentAt).toLocaleString() }) }}</span>
-                            <span v-if="invite.lastSeenAt" class="text-emerald-500">{{ t("photo.galleries.admin.invites.lastSeen", { date: new Date(invite.lastSeenAt).toLocaleString() }) }}</span>
-                            <span v-else-if="invite.sentAt" class="text-muted italic">{{ t("photo.galleries.admin.invites.notSeen") }}</span>
+                            <span v-if="!invite.sentAt" class="text-amber-500">{{ t("photo.galleries.admin.invites.not_sent") }}</span>
+                            <span v-else>{{ t("photo.galleries.admin.invites.sent_at", { date: new Date(invite.sentAt).toLocaleString() }) }}</span>
+                            <span v-if="invite.lastSeenAt" class="text-emerald-500">{{ t("photo.galleries.admin.invites.last_seen", { date: new Date(invite.lastSeenAt).toLocaleString() }) }}</span>
+                            <span v-else-if="invite.sentAt" class="text-muted italic">{{ t("photo.galleries.admin.invites.not_seen") }}</span>
                         </p>
                     </div>
                     <AppIconButton
@@ -317,7 +317,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
                             </p>
                             <p v-if="finalization.invitedAs" class="text-xs text-amber-600 mt-0.5 flex items-center gap-1">
                                 <Mail class="w-3 h-3" :stroke-width="2" />
-                                {{ t("photo.galleries.admin.finalizations.invitedAs", { name: finalization.invitedAs.name, email: finalization.invitedAs.email }) }}
+                                {{ t("photo.galleries.admin.finalizations.invited_as", { name: finalization.invitedAs.name, email: finalization.invitedAs.email }) }}
                             </p>
                             <p class="text-xs text-muted mt-0.5 flex items-center gap-3 flex-wrap">
                                 <span>{{ new Date(finalization.finalizedAt).toLocaleString() }}</span>
@@ -416,7 +416,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
             :closeable="false"
             v-on:close="showReopenModal = false"
         >
-            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.reopenConfirm") }}</p>
+            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.reopen_confirm") }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="showReopenModal = false"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>
@@ -432,12 +432,12 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
         <AppModal
             :show="!!pendingInviteDelete"
             max-width="sm"
-            :title="t('photo.galleries.admin.invites.deleteConfirmTitle')"
+            :title="t('photo.galleries.admin.invites.delete_confirm_title')"
             :icon="Trash2"
             :closeable="false"
             v-on:close="pendingInviteDelete = null"
         >
-            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.invites.deleteConfirm", { name: pendingInviteDelete?.name }) }}</p>
+            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.invites.delete_confirm", { name: pendingInviteDelete?.name }) }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingInviteDelete = null"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>
@@ -455,7 +455,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
             :closeable="false"
             v-on:close="pendingFinalizationDelete = null"
         >
-            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.finalizations.reopenConfirm") }}</p>
+            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.finalizations.reopen_confirm") }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingFinalizationDelete = null"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>
@@ -476,7 +476,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
             :closeable="false"
             v-on:close="pendingCommentDelete = null"
         >
-            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.comments.deleteConfirm") }}</p>
+            <p class="text-sm text-secondary">{{ t("photo.galleries.admin.comments.delete_confirm") }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingCommentDelete = null"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>
@@ -494,7 +494,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
             :icon="Trash2"
             v-on:close="pendingDeleteItem = null"
         >
-            <p class="text-sm text-primary">{{ t("photo.galleries.itemDeleteConfirm") }}</p>
+            <p class="text-sm text-primary">{{ t("photo.galleries.item_delete_confirm") }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingDeleteItem = null"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>
@@ -512,7 +512,7 @@ const { expandedFinalizations, finalizationsPage, finalizationsTotalPages, pagin
             :icon="Trash2"
             v-on:close="pendingBulkDelete = false"
         >
-            <p class="text-sm text-primary">{{ t("photo.galleries.itemsBulkDeleteConfirm", { count: selected.size }) }}</p>
+            <p class="text-sm text-primary">{{ t("photo.galleries.items_bulk_delete_confirm", { count: selected.size }) }}</p>
             <template #footer>
                 <AppModalFooter>
                     <AppButton variant="ghost" size="md" v-on:click="pendingBulkDelete = false"><X class="w-3.5 h-3.5" :stroke-width="2" /> {{ t("shared.common.cancel") }}</AppButton>

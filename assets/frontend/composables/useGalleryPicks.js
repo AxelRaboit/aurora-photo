@@ -80,7 +80,7 @@ export function useGalleryPicks({
         }
         if (data?.error === "finalized") {
             finalized.value = true;
-            toast.info(t("photo.frontend.alreadyFinalized"));
+            toast.info(t("photo.frontend.already_finalized"));
             return;
         }
         if (!data?.success) {
@@ -97,7 +97,7 @@ export function useGalleryPicks({
 
     async function togglePick(itemId, kind = KIND.Favorite) {
         if (finalized.value) {
-            toast.info(t("photo.frontend.alreadyFinalized"));
+            toast.info(t("photo.frontend.already_finalized"));
             return;
         }
         if (gallery.picksRequireIdentity && !identityKnown.value) {

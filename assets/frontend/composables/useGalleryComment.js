@@ -27,16 +27,16 @@ export function useGalleryComment({
         commentNameError.value = "";
         commentEmailError.value = "";
         if (!commentDraft.value.trim()) {
-            toast.error(t("photo.frontend.comments.contentRequired"));
+            toast.error(t("photo.frontend.comments.content_required"));
             return;
         }
         if (!visitorName.value.trim()) {
-            commentNameError.value = t("photo.frontend.comments.nameRequired");
+            commentNameError.value = t("photo.frontend.comments.name_required");
             return;
         }
         if (!visitorEmail.value.trim()) {
             commentEmailError.value = t(
-                "photo.frontend.comments.emailRequired",
+                "photo.frontend.comments.email_required",
             );
             return;
         }
