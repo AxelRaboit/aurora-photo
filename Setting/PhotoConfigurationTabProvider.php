@@ -20,6 +20,7 @@ final readonly class PhotoConfigurationTabProvider implements ConfigurationTabPr
                 labelKey: $case->getLabel(),
                 descriptionKey: $case->getDescription(),
                 defaultValue: $case->getDefaultValue(),
+                placeholderKey: $case->getPlaceholder(),
             );
         }
 
