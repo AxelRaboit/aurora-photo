@@ -40,7 +40,7 @@ final readonly class PhotoMediaUsageProvider implements MediaUsageProviderInterf
         $items = $this->connection->fetchAllAssociative(
             'SELECT g.id, g.title, COUNT(i.id) AS cnt
              FROM core_photo_gallery_items i
-             INNER JOIN photo_galleries g ON g.id = i.gallery_id
+             INNER JOIN core_photo_galleries g ON g.id = i.gallery_id
              WHERE i.media_id = :id
              GROUP BY g.id, g.title',
             ['id' => $mediaId],
