@@ -24,9 +24,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Gallery invites sub-domain — create / send / delete an invite for a
  * gallery. Split from `GalleriesController`. Route names preserved
- * (`backend_galleries_invites_*`).
+ * (`backend_photo_galleries_invites_*`).
  */
-#[Route('/backend/galleries', name: 'backend_galleries')]
+#[Route('/backend/photo/galleries', name: 'backend_photo_galleries')]
 #[IsGranted('photo.galleries.view')]
 final class GalleryInvitesController extends AbstractController
 {

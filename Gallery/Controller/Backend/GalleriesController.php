@@ -34,7 +34,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  *  - `GalleryInvitesController` — invite create/send/delete
  *  - `GalleryItemsController` — item add/reorder/caption/delete/bulk-delete + comment cleanup.
  */
-#[Route('/backend/galleries', name: 'backend_galleries')]
+#[Route('/backend/photo/galleries', name: 'backend_photo_galleries')]
 #[IsGranted('photo.galleries.view')]
 final class GalleriesController extends AbstractController
 {

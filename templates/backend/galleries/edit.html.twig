@@ -7,7 +7,7 @@
         title: gallery.title,
         crumbs: [
             {label: 'backend.nav.sections.photo'|trans},
-            {label: 'backend.nav.galleries'|trans, href: path('backend_galleries')},
+            {label: 'backend.nav.galleries'|trans, href: path('backend_photo_galleries')},
             {label: gallery.title},
         ],
     }) }}
@@ -21,7 +21,7 @@
     comments: comments,
     finalizations: finalizations,
     invites: invites,
-    backPath: path('backend_galleries'),
+    backPath: path('backend_photo_galleries'),
     previewPath: previewPath,
     reopenPath: reopenPath,
     finalizationDeletePath: finalizationDeletePath,

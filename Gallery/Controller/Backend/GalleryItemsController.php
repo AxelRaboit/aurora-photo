@@ -31,9 +31,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * Gallery items sub-domain — add / reorder / caption / delete /
  * bulk-delete items, plus per-item comment deletion (cleanup endpoint
  * for reviewer comments). Split from `GalleriesController`. Route
- * names preserved (`backend_galleries_items_*`, `_comments_delete`).
+ * names preserved (`backend_photo_galleries_items_*`, `_comments_delete`).
  */
-#[Route('/backend/galleries', name: 'backend_galleries')]
+#[Route('/backend/photo/galleries', name: 'backend_photo_galleries')]
 #[IsGranted('photo.galleries.view')]
 final class GalleryItemsController extends AbstractController
 {
