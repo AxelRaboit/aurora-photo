@@ -9,7 +9,7 @@ use Aurora\Core\Module\Contract\ModuleToggleProviderInterface;
 use Aurora\Core\Module\Nav\NavItem;
 use Aurora\Core\Module\Nav\NavPermission;
 use Aurora\Core\Module\Nav\NavSection;
-use Aurora\Module\Configuration\Setting\Enum\ModuleParameterEnum;
+use Aurora\Module\Photo\Setting\PhotoModuleParameterEnum;
 
 final readonly class PhotoModule implements ModuleInterface, ModuleToggleProviderInterface
 {
@@ -61,9 +61,9 @@ final readonly class PhotoModule implements ModuleInterface, ModuleToggleProvide
     public function getToggles(): array
     {
         return [
-            ModuleParameterEnum::PhotoBackend->toToggle(),
-            ModuleParameterEnum::PhotoFrontend->toToggle(),
-            ModuleParameterEnum::PhotoGalleries->toToggle(),
+            PhotoModuleParameterEnum::Backend->toToggle(),
+            PhotoModuleParameterEnum::Frontend->toToggle(),
+            PhotoModuleParameterEnum::Galleries->toToggle(),
         ];
     }
 }

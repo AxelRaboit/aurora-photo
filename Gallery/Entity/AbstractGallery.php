@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
+use Aurora\Core\Reference\EntityReferenceResolver;
 use Aurora\Core\Timestampable\TimestampableTrait;
 use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;
@@ -80,7 +81,7 @@ abstract class AbstractGallery implements GalleryInterface
      * Optional soft reference to a CRM Contact (its id), kept as a plain
      * column with no Doctrine relation so Photo depends on no other module and
      * works without Crm installed. Resolve for display via the core
-     * {@see \Aurora\Core\Reference\EntityReferenceResolver} ('crm.contact').
+     * {@see EntityReferenceResolver} ('crm.contact').
      */
     #[ORM\Column(name: 'client_contact_id', type: Types::INTEGER, nullable: true)]
     protected ?int $clientContactId = null;

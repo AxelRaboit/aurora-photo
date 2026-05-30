@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo;
 
 use Aurora\Core\Frontend\Contract\FrontendInterface;
-use Aurora\Module\Configuration\Setting\Enum\ModuleParameterEnum;
+use Aurora\Module\Photo\Setting\PhotoModuleParameterEnum;
 
 final class PhotoFrontendDescriptor implements FrontendInterface
 {
@@ -31,7 +31,7 @@ final class PhotoFrontendDescriptor implements FrontendInterface
 
     public function getModuleSettingKey(): string
     {
-        return ModuleParameterEnum::PhotoFrontend->value;
+        return PhotoModuleParameterEnum::Frontend->value;
     }
 
     public function getRoutePrefixes(): array
