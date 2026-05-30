@@ -6,7 +6,6 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
-use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Dev\Audit\Service\AuditLogger;
 use Aurora\Module\Ged\Document\Repository\DocumentRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
@@ -24,7 +23,6 @@ class GalleryManager implements GalleryManagerInterface
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly DocumentRepository $documentRepository,
-        protected readonly ContactRepository $contactRepository,
         protected readonly AuditLogger $auditLogger,
         protected readonly GalleryWatermarkService $watermarkService,
         protected readonly SequenceGenerator $sequenceGenerator,
@@ -108,7 +106,7 @@ class GalleryManager implements GalleryManagerInterface
         $gallery->setWatermarkEnabled($input->isWatermarkEnabled());
         $gallery->setWatermarkText($input->getWatermarkText());
         $gallery->setCoverMedia(null !== $input->getCoverMediaId() ? $this->documentRepository->find($input->getCoverMediaId()) : null);
-        $gallery->setClientContact(null !== $input->getClientContactId() ? $this->contactRepository->find($input->getClientContactId()) : null);
+        $gallery->setClientContactId($input->getClientContactId());
 
         // Password handling: hash a new one if provided, clear when explicitly asked.
         if ($input->shouldClearPassword()) {

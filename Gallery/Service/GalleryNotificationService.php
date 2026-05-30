@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Service;
 
 use Aurora\Core\Mail\Service\MailService;
+use Aurora\Core\Reference\EntityReferenceResolver;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInviteInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
@@ -17,6 +18,7 @@ final readonly class GalleryNotificationService
         private MailService $mail,
         private GalleryPickRepository $pickRepository,
         private UrlGeneratorInterface $urlGenerator,
+        private EntityReferenceResolver $referenceResolver,
     ) {}
 
     public function notifyFinalized(GalleryInterface $gallery, string $visitorToken, ?string $visitorName = null, ?string $visitorEmail = null): void
@@ -37,7 +39,7 @@ final readonly class GalleryNotificationService
 
         // CC the linked CRM contact when present so the photographer's client
         // also gets a confirmation copy of their selection.
-        $clientEmail = $gallery->getClientContact()?->getEmail();
+        $clientEmail = $this->referenceResolver->summarize('crm.contact', $gallery->getClientContactId())['email'] ?? null;
         $cc = (null !== $clientEmail && '' !== $clientEmail) ? [$clientEmail] : [];
 
         $this->mail->send(

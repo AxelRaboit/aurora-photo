@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Entity;
 
 use Aurora\Core\Timestampable\TimestampableTrait;
-use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;
 use DateTimeImmutable;
@@ -77,9 +76,14 @@ abstract class AbstractGallery implements GalleryInterface
     #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
     protected User $createdBy;
 
-    #[ORM\ManyToOne(targetEntity: ContactInterface::class)]
-    #[ORM\JoinColumn(name: 'client_contact_id', nullable: true, onDelete: 'SET NULL')]
-    protected ?ContactInterface $clientContact = null;
+    /**
+     * Optional soft reference to a CRM Contact (its id), kept as a plain
+     * column with no Doctrine relation so Photo depends on no other module and
+     * works without Crm installed. Resolve for display via the core
+     * {@see \Aurora\Core\Reference\EntityReferenceResolver} ('crm.contact').
+     */
+    #[ORM\Column(name: 'client_contact_id', type: Types::INTEGER, nullable: true)]
+    protected ?int $clientContactId = null;
 
     /** @var Collection<int, GalleryItemInterface> */
     #[ORM\OneToMany(targetEntity: GalleryItemInterface::class, mappedBy: 'gallery', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -315,14 +319,14 @@ abstract class AbstractGallery implements GalleryInterface
         return $this;
     }
 
-    public function getClientContact(): ?ContactInterface
+    public function getClientContactId(): ?int
     {
-        return $this->clientContact;
+        return $this->clientContactId;
     }
 
-    public function setClientContact(?ContactInterface $clientContact): static
+    public function setClientContactId(?int $clientContactId): static
     {
-        $this->clientContact = $clientContact;
+        $this->clientContactId = $clientContactId;
 
         return $this;
     }

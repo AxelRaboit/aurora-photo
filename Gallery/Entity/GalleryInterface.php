@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Aurora\Module\Photo\Gallery\Entity;
 
 use Aurora\Core\Timestampable\TimestampableInterface;
-use Aurora\Module\Crm\Contact\Entity\ContactInterface;
 use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;
 use DateTimeImmutable;
@@ -95,9 +94,9 @@ interface GalleryInterface extends TimestampableInterface
 
     public function setCreatedBy(User $createdBy): static;
 
-    public function getClientContact(): ?ContactInterface;
+    public function getClientContactId(): ?int;
 
-    public function setClientContact(?ContactInterface $clientContact): static;
+    public function setClientContactId(?int $clientContactId): static;
 
     /** @return Collection<int, GalleryItemInterface> */
     public function getItems(): Collection;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\View;
 
+use Aurora\Core\Reference\EntityReferenceResolver;
 use Aurora\Core\Validation\Dto\PaginationRequest;
-use Aurora\Module\Crm\CrmContext;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Repository\GalleryRepository;
 use Aurora\Module\Photo\Gallery\Serializer\GallerySerializerInterface;
@@ -21,7 +21,7 @@ final readonly class GalleryViewBuilder
     public function __construct(
         private GallerySerializerInterface $gallerySerializer,
         private GalleryRepository $galleryRepository,
-        private CrmContext $crmContext,
+        private EntityReferenceResolver $referenceResolver,
         private UrlGeneratorInterface $urlGenerator,
     ) {}
 
@@ -30,7 +30,7 @@ final readonly class GalleryViewBuilder
      */
     public function indexView(PaginationRequest $pagination): array
     {
-        $crmEnabled = $this->crmContext->isBackendEnabled();
+        $crmEnabled = $this->referenceResolver->supports('crm.contact');
 
         return [
             'galleries' => $this->gallerySerializer->serializeListPayload($this->galleryRepository->findPaginated($pagination->page, search: $pagination->search)),

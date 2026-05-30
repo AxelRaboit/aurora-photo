@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Serializer;
 
-use Aurora\Module\Crm\Contact\Entity\ContactInterface;
+use Aurora\Core\Reference\EntityReferenceResolver;
 use Aurora\Module\Ged\Document\Service\DocumentUrlGenerator;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemCommentInterface;
@@ -32,6 +32,7 @@ class GallerySerializer implements GallerySerializerInterface
         protected readonly GalleryInviteRepository $inviteRepository,
         protected readonly GalleryRepository $galleryRepository,
         protected readonly DocumentUrlGenerator $documentUrlGenerator,
+        protected readonly EntityReferenceResolver $referenceResolver,
     ) {}
 
     /**
@@ -81,11 +82,7 @@ class GallerySerializer implements GallerySerializerInterface
             'allowVisitorComments' => $gallery->isAllowVisitorComments(),
             'watermarkEnabled' => $gallery->isWatermarkEnabled(),
             'watermarkText' => $gallery->getWatermarkText(),
-            'client' => $gallery->getClientContact() instanceof ContactInterface ? [
-                'id' => $gallery->getClientContact()->getId(),
-                'name' => $gallery->getClientContact()->getFullName(),
-                'email' => $gallery->getClientContact()->getEmail(),
-            ] : null,
+            'client' => $this->referenceResolver->summarize('crm.contact', $gallery->getClientContactId()),
             'finalizedAt' => $gallery->getFinalizedAt()?->format(DateTimeInterface::ATOM),
             'finalizedByName' => $gallery->getFinalizedByName(),
             'finalizedByEmail' => $gallery->getFinalizedByEmail(),
