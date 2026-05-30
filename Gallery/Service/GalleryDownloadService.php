@@ -133,7 +133,7 @@ final readonly class GalleryDownloadService
 
     private function niceName(DocumentInterface $media, string $variant, bool $degraded = false): string
     {
-        $base = pathinfo($media->getOriginalName(), PATHINFO_FILENAME) ?: pathinfo((string) $media->getFilePath(), PATHINFO_FILENAME);
+        $base = pathinfo((string) $media->getOriginalName(), PATHINFO_FILENAME) ?: pathinfo((string) $media->getFilePath(), PATHINFO_FILENAME);
         $ext = pathinfo((string) $media->getFilePath(), PATHINFO_EXTENSION) ?: 'jpg';
         $suffix = $degraded ? '-preview' : ('web' === $variant ? '-web' : '');
 
