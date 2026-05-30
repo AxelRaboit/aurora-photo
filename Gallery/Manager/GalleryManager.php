@@ -8,7 +8,7 @@ use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Module\Crm\Contact\Repository\ContactRepository;
 use Aurora\Module\Dev\Audit\Service\AuditLogger;
-use Aurora\Module\Media\Library\Repository\MediaRepository;
+use Aurora\Module\Ged\Document\Repository\DocumentRepository;
 use Aurora\Module\Photo\Gallery\Dto\GalleryInputInterface;
 use Aurora\Module\Photo\Gallery\Entity\Gallery;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
@@ -23,7 +23,7 @@ class GalleryManager implements GalleryManagerInterface
 {
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
-        protected readonly MediaRepository $mediaRepository,
+        protected readonly DocumentRepository $documentRepository,
         protected readonly ContactRepository $contactRepository,
         protected readonly AuditLogger $auditLogger,
         protected readonly GalleryWatermarkService $watermarkService,
@@ -107,7 +107,7 @@ class GalleryManager implements GalleryManagerInterface
         $gallery->setAllowVisitorComments($input->isAllowVisitorComments());
         $gallery->setWatermarkEnabled($input->isWatermarkEnabled());
         $gallery->setWatermarkText($input->getWatermarkText());
-        $gallery->setCoverMedia(null !== $input->getCoverMediaId() ? $this->mediaRepository->find($input->getCoverMediaId()) : null);
+        $gallery->setCoverMedia(null !== $input->getCoverMediaId() ? $this->documentRepository->find($input->getCoverMediaId()) : null);
         $gallery->setClientContact(null !== $input->getClientContactId() ? $this->contactRepository->find($input->getClientContactId()) : null);
 
         // Password handling: hash a new one if provided, clear when explicitly asked.

@@ -7,7 +7,7 @@ namespace Aurora\Module\Photo\Gallery\Manager;
 use Aurora\Core\Sequence\SequenceGenerator;
 use Aurora\Module\Configuration\Setting\Repository\SettingRepository;
 use Aurora\Module\Dev\Audit\Service\AuditLogger;
-use Aurora\Module\Media\Library\Repository\MediaRepository;
+use Aurora\Module\Ged\Document\Repository\DocumentRepository;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItem;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
@@ -23,7 +23,7 @@ class GalleryItemManager implements GalleryItemManagerInterface
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly GalleryItemRepository $itemRepository,
-        protected readonly MediaRepository $mediaRepository,
+        protected readonly DocumentRepository $documentRepository,
         protected readonly AuditLogger $auditLogger,
         protected readonly ExifReader $exifReader,
         protected readonly SequenceGenerator $sequenceGenerator,
@@ -51,7 +51,7 @@ class GalleryItemManager implements GalleryItemManagerInterface
         $newMediaIds = array_values(array_filter($mediaIds, static fn (int $id): bool => !isset($existing[$id])));
         $mediaById = [];
         if ([] !== $newMediaIds) {
-            foreach ($this->mediaRepository->findBy(['id' => $newMediaIds]) as $media) {
+            foreach ($this->documentRepository->findBy(['id' => $newMediaIds]) as $media) {
                 $mediaById[(int) $media->getId()] = $media;
             }
         }
@@ -71,7 +71,7 @@ class GalleryItemManager implements GalleryItemManagerInterface
             $item->setMedia($media);
             $item->setPosition($position++);
             $item->setNumber($number++);
-            $item->setTakenAt($this->exifReader->readDateTimeOriginal($media->getPath()));
+            $item->setTakenAt($this->exifReader->readDateTimeOriginal((string) $media->getFilePath()));
             $item->setReference($this->sequenceGenerator->next($prefix));
             $this->entityManager->persist($item);
             // Keep the in-memory collection in sync so callers can serialize

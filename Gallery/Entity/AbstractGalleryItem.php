@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,9 +19,9 @@ abstract class AbstractGalleryItem implements GalleryItemInterface
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     protected GalleryInterface $gallery;
 
-    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\ManyToOne(targetEntity: DocumentInterface::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    protected MediaInterface $media;
+    protected DocumentInterface $media;
 
     #[ORM\Column(options: ['default' => 0])]
     protected int $position = 0;
@@ -59,12 +59,12 @@ abstract class AbstractGalleryItem implements GalleryItemInterface
         return $this;
     }
 
-    public function getMedia(): MediaInterface
+    public function getMedia(): DocumentInterface
     {
         return $this->media;
     }
 
-    public function setMedia(MediaInterface $media): static
+    public function setMedia(DocumentInterface $media): static
     {
         $this->media = $media;
 

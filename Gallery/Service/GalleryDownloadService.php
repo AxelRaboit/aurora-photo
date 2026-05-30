@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Service;
 
-use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryInterface;
 use Aurora\Module\Photo\Gallery\Entity\GalleryItemInterface;
 use DomainException;
@@ -113,28 +113,28 @@ final readonly class GalleryDownloadService
         return $response;
     }
 
-    private function resolvePath(GalleryInterface $gallery, MediaInterface $media, string $variant): string
+    private function resolvePath(GalleryInterface $gallery, DocumentInterface $media, string $variant): string
     {
         if ('original' === $variant) {
             if (!$gallery->isAllowOriginals()) {
                 throw new DomainException('Original downloads are disabled for this gallery.');
             }
 
-            return Path::join($this->uploadDir, $media->getPath());
+            return Path::join($this->uploadDir, (string) $media->getFilePath());
         }
 
         // 'web' = the largest cached derivative, falling back to the original
         // when no medium variant has been generated yet.
         $variantPath = $media->getVariants()['large'] ?? $media->getVariants()['medium'] ?? null;
-        $relative = $variantPath ?? $media->getPath();
+        $relative = $variantPath ?? (string) $media->getFilePath();
 
         return Path::join($this->uploadDir, $relative);
     }
 
-    private function niceName(MediaInterface $media, string $variant, bool $degraded = false): string
+    private function niceName(DocumentInterface $media, string $variant, bool $degraded = false): string
     {
-        $base = pathinfo($media->getOriginalName(), PATHINFO_FILENAME) ?: pathinfo($media->getPath(), PATHINFO_FILENAME);
-        $ext = pathinfo($media->getPath(), PATHINFO_EXTENSION) ?: 'jpg';
+        $base = pathinfo($media->getOriginalName(), PATHINFO_FILENAME) ?: pathinfo((string) $media->getFilePath(), PATHINFO_FILENAME);
+        $ext = pathinfo((string) $media->getFilePath(), PATHINFO_EXTENSION) ?: 'jpg';
         $suffix = $degraded ? '-preview' : ('web' === $variant ? '-web' : '');
 
         return preg_replace('/[^A-Za-z0-9._-]+/', '-', $base.$suffix).'.'.$ext;

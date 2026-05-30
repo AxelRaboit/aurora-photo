@@ -3,7 +3,7 @@ import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 import { buildPath } from "@/shared/utils/http/buildPath.js";
 import { useRequest } from "@/shared/composables/http/backend/useRequest.js";
-import { openMediaPicker } from "@/shared/utils/mediaPicker.js";
+import { openDocumentPicker } from "@/shared/utils/documentPicker.js";
 
 export function useGalleryEditItems(props, initialItems) {
     const { t } = useI18n();
@@ -39,7 +39,7 @@ export function useGalleryEditItems(props, initialItems) {
 
     // ── Add photos ────────────────────────────────────────────────────────────
     async function addPhotos() {
-        const picked = await openMediaPicker({
+        const picked = await openDocumentPicker({
             imagesOnly: true,
             multiple: true,
         });

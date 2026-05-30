@@ -6,7 +6,7 @@ namespace Aurora\Module\Photo\Gallery\Entity;
 
 use Aurora\Core\Timestampable\TimestampableInterface;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
-use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
@@ -37,9 +37,9 @@ interface GalleryInterface extends TimestampableInterface
 
     public function hasPassword(): bool;
 
-    public function getCoverMedia(): ?MediaInterface;
+    public function getCoverMedia(): ?DocumentInterface;
 
-    public function setCoverMedia(?MediaInterface $coverMedia): static;
+    public function setCoverMedia(?DocumentInterface $coverMedia): static;
 
     public function getExpiresAt(): ?DateTimeImmutable;
 

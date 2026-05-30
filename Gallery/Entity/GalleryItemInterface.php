@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use DateTimeImmutable;
 
 interface GalleryItemInterface
@@ -19,9 +19,9 @@ interface GalleryItemInterface
 
     public function setGallery(GalleryInterface $gallery): static;
 
-    public function getMedia(): MediaInterface;
+    public function getMedia(): DocumentInterface;
 
-    public function setMedia(MediaInterface $media): static;
+    public function setMedia(DocumentInterface $media): static;
 
     public function getPosition(): int;
 

@@ -6,7 +6,7 @@ namespace Aurora\Module\Photo\Gallery\Entity;
 
 use Aurora\Core\Timestampable\TimestampableTrait;
 use Aurora\Module\Crm\Contact\Entity\ContactInterface;
-use Aurora\Module\Media\Library\Entity\MediaInterface;
+use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,9 +36,9 @@ abstract class AbstractGallery implements GalleryInterface
     #[ORM\Column(name: 'password_hash', length: 255, nullable: true)]
     protected ?string $passwordHash = null;
 
-    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\ManyToOne(targetEntity: DocumentInterface::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    protected ?MediaInterface $coverMedia = null;
+    protected ?DocumentInterface $coverMedia = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     protected ?DateTimeImmutable $expiresAt = null;
@@ -144,12 +144,12 @@ abstract class AbstractGallery implements GalleryInterface
         return null !== $this->passwordHash && '' !== $this->passwordHash;
     }
 
-    public function getCoverMedia(): ?MediaInterface
+    public function getCoverMedia(): ?DocumentInterface
     {
         return $this->coverMedia;
     }
 
-    public function setCoverMedia(?MediaInterface $coverMedia): static
+    public function setCoverMedia(?DocumentInterface $coverMedia): static
     {
         $this->coverMedia = $coverMedia;
 

@@ -141,6 +141,7 @@ const onCoverChange = onGalleryCoverChange;
         >
             <form class="space-y-4" v-on:submit.prevent="submitCreate">
                 <AppImagePickerField
+                    source="document"
                     :label="t('photo.galleries.fields.cover_media')"
                     :hint="t('photo.galleries.fields.cover_media_hint')"
                     :model-value="coverState(newForm)"
@@ -271,6 +272,7 @@ const onCoverChange = onGalleryCoverChange;
         >
             <form class="space-y-4" v-on:submit.prevent="submitEdit">
                 <AppImagePickerField
+                    source="document"
                     :label="t('photo.galleries.fields.cover_media')"
                     :hint="t('photo.galleries.fields.cover_media_hint')"
                     :model-value="coverState(editForm)"
