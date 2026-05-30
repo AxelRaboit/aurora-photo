@@ -25,6 +25,7 @@ import AppNoData from "@/shared/components/feedback/AppNoData.vue";
 import AppBadge from "@/shared/components/feedback/AppBadge.vue";
 import AppLoader from "@/shared/components/feedback/AppLoader.vue";
 import { Plus, Pencil, Trash2, Save, Lock, Eye, EyeOff, CheckCircle, Image as ImageIcon, User, X, Images } from "lucide-vue-next";
+import AppOverlayIconButton from "@/shared/components/action/AppOverlayIconButton.vue";
 import { usePrivileges } from "@/shared/composables/usePrivileges.js";
 
 const { t } = useI18n();
@@ -88,7 +89,7 @@ const onCoverChange = onGalleryCoverChange;
                 <article
                     v-for="g in items"
                     :key="g.id"
-                    class="bg-surface border border-line rounded-lg overflow-hidden hover:border-accent transition-colors"
+                    class="group bg-surface border border-line rounded-lg overflow-hidden hover:border-accent transition-colors"
                     :class="{ 'cursor-pointer': editPath }"
                     v-on:click="editPath && openGallery(g)"
                 >
@@ -105,6 +106,38 @@ const onCoverChange = onGalleryCoverChange;
                                 <CheckCircle class="w-3 h-3" :stroke-width="2.5" />
                             </AppBadge>
                         </div>
+                        <!-- Hover-only on lg+ (no hover on touch — below lg the
+                             action strip below the card stays visible) -->
+                        <div class="hidden lg:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-1.5">
+                            <AppOverlayIconButton
+                                v-if="editPath"
+                                size="sm"
+                                variant="light"
+                                :title="t('photo.galleries.open_editor')"
+                                :href="buildPath(editPath, { id: g.id })"
+                                v-on:click.stop
+                            >
+                                <Eye class="w-4 h-4" :stroke-width="2" />
+                            </AppOverlayIconButton>
+                            <AppOverlayIconButton
+                                v-if="can('photo.galleries.edit')"
+                                size="sm"
+                                variant="light"
+                                :title="t('shared.common.edit')"
+                                v-on:click.stop="openEdit(g)"
+                            >
+                                <Pencil class="w-4 h-4" :stroke-width="2" />
+                            </AppOverlayIconButton>
+                            <AppOverlayIconButton
+                                v-if="can('photo.galleries.delete')"
+                                size="sm"
+                                variant="light"
+                                :title="t('shared.common.delete')"
+                                v-on:click.stop="confirmDelete(g)"
+                            >
+                                <Trash2 class="w-4 h-4" :stroke-width="2" />
+                            </AppOverlayIconButton>
+                        </div>
                     </div>
                     <div class="p-2.5 space-y-1">
                         <h3 class="text-sm font-semibold text-primary truncate">{{ g.title }}</h3>
@@ -113,7 +146,9 @@ const onCoverChange = onGalleryCoverChange;
                             <User class="w-3 h-3 shrink-0" :stroke-width="2" />
                             <span class="truncate">{{ g.client.name }}</span>
                         </p>
-                        <div class="flex items-center gap-0.5 pt-1" v-on:click.stop>
+                        <!-- Below lg the overlay isn't reachable (no hover on
+                             touch), so the action strip stays visible there. -->
+                        <div class="lg:hidden flex items-center gap-0.5 pt-1" v-on:click.stop>
                             <AppIconButton v-if="editPath" color="sky" :title="t('photo.galleries.open_editor')" :href="buildPath(editPath, { id: g.id })">
                                 <ImageIcon class="w-3.5 h-3.5" :stroke-width="2" />
                             </AppIconButton>
