@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Aurora\Module\Photo\Gallery\Entity;
 
-use Aurora\Core\Reference\EntityReferenceResolver;
 use Aurora\Core\Timestampable\TimestampableTrait;
 use Aurora\Module\Ged\Document\Entity\DocumentInterface;
 use Aurora\Module\Platform\User\Entity\User;

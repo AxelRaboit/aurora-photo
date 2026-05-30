@@ -6,7 +6,6 @@ namespace Aurora\Module\Photo\Setting;
 
 use Aurora\Core\Module\Toggle\ModuleToggle;
 use Aurora\Module\Configuration\Setting\Enum\ApplicationParameterEnumInterface;
-use Aurora\Module\Photo\PhotoModule;
 
 /**
  * Photo module's own access toggles (one row each in core_settings, group
