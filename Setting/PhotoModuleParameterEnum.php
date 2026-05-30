@@ -87,12 +87,11 @@ enum PhotoModuleParameterEnum: string implements ApplicationParameterEnumInterfa
 
     /**
      * Structural parent for dashboard grouping. Null for the top-level Backend
-     * toggle and for Frontend (a standalone top-level toggle that merely
-     * cascade-requires Backend but is not nested under it in the dashboard).
+     * toggle. Galleries and the public-galleries Frontend both nest under it.
      */
     private function getDisplayParent(): ?string
     {
-        return self::Galleries === $this ? self::Backend->value : null;
+        return self::Backend === $this ? null : self::Backend->value;
     }
 
     public function toToggle(): ModuleToggle
