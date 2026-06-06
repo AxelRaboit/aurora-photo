@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $container): void {
     $services->load('Aurora\\Module\\Photo\\', $moduleDir.'/')
         ->exclude([
             $moduleDir.'/AuroraPhotoBundle.php',
-            $moduleDir.'/{config,templates,translations,assets}',
+            $moduleDir.'/{config,templates,translations,assets,DataFixtures}',
             $moduleDir.'/**/Entity',
             $moduleDir.'/Setting/PhotoModuleParameterEnum.php',
         ]);
